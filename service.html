@@ -13,13 +13,12 @@
         /* 1.md 스타일 */
         .slide-container-1 {
             width: 100%;
-            min-height: 600px;
+            min-height: 100vh;
             background-color: #ffffff;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            margin-bottom: 40px;
         }
         .accent-bar {
             position: absolute;
@@ -61,22 +60,22 @@
         .tag-pill {
             display: inline-block;
             padding: 6px 16px;
-            background-color: #f1f5f9;
+            background-color: #f0f2f5;
             color: #051c2c;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 700;
-            letter-spacing: 1.5px;
-            margin-bottom: 24px;
+            letter-spacing: 1px;
+            margin-bottom: 32px;
             border-radius: 4px;
             text-transform: uppercase;
-            border-left: 4px solid #051c2c;
+            width: fit-content;
         }
         .main-title {
-            font-size: 56px;
+            font-size: 64px;
             font-weight: 900;
-            line-height: 1.15;
-            color: #1e293b;
-            margin-bottom: 16px;
+            line-height: 1.2;
+            color: #111827;
+            margin-bottom: 40px;
             letter-spacing: -0.02em;
         }
         .sub-title {
@@ -90,25 +89,24 @@
             color: #A4C639;
         }
         .summary-box {
-            border-top: 2px solid #e2e8f0;
-            padding-top: 32px;
-            margin-top: 10px;
+            border-top: 2px solid #e5e7eb;
+            padding-top: 40px;
+            margin-top: 20px;
         }
         .summary-label {
-            font-size: 15px;
-            font-weight: 800;
+            font-size: 16px;
+            font-weight: 700;
             color: #051c2c;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
         .summary-text {
-            font-size: 18px;
+            font-size: 24px;
             font-weight: 400;
-            color: #475569;
+            color: #4b5563;
             line-height: 1.6;
+            max-width: 90%;
         }
         .deco-circle-large {
             position: absolute;
@@ -136,12 +134,11 @@
         /* 2-5.md 공통 스타일 */
         .slide-container {
             width: 100%;
-            min-height: 600px;
+            min-height: 100vh;
             background-color: #ffffff;
             position: relative;
             overflow: hidden;
             display: flex;
-            margin-bottom: 40px;
         }
         .sidebar {
             width: 280px;
@@ -201,7 +198,7 @@
             flex-direction: column;
         }
         .page-header {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             border-bottom: 1px solid #e5e7eb;
             padding-bottom: 20px;
         }
@@ -215,13 +212,13 @@
         .page-title i {
             color: #A4C639;
             margin-right: 16px;
-            font-size: 28px;
+            font-size: 24px;
         }
         .analysis-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
-            gap: 24px;
+            gap: 30px;
             flex: 1;
         }
         .card {
@@ -256,12 +253,12 @@
         }
         .card-title {
             font-size: 20px;
-            font-weight: 800;
+            font-weight: 700;
             color: #1f2937;
         }
         .card-content {
             color: #4b5563;
-            font-size: 15px;
+            font-size: 16px;
             line-height: 1.6;
             flex: 1;
         }
@@ -272,8 +269,8 @@
         }
         .bullet-list li {
             position: relative;
-            padding-left: 14px;
-            margin-bottom: 6px;
+            padding-left: 16px;
+            margin-bottom: 8px;
         }
         .bullet-list li::before {
             content: "•";
@@ -379,6 +376,24 @@
             color: #111827;
             flex-shrink: 0;
         }
+        /* Icon color classes matching personal.html */
+        .workflow-icon-danger {
+            background-color: #fee2e2;
+            color: #ef4444;
+        }
+        .workflow-icon-warning {
+            background-color: #fef3c7;
+            color: #f59e0b;
+        }
+        .workflow-icon-success {
+            background-color: #d1fae5;
+            color: #10b981;
+        }
+        .workflow-icon-info {
+            background-color: #dbeafe;
+            color: #3b82f6;
+        }
+
         .pillar-title {
             font-size: 18px;
             font-weight: 700;
@@ -627,6 +642,48 @@
             color: #475569;
             line-height: 1.5;
         }
+
+        /* 미디어 쿼리 - 반응형 디자인 */
+        @media (max-width: 960px) {
+            .content-wrapper {
+                padding: 60px 40px;
+            }
+            .main-title {
+                font-size: 48px;
+            }
+            .summary-text {
+                font-size: 20px;
+            }
+            .main-content {
+                padding: 50px 40px;
+            }
+        }
+        @media (max-width: 720px) {
+            .content-wrapper {
+                padding: 40px 24px;
+            }
+            .main-title {
+                font-size: 36px;
+            }
+            .summary-text {
+                font-size: 18px;
+                max-width: 100%;
+            }
+            .tag-pill {
+                font-size: 12px;
+                padding: 4px 12px;
+            }
+            .accent-bar {
+                top: 40px;
+                bottom: 40px;
+            }
+            .main-content {
+                padding: 40px 24px;
+            }
+            .sidebar {
+                padding: 40px 24px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -739,7 +796,7 @@
                     <div class="analysis-grid">
                         <div class="card card-overview">
                             <div class="card-header">
-                                <div class="card-icon"><i class="fas fa-clipboard-list"></i></div>
+                                <div class="card-icon workflow-icon-info"><i class="fas fa-clipboard-list"></i></div>
                                 <h3 class="card-title">프로젝트 개요 (Overview)</h3>
                             </div>
                             <div class="card-content">
@@ -760,7 +817,7 @@
                         </div>
                         <div class="card card-goal">
                             <div class="card-header">
-                                <div class="card-icon"><i class="fas fa-bullseye"></i></div>
+                                <div class="card-icon workflow-icon-success"><i class="fas fa-bullseye"></i></div>
                                 <h3 class="card-title">기획 목표 (Service Goal)</h3>
                             </div>
                             <div class="card-content">
@@ -779,7 +836,7 @@
                         </div>
                         <div class="card card-tech">
                             <div class="card-header">
-                                <div class="card-icon"><i class="fas fa-robot"></i></div>
+                                <div class="card-icon workflow-icon-info"><i class="fas fa-robot"></i></div>
                                 <h3 class="card-title">기술 전략 (Quant Engine)</h3>
                             </div>
                             <div class="card-content">
@@ -798,7 +855,7 @@
                         </div>
                         <div class="card card-value">
                             <div class="card-header">
-                                <div class="card-icon"><i class="fas fa-star"></i></div>
+                                <div class="card-icon workflow-icon-success"><i class="fas fa-star"></i></div>
                                 <h3 class="card-title">핵심 가치 제안 (Value Prop)</h3>
                             </div>
                             <div class="card-content">
@@ -849,7 +906,7 @@
                     <div class="analysis-grid">
                         <div class="card card-legal">
                             <div class="card-header">
-                                <div class="card-icon"><i class="fas fa-gavel"></i></div>
+                                <div class="card-icon workflow-icon-warning"><i class="fas fa-gavel"></i></div>
                                 <h3 class="card-title">주요 법률 리스크 (Legal)</h3>
                             </div>
                             <div class="card-content">
@@ -864,7 +921,7 @@
                         </div>
                         <div class="card card-competition">
                             <div class="card-header">
-                                <div class="card-icon"><i class="fas fa-users-slash"></i></div>
+                                <div class="card-icon workflow-icon-danger"><i class="fas fa-users-slash"></i></div>
                                 <h3 class="card-title">경쟁 환경 리스크 (Competition)</h3>
                             </div>
                             <div class="card-content">
@@ -879,7 +936,7 @@
                         </div>
                         <div class="card card-opportunity">
                             <div class="card-header">
-                                <div class="card-icon"><i class="fas fa-file-signature"></i></div>
+                                <div class="card-icon workflow-icon-success"><i class="fas fa-file-signature"></i></div>
                                 <h3 class="card-title">제도 변화 기회 (Opportunity)</h3>
                             </div>
                             <div class="card-content">
@@ -896,7 +953,7 @@
                         </div>
                         <div class="card card-strategy">
                             <div class="card-header">
-                                <div class="card-icon"><i class="fas fa-chess-knight"></i></div>
+                                <div class="card-icon workflow-icon-success"><i class="fas fa-chess-knight"></i></div>
                                 <h3 class="card-title">전략적 판단 (Strategic Pivot)</h3>
                             </div>
                             <div class="card-content">
@@ -964,8 +1021,7 @@
                         </div>
                         <div class="pillars-grid">
                             <div class="pillar-card green">
-                                <div class="pillar-icon">
-                                    <i class="fas fa-code"></i>
+                                <div class="pillar-icon workflow-icon-info"><i class="fas fa-code"></i>
                                 </div>
                                 <h3 class="pillar-title">자체 알고리즘 고도화</h3>
                                 <ul class="check-list pillar-content">
@@ -975,8 +1031,7 @@
                                 </ul>
                             </div>
                             <div class="pillar-card blue">
-                                <div class="pillar-icon">
-                                    <i class="fas fa-handshake"></i>
+                                <div class="pillar-icon workflow-icon-success"><i class="fas fa-handshake"></i>
                                 </div>
                                 <h3 class="pillar-title">라이선스 파트너 확보</h3>
                                 <ul class="check-list pillar-content">
@@ -986,8 +1041,7 @@
                                 </ul>
                             </div>
                             <div class="pillar-card slate">
-                                <div class="pillar-icon">
-                                    <i class="fas fa-file-shield"></i>
+                                <div class="pillar-icon workflow-icon-success"><i class="fas fa-file-shield"></i>
                                 </div>
                                 <h3 class="pillar-title">컴플라이언스 완벽 대응</h3>
                                 <ul class="check-list pillar-content">

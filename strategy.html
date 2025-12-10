@@ -27,7 +27,7 @@
         }
         .content-wrapper {
             flex: 1;
-            padding: 80px 120px;
+            padding: 60px 80px 60px 100px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -205,7 +205,7 @@
         /* Main Content */
         .main-content {
             flex: 1;
-            padding: 60px 80px;
+            padding: 50px 70px;
             background-color: #f9fafb;
             display: flex;
             flex-direction: column;
@@ -397,6 +397,24 @@
             color: #111827;
             flex-shrink: 0;
         }
+        /* Icon color classes matching personal.html */
+        .workflow-icon-danger {
+            background-color: #fee2e2;
+            color: #ef4444;
+        }
+        .workflow-icon-warning {
+            background-color: #fef3c7;
+            color: #f59e0b;
+        }
+        .workflow-icon-success {
+            background-color: #d1fae5;
+            color: #10b981;
+        }
+        .workflow-icon-info {
+            background-color: #dbeafe;
+            color: #3b82f6;
+        }
+
 
         .pillar-title {
             font-size: 18px;
@@ -1157,7 +1175,7 @@
                     <!-- 1. 상황 (Situation) -->
                     <div class="card card-situation">
                         <div class="card-header">
-                            <div class="card-icon"><i class="fas fa-virus"></i></div>
+                            <div class="card-icon workflow-icon-danger"><i class="fas fa-virus"></i></div>
                             <h3 class="card-title">위기 상황 (Situation)</h3>
                         </div>
                         <div class="card-content">
@@ -1177,7 +1195,7 @@
                     <!-- 2. 초기 분석 (Analysis) -->
                     <div class="card card-analysis">
                         <div class="card-header">
-                            <div class="card-icon"><i class="fas fa-magnifying-glass-chart"></i></div>
+                            <div class="card-icon workflow-icon-info"><i class="fas fa-magnifying-glass-chart"></i></div>
                             <h3 class="card-title">초기 진단 및 분석 (Analysis)</h3>
                         </div>
                         <div class="card-content">
@@ -1197,7 +1215,7 @@
                     <!-- 3. 핵심 문제 정의 (Key Problem) -->
                     <div class="card card-problem">
                         <div class="card-header">
-                            <div class="card-icon"><i class="fas fa-bullseye"></i></div>
+                            <div class="card-icon workflow-icon-warning"><i class="fas fa-bullseye"></i></div>
                             <h3 class="card-title">핵심 문제 정의 (Problem)</h3>
                         </div>
                         <div class="card-content">
@@ -1217,7 +1235,7 @@
                     <!-- 4. 의사결정 지원 (Decision Support) -->
                     <div class="card card-decision">
                         <div class="card-header">
-                            <div class="card-icon"><i class="fas fa-chess-knight"></i></div>
+                            <div class="card-icon workflow-icon-success"><i class="fas fa-chess-knight"></i></div>
                             <h3 class="card-title">의사결정 지원 (Role &amp; Action)</h3>
                         </div>
                         <div class="card-content">
@@ -1288,8 +1306,7 @@
                     <div class="pillars-grid">
                         <!-- Pillar 1 -->
                         <div class="pillar-card blue">
-                            <div class="pillar-icon">
-                                <i class="fas fa-chart-line"></i>
+                            <div class="pillar-icon workflow-icon-info"><i class="fas fa-chart-line"></i>
                             </div>
                             <h3 class="pillar-title">시장·정책 모니터링 체계</h3>
                             <ul class="check-list pillar-content">
@@ -1300,8 +1317,7 @@
                         </div>
                         <!-- Pillar 2 -->
                         <div class="pillar-card purple">
-                            <div class="pillar-icon">
-                                <i class="fas fa-lightbulb"></i>
+                            <div class="pillar-icon workflow-icon-warning"><i class="fas fa-lightbulb"></i>
                             </div>
                             <h3 class="pillar-title">신규 아이템 타당성 검토</h3>
                             <ul class="check-list pillar-content">
@@ -1312,8 +1328,7 @@
                         </div>
                         <!-- Pillar 3 -->
                         <div class="pillar-card amber">
-                            <div class="pillar-icon">
-                                <i class="fas fa-shield-halved"></i>
+                            <div class="pillar-icon workflow-icon-success"><i class="fas fa-shield-halved"></i>
                             </div>
                             <h3 class="pillar-title">리스크 대응 및 관리</h3>
                             <ul class="check-list pillar-content">

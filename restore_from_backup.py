@@ -92,3 +92,4 @@ if __name__ == "__main__":
     print(f"📁 백업 파일 로드: {backup_file}")
     restored = restore_from_backup_json(backup_file, target_files)
     print(f"\n✅ 총 {restored}개 파일 복원 완료")
+
