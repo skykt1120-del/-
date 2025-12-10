@@ -194,10 +194,12 @@
             font-weight: 700;
             margin-right: 12px;
             width: 20px;
+            color: inherit;
         }
         .nav-text {
             font-size: 16px;
             font-weight: 500;
+            color: inherit;
         }
         
         /* Main Content */
@@ -241,18 +243,22 @@
             flex: 1;
         }
         .card {
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 32px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            border-left: 4px solid transparent;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+            padding: 24px;
+            border-left: 4px solid #e5e7eb;
             display: flex;
             flex-direction: column;
+            transition: box-shadow 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1);
         }
         .card-header {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
         .card-icon {
             width: 40px;
@@ -263,6 +269,8 @@
             justify-content: center;
             margin-right: 16px;
             font-size: 18px;
+            color: #111827;
+            flex-shrink: 0;
         }
         .card-title {
             font-size: 20px;
@@ -293,18 +301,7 @@
             font-weight: bold;
         }
 
-        /* Specific Card Styles */
-        .card-situation { border-left-color: #ef4444; }
-        .card-situation .card-icon { background-color: #fee2e2; color: #ef4444; }
-        
-        .card-analysis { border-left-color: #3b82f6; }
-        .card-analysis .card-icon { background-color: #dbeafe; color: #3b82f6; }
-        
-        .card-problem { border-left-color: #f59e0b; }
-        .card-problem .card-icon { background-color: #fef3c7; color: #f59e0b; }
-        
-        .card-decision { border-left-color: #10b981; }
-        .card-decision .card-icon { background-color: #d1fae5; color: #10b981; }
+        /* Specific Card Styles - 컬러 코드 제거 */
 
         .highlight-text {
             font-weight: 600;
@@ -375,31 +372,31 @@
             flex: 1;
         }
         .pillar-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 25px;
-            border-top: 4px solid #cbd5e1;
-            box-shadow: 0 2px 4px -1px rgba(0,0,0,0.06);
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+            padding: 24px;
+            border-left: 4px solid #e5e7eb;
             display: flex;
             flex-direction: column;
+            transition: box-shadow 0.3s ease;
         }
-        .pillar-card.blue { border-top-color: #3b82f6; }
-        .pillar-card.purple { border-top-color: #8b5cf6; }
-        .pillar-card.amber { border-top-color: #f59e0b; }
+        .pillar-card:hover {
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1);
+        }
 
         .pillar-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 16px;
-            font-size: 20px;
+            font-size: 18px;
+            color: #111827;
+            flex-shrink: 0;
         }
-        .pillar-card.blue .pillar-icon { background-color: #eff6ff; color: #3b82f6; }
-        .pillar-card.purple .pillar-icon { background-color: #f5f3ff; color: #8b5cf6; }
-        .pillar-card.amber .pillar-icon { background-color: #fffbeb; color: #f59e0b; }
 
         .pillar-title {
             font-size: 18px;
@@ -791,8 +788,7 @@
         /* 2x2 Grid Layout */
         .content-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 24px;
             flex: 1;
         }
@@ -998,7 +994,6 @@
             }
             .content-grid {
                 grid-template-columns: 1fr;
-                grid-template-rows: auto;
             }
             .chart-container {
                 min-height: 250px;
@@ -1053,14 +1048,14 @@
             <div class="nav-logo">Hybrid Planner. Kwon</div>
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="journey.html" class="nav-link">Profile</a></li>
+                <li><a href="profile.html" class="nav-link">Profile</a></li>
                 <li class="nav-item-has-sub">
                     <a href="javascript:void(0)" class="nav-link active">Portfolio</a>
                     <div class="nav-submenu">
-                        <a href="work-style.html" class="nav-sublink">전략 기획</a>
-                        <a href="results.html" class="nav-sublink">서비스 기획</a>
-                        <a href="ai-planner.html" class="nav-sublink">진행 중 프로젝트</a>
-                        <a href="other-projects.html" class="nav-sublink">Next Strategy</a>
+                        <a href="strategy.html" class="nav-sublink">전략 기획</a>
+                        <a href="service.html" class="nav-sublink">서비스 기획</a>
+                        <a href="next.html" class="nav-sublink">진행 중 프로젝트</a>
+                        <a href="personal.html" class="nav-sublink">개인 커스텀 Tool</a>
                     </div>
                 </li>
                 <li><a href="contact.html" class="nav-link">Contact</a></li>
@@ -1088,14 +1083,38 @@
                         <i class="fas fa-quote-left mr-2"></i> EXECUTIVE SUMMARY
                     </div>
                     <p class="summary-text">
-                        팬데믹 위기 환경에서 <strong>분석 → 전략 설계 → 단계별 투자유치</strong>를 통해<br/>
-                        자본금 9억 원 증자로 성장 기반을 구축한 전략기획 실전 사례
+                        팬데믹 위기 환경에서 투자 유치를 통해 성장 기반을 구축한 전략기획 실전 사례
                     </p>
+                    <div class="work-table" style="margin-top: 32px; max-width: 90%;">
+                        <div class="work-row">
+                            <div class="work-label">전략 분석 & 의사결정 지원</div>
+                            <div class="work-progress-bar">
+                                <div class="work-progress-fill" style="width: 70%; background: rgba(59, 130, 246, 0.539); border-right: 1px solid rgba(59, 130, 246, 0.6); box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2), 0 4px 12px rgba(59, 130, 246, 0.1);"></div>
+                            </div>
+                        </div>
+                        <div class="work-row">
+                            <div class="work-label">중장기 로드맵 설계</div>
+                            <div class="work-progress-bar">
+                                <div class="work-progress-fill" style="width: 25%; background: rgba(59, 130, 246, 0.539); border-right: 1px solid rgba(59, 130, 246, 0.6); box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2), 0 4px 12px rgba(59, 130, 246, 0.1);"></div>
+                            </div>
+                        </div>
+                        <div class="work-row">
+                            <div class="work-label">리스크 검토</div>
+                            <div class="work-progress-bar">
+                                <div class="work-progress-fill" style="width: 20%; background: rgba(59, 130, 246, 0.539); border-right: 1px solid rgba(59, 130, 246, 0.6); box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2), 0 4px 12px rgba(59, 130, 246, 0.1);"></div>
+                            </div>
+                        </div>
+                        <div class="work-row">
+                            <div class="work-label">투자 유치 & IR</div>
+                            <div class="work-progress-bar">
+                                <div class="work-progress-fill" style="width: 25%; background: rgba(59, 130, 246, 0.539); border-right: 1px solid rgba(59, 130, 246, 0.6); box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2), 0 4px 12px rgba(59, 130, 246, 0.1);"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- Footer -->
             <div class="footer">
-                <p>CASE STUDY 2025 | Strategic Planner Portfolio</p>
             </div>
         </div>
     </section>
@@ -1542,63 +1561,62 @@
                             <span class="skill-tag">#투자자 커뮤니케이션</span>
                         </div>
                     </div>
-                    <!-- 3. Structural Improvements -->
+                    <!-- 3. Structural Improvements & Business Impact -->
                     <div class="result-card">
                         <div class="card-header">
                             <div class="card-icon icon-structure"><i class="fas fa-building-columns"></i></div>
-                            <h3 class="card-title">구조적 개선 (Improvements)</h3>
+                            <h3 class="card-title">구조적 개선 (Improvements) & 사업 임팩트 (Impact)</h3>
                         </div>
-                        <ul class="improvement-list">
-                            <li class="improvement-item">
-                                <i class="fas fa-check-circle check-icon"></i>
-                                <div class="improvement-text">
-                                    <strong>상시 모니터링 체계 구축</strong>
-                                    <p>시장 지표/정책 변화 추적을 통한 선제적 이슈 감지</p>
-                                </div>
-                            </li>
-                            <li class="improvement-item">
-                                <i class="fas fa-check-circle check-icon"></i>
-                                <div class="improvement-text">
-                                    <strong>거버넌스 &amp; 컴플라이언스 정립</strong>
-                                    <p>이사회/주총 프로세스 표준화 및 내부통제 강화</p>
-                                </div>
-                            </li>
-                            <li class="improvement-item">
-                                <i class="fas fa-check-circle check-icon"></i>
-                                <div class="improvement-text">
-                                    <strong>리스크 관리 내재화</strong>
-                                    <p>사업별 법적 리스크 검토 프로세스 의무화</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- 4. Business Impact -->
-                    <div class="result-card">
-                        <div class="card-header">
-                            <div class="card-icon icon-impact"><i class="fas fa-rocket"></i></div>
-                            <h3 class="card-title">사업 임팩트 (Impact)</h3>
+                        <div style="margin-bottom: 24px;">
+                            <h4 style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 12px;">구조적 개선</h4>
+                            <ul class="improvement-list">
+                                <li class="improvement-item">
+                                    <i class="fas fa-check-circle check-icon"></i>
+                                    <div class="improvement-text">
+                                        <strong>상시 모니터링 체계 구축</strong>
+                                        <p>시장 지표/정책 변화 추적을 통한 선제적 이슈 감지</p>
+                                    </div>
+                                </li>
+                                <li class="improvement-item">
+                                    <i class="fas fa-check-circle check-icon"></i>
+                                    <div class="improvement-text">
+                                        <strong>거버넌스 &amp; 컴플라이언스 정립</strong>
+                                        <p>이사회/주총 프로세스 표준화 및 내부통제 강화</p>
+                                    </div>
+                                </li>
+                                <li class="improvement-item">
+                                    <i class="fas fa-check-circle check-icon"></i>
+                                    <div class="improvement-text">
+                                        <strong>리스크 관리 내재화</strong>
+                                        <p>사업별 법적 리스크 검토 프로세스 의무화</p>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="impact-flow">
-                            <div class="impact-step">
-                                <h4>Survival</h4>
-                                <span>생존 위기</span>
+                        <div style="border-top: 1px solid #e5e7eb; padding-top: 24px;">
+                            <h4 style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 12px;">사업 임팩트</h4>
+                            <div class="impact-flow">
+                                <div class="impact-step">
+                                    <h4>Survival</h4>
+                                    <span>생존 위기</span>
+                                </div>
+                                <div class="flow-arrow"><i class="fas fa-chevron-right"></i></div>
+                                <div class="impact-step">
+                                    <h4>Stability</h4>
+                                    <span>자금/체계 확보</span>
+                                </div>
+                                <div class="flow-arrow"><i class="fas fa-chevron-right"></i></div>
+                                <div class="impact-step final">
+                                    <h4>Growth</h4>
+                                    <span>성장 가속화</span>
+                                </div>
                             </div>
-                            <div class="flow-arrow"><i class="fas fa-chevron-right"></i></div>
-                            <div class="impact-step">
-                                <h4>Stability</h4>
-                                <span>자금/체계 확보</span>
+                            <div class="impact-summary">
+                                <p>
+                                    <strong>"생존 단계에서 성장 준비 단계로의 전환"</strong><br/>
+                                    자금(Finance) - 제품(Product) - 거버넌스(Governance) 삼각 축의 정합성을 확보하여 지속 가능한 성장 기반 마련
+                                </p>
                             </div>
-                            <div class="flow-arrow"><i class="fas fa-chevron-right"></i></div>
-                            <div class="impact-step final">
-                                <h4>Growth</h4>
-                                <span>성장 가속화</span>
-                            </div>
-                        </div>
-                        <div class="impact-summary">
-                            <p>
-                                <strong>"생존 단계에서 성장 준비 단계로의 전환"</strong><br/>
-                                자금(Finance) - 제품(Product) - 거버넌스(Governance) 삼각 축의 정합성을 확보하여 지속 가능한 성장 기반 마련
-                            </p>
                         </div>
                     </div>
                 </div>

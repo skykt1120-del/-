@@ -26,3 +26,7 @@ node_modules/
 dist/
 build/
 
+# Backup files
+backups/
+*.backup_pid
+
