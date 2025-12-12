@@ -13,12 +13,13 @@
         /* 1.md 스타일 */
         .slide-container-1 {
             width: 100%;
-            min-height: 100vh;
+            min-height: 600px;
             background-color: #ffffff;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            margin-bottom: 40px;
         }
         .accent-bar {
             position: absolute;
@@ -60,22 +61,22 @@
         .tag-pill {
             display: inline-block;
             padding: 6px 16px;
-            background-color: #f0f2f5;
+            background-color: #f1f5f9;
             color: #051c2c;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 32px;
+            letter-spacing: 1.5px;
+            margin-bottom: 24px;
             border-radius: 4px;
             text-transform: uppercase;
-            width: fit-content;
+            border-left: 4px solid #051c2c;
         }
         .main-title {
-            font-size: 64px;
+            font-size: 56px;
             font-weight: 900;
-            line-height: 1.2;
-            color: #111827;
-            margin-bottom: 40px;
+            line-height: 1.15;
+            color: #1e293b;
+            margin-bottom: 16px;
             letter-spacing: -0.02em;
         }
         .sub-title {
@@ -89,24 +90,25 @@
             color: #A4C639;
         }
         .summary-box {
-            border-top: 2px solid #e5e7eb;
-            padding-top: 40px;
-            margin-top: 20px;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 32px;
+            margin-top: 10px;
         }
         .summary-label {
-            font-size: 16px;
-            font-weight: 700;
+            font-size: 15px;
+            font-weight: 800;
             color: #051c2c;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .summary-text {
-            font-size: 24px;
+            font-size: 18px;
             font-weight: 400;
-            color: #4b5563;
+            color: #475569;
             line-height: 1.6;
-            max-width: 90%;
         }
         .deco-circle-large {
             position: absolute;
@@ -134,11 +136,12 @@
         /* 2-5.md 공통 스타일 */
         .slide-container {
             width: 100%;
-            min-height: 100vh;
+            min-height: 600px;
             background-color: #ffffff;
             position: relative;
             overflow: hidden;
             display: flex;
+            margin-bottom: 40px;
         }
         .sidebar {
             width: 280px;
@@ -198,7 +201,7 @@
             flex-direction: column;
         }
         .page-header {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             border-bottom: 1px solid #e5e7eb;
             padding-bottom: 20px;
         }
@@ -212,13 +215,13 @@
         .page-title i {
             color: #A4C639;
             margin-right: 16px;
-            font-size: 24px;
+            font-size: 28px;
         }
         .analysis-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
-            gap: 30px;
+            gap: 24px;
             flex: 1;
         }
         .card {
@@ -253,12 +256,12 @@
         }
         .card-title {
             font-size: 20px;
-            font-weight: 700;
+            font-weight: 800;
             color: #1f2937;
         }
         .card-content {
             color: #4b5563;
-            font-size: 16px;
+            font-size: 15px;
             line-height: 1.6;
             flex: 1;
         }
@@ -269,8 +272,8 @@
         }
         .bullet-list li {
             position: relative;
-            padding-left: 16px;
-            margin-bottom: 8px;
+            padding-left: 14px;
+            margin-bottom: 6px;
         }
         .bullet-list li::before {
             content: "•";
@@ -376,24 +379,6 @@
             color: #111827;
             flex-shrink: 0;
         }
-        /* Icon color classes matching personal.html */
-        .workflow-icon-danger {
-            background-color: #fee2e2;
-            color: #ef4444;
-        }
-        .workflow-icon-warning {
-            background-color: #fef3c7;
-            color: #f59e0b;
-        }
-        .workflow-icon-success {
-            background-color: #d1fae5;
-            color: #10b981;
-        }
-        .workflow-icon-info {
-            background-color: #dbeafe;
-            color: #3b82f6;
-        }
-
         .pillar-title {
             font-size: 18px;
             font-weight: 700;
@@ -642,48 +627,6 @@
             color: #475569;
             line-height: 1.5;
         }
-
-        /* 미디어 쿼리 - 반응형 디자인 */
-        @media (max-width: 960px) {
-            .content-wrapper {
-                padding: 60px 40px;
-            }
-            .main-title {
-                font-size: 48px;
-            }
-            .summary-text {
-                font-size: 20px;
-            }
-            .main-content {
-                padding: 50px 40px;
-            }
-        }
-        @media (max-width: 720px) {
-            .content-wrapper {
-                padding: 40px 24px;
-            }
-            .main-title {
-                font-size: 36px;
-            }
-            .summary-text {
-                font-size: 18px;
-                max-width: 100%;
-            }
-            .tag-pill {
-                font-size: 12px;
-                padding: 4px 12px;
-            }
-            .accent-bar {
-                top: 40px;
-                bottom: 40px;
-            }
-            .main-content {
-                padding: 40px 24px;
-            }
-            .sidebar {
-                padding: 40px 24px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -717,7 +660,7 @@
                 <div class="content-wrapper">
                     <div class="text-content">
                         <div class="tag-pill">Fintech Project Portfolio</div>
-                        <h1 class="main-title">모바일 로보어드바이저<br><span class="highlight">KIWI 서비스 기획</span></h1>
+                        <h1 class="main-title">모바일 로보어드바이저 <span class="highlight">KIWI 서비스 기획</span></h1>
                         <p class="sub-title">시간과 장소에 구애받지 않는<br>모바일 자산관리 서비스</p>
                         <div class="summary-box">
                             <div class="summary-label">
@@ -725,35 +668,32 @@
                             </div>
                             <p class="summary-text">손 안의 <strong>'원클릭' 자동투자</strong> 경험 제공</p>
                             <p class="summary-text" style="font-size: 16px; margin-top: 16px; color: #64748b;">
-                                전문 지식 없이도 알고리즘이 <strong>포트폴리오 구성·리밸런싱을<br>
-                                자동 수행</strong>하는 모바일 투자일임 서비스
+                                전문 지식 없이도 알고리즘이 <strong>포트폴리오 구성·리밸런싱을 자동 수행</strong>하는<br>
+                                모바일 투자일임 서비스
                             </p>
-                            <div class="summary-label" style="margin-top: 40px; margin-bottom: 16px;">
-                                업무 및 비중
-                            </div>
                             <div class="work-table" style="margin-top: 32px; max-width: 90%;">
                                 <div class="work-row">
-                                    <div class="work-label">앱 기획 및 고도화</div>
+                                    <div class="work-label">알고리즘 설계</div>
                                     <div class="work-progress-bar">
-                                        <div class="work-progress-fill" style="width: 80%; background: rgba(164, 198, 57, 0.539); border-right: 1px solid rgba(164, 198, 57, 0.6); box-shadow: 0 2px 8px rgba(164, 198, 57, 0.2), 0 4px 12px rgba(164, 198, 57, 0.1);"></div>
+                                        <div class="work-progress-fill" style="width: 100%; background: rgba(164, 198, 57, 0.539); border-right: 1px solid rgba(164, 198, 57, 0.6); box-shadow: 0 2px 8px rgba(164, 198, 57, 0.2), 0 4px 12px rgba(164, 198, 57, 0.1);"></div>
                                     </div>
                                 </div>
                                 <div class="work-row">
-                                    <div class="work-label">B2B 커뮤니케이션</div>
+                                    <div class="work-label">B2B 파트너십</div>
                                     <div class="work-progress-bar">
-                                        <div class="work-progress-fill" style="width: 70%; background: rgba(164, 198, 57, 0.539); border-right: 1px solid rgba(164, 198, 57, 0.6); box-shadow: 0 2px 8px rgba(164, 198, 57, 0.2), 0 4px 12px rgba(164, 198, 57, 0.1);"></div>
+                                        <div class="work-progress-fill" style="width: 100%; background: rgba(164, 198, 57, 0.539); border-right: 1px solid rgba(164, 198, 57, 0.6); box-shadow: 0 2px 8px rgba(164, 198, 57, 0.2), 0 4px 12px rgba(164, 198, 57, 0.1);"></div>
                                     </div>
                                 </div>
                                 <div class="work-row">
                                     <div class="work-label">법률 리스크 검토</div>
                                     <div class="work-progress-bar">
-                                        <div class="work-progress-fill" style="width: 50%; background: rgba(164, 198, 57, 0.539); border-right: 1px solid rgba(164, 198, 57, 0.6); box-shadow: 0 2px 8px rgba(164, 198, 57, 0.2), 0 4px 12px rgba(164, 198, 57, 0.1);"></div>
+                                        <div class="work-progress-fill" style="width: 80%; background: rgba(164, 198, 57, 0.539); border-right: 1px solid rgba(164, 198, 57, 0.6); box-shadow: 0 2px 8px rgba(164, 198, 57, 0.2), 0 4px 12px rgba(164, 198, 57, 0.1);"></div>
                                     </div>
                                 </div>
                                 <div class="work-row">
                                     <div class="work-label">투자 성과 모니터링</div>
                                     <div class="work-progress-bar">
-                                        <div class="work-progress-fill" style="width: 80%; background: rgba(164, 198, 57, 0.539); border-right: 1px solid rgba(164, 198, 57, 0.6); box-shadow: 0 2px 8px rgba(164, 198, 57, 0.2), 0 4px 12px rgba(164, 198, 57, 0.1);"></div>
+                                        <div class="work-progress-fill" style="width: 90%; background: rgba(164, 198, 57, 0.539); border-right: 1px solid rgba(164, 198, 57, 0.6); box-shadow: 0 2px 8px rgba(164, 198, 57, 0.2), 0 4px 12px rgba(164, 198, 57, 0.1);"></div>
                                     </div>
                                 </div>
                             </div>
@@ -799,8 +739,8 @@
                     <div class="analysis-grid">
                         <div class="card card-overview">
                             <div class="card-header">
-                                <div class="card-icon workflow-icon-info"><i class="fas fa-clipboard-list"></i></div>
-                                <h3 class="card-title">프로젝트 개요</h3>
+                                <div class="card-icon"><i class="fas fa-clipboard-list"></i></div>
+                                <h3 class="card-title">프로젝트 개요 (Overview)</h3>
                             </div>
                             <div class="card-content">
                                 <ul class="bullet-list">
@@ -808,8 +748,8 @@
                                     <li>
                                         <strong>주요 역할:</strong>
                                         <div class="mt-1 pl-1 text-sm text-gray-500">
-                                            앱 기능 정의 · 앱 기획 및 고도화 · 법률 리스크 검토<br/>
-                                            B2B 커뮤니케이션 · 투자 성과 모니터링
+                                            앱 기능 정의 · 알고리즘 설계 · 법률 리스크 검토<br/>
+                                            B2B 파트너십 · 투자 성과 모니터링
                                         </div>
                                     </li>
                                     <li class="mt-2">
@@ -820,8 +760,8 @@
                         </div>
                         <div class="card card-goal">
                             <div class="card-header">
-                                <div class="card-icon workflow-icon-success"><i class="fas fa-bullseye"></i></div>
-                                <h3 class="card-title">기획 목표</h3>
+                                <div class="card-icon"><i class="fas fa-bullseye"></i></div>
+                                <h3 class="card-title">기획 목표 (Service Goal)</h3>
                             </div>
                             <div class="card-content">
                                 <ul class="bullet-list">
@@ -839,8 +779,8 @@
                         </div>
                         <div class="card card-tech">
                             <div class="card-header">
-                                <div class="card-icon workflow-icon-info"><i class="fas fa-robot"></i></div>
-                                <h3 class="card-title">기술 전략</h3>
+                                <div class="card-icon"><i class="fas fa-robot"></i></div>
+                                <h3 class="card-title">기술 전략 (Quant Engine)</h3>
                             </div>
                             <div class="card-content">
                                 <ul class="bullet-list">
@@ -858,8 +798,8 @@
                         </div>
                         <div class="card card-value">
                             <div class="card-header">
-                                <div class="card-icon workflow-icon-success"><i class="fas fa-star"></i></div>
-                                <h3 class="card-title">핵심 가치 제안</h3>
+                                <div class="card-icon"><i class="fas fa-star"></i></div>
+                                <h3 class="card-title">핵심 가치 제안 (Value Prop)</h3>
                             </div>
                             <div class="card-content">
                                 <ul class="bullet-list">
@@ -909,8 +849,8 @@
                     <div class="analysis-grid">
                         <div class="card card-legal">
                             <div class="card-header">
-                                <div class="card-icon workflow-icon-warning"><i class="fas fa-gavel"></i></div>
-                                <h3 class="card-title">주요 법률 리스크</h3>
+                                <div class="card-icon"><i class="fas fa-gavel"></i></div>
+                                <h3 class="card-title">주요 법률 리스크 (Legal)</h3>
                             </div>
                             <div class="card-content">
                                 <ul class="bullet-list">
@@ -924,8 +864,8 @@
                         </div>
                         <div class="card card-competition">
                             <div class="card-header">
-                                <div class="card-icon workflow-icon-danger"><i class="fas fa-users-slash"></i></div>
-                                <h3 class="card-title">경쟁 환경 리스크</h3>
+                                <div class="card-icon"><i class="fas fa-users-slash"></i></div>
+                                <h3 class="card-title">경쟁 환경 리스크 (Competition)</h3>
                             </div>
                             <div class="card-content">
                                 <ul class="bullet-list">
@@ -939,8 +879,8 @@
                         </div>
                         <div class="card card-opportunity">
                             <div class="card-header">
-                                <div class="card-icon workflow-icon-success"><i class="fas fa-file-signature"></i></div>
-                                <h3 class="card-title">제도 변화 기회</h3>
+                                <div class="card-icon"><i class="fas fa-file-signature"></i></div>
+                                <h3 class="card-title">제도 변화 기회 (Opportunity)</h3>
                             </div>
                             <div class="card-content">
                                 <ul class="bullet-list">
@@ -956,8 +896,8 @@
                         </div>
                         <div class="card card-strategy">
                             <div class="card-header">
-                                <div class="card-icon workflow-icon-success"><i class="fas fa-chess-knight"></i></div>
-                                <h3 class="card-title">전략적 판단</h3>
+                                <div class="card-icon"><i class="fas fa-chess-knight"></i></div>
+                                <h3 class="card-title">전략적 판단 (Strategic Pivot)</h3>
                             </div>
                             <div class="card-content">
                                 <ul class="bullet-list">
@@ -1024,7 +964,8 @@
                         </div>
                         <div class="pillars-grid">
                             <div class="pillar-card green">
-                                <div class="pillar-icon workflow-icon-info"><i class="fas fa-code"></i>
+                                <div class="pillar-icon">
+                                    <i class="fas fa-code"></i>
                                 </div>
                                 <h3 class="pillar-title">자체 알고리즘 고도화</h3>
                                 <ul class="check-list pillar-content">
@@ -1034,7 +975,8 @@
                                 </ul>
                             </div>
                             <div class="pillar-card blue">
-                                <div class="pillar-icon workflow-icon-success"><i class="fas fa-handshake"></i>
+                                <div class="pillar-icon">
+                                    <i class="fas fa-handshake"></i>
                                 </div>
                                 <h3 class="pillar-title">라이선스 파트너 확보</h3>
                                 <ul class="check-list pillar-content">
@@ -1044,7 +986,8 @@
                                 </ul>
                             </div>
                             <div class="pillar-card slate">
-                                <div class="pillar-icon workflow-icon-success"><i class="fas fa-file-shield"></i>
+                                <div class="pillar-icon">
+                                    <i class="fas fa-file-shield"></i>
                                 </div>
                                 <h3 class="pillar-title">컴플라이언스 완벽 대응</h3>
                                 <ul class="check-list pillar-content">
@@ -1118,7 +1061,7 @@
                         <div class="result-card">
                             <div class="card-header">
                                 <div class="card-icon icon-growth"><i class="fas fa-sack-dollar"></i></div>
-                                <h3 class="card-title">핵심 성과</h3>
+                                <h3 class="card-title">핵심 성과 (Key Results)</h3>
                             </div>
                             <div class="stat-row">
                                 <span class="stat-value">80억</span>
@@ -1169,7 +1112,7 @@
                         <div class="result-card">
                             <div class="card-header">
                                 <div class="card-icon icon-impact"><i class="fas fa-flag-checkered"></i></div>
-                                <h3 class="card-title">사업 임팩트</h3>
+                                <h3 class="card-title">사업 임팩트 (Business Impact)</h3>
                             </div>
                             <div class="impact-flow">
                                 <div class="impact-step">

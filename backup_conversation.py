@@ -55,54 +55,37 @@ def get_git_status():
         return "Git 정보를 가져올 수 없습니다."
 
 def get_recent_files():
-    """최근 수정된 파일 목록 및 내용 가져오기"""
+    """최근 수정된 파일 목록 가져오기"""
     project_root = Path(__file__).parent
     recent_files = []
-    file_contents = {}
     
     for file_path in project_root.rglob('*'):
         if file_path.is_file() and not any(part.startswith('.') for part in file_path.parts):
-            # 백업 디렉토리와 큰 바이너리 파일 제외
-            if 'backups' in str(file_path) or file_path.suffix.lower() in ['.jpg', '.jpeg', '.png', '.gif', '.pdf', '.zip']:
-                continue
             try:
                 mtime = file_path.stat().st_mtime
-                rel_path = str(file_path.relative_to(project_root))
                 recent_files.append({
-                    'path': rel_path,
+                    'path': str(file_path.relative_to(project_root)),
                     'modified': datetime.fromtimestamp(mtime).isoformat(),
                     'size': file_path.stat().st_size
                 })
-                
-                # 파일 내용 저장 (텍스트 파일만, 최대 500KB)
-                if file_path.stat().st_size < 500 * 1024:  # 500KB 미만
-                    try:
-                        with open(file_path, 'r', encoding='utf-8') as f:
-                            content = f.read()
-                            file_contents[rel_path] = content
-                    except:
-                        pass  # 바이너리 파일이면 건너뛰기
             except:
                 continue
     
     # 수정 시간 기준으로 정렬
     recent_files.sort(key=lambda x: x['modified'], reverse=True)
-    return recent_files[:20], file_contents  # 최근 20개 파일만
+    return recent_files[:20]  # 최근 20개 파일만
 
 def save_backup(conversation_data=None, reason="auto"):
     """백업 파일 저장"""
     backup_dir = ensure_backup_dir()
     timestamp = get_local_timestamp()
     
-    recent_files, file_contents = get_recent_files()
-    
     backup_data = {
         'timestamp': timestamp,
         'local_time': datetime.now().isoformat(),
         'reason': reason,
         'git_status': get_git_status(),
-        'recent_files': recent_files,
-        'file_contents': file_contents,  # 파일 내용 추가
+        'recent_files': get_recent_files(),
         'conversation_data': conversation_data or {},
         'project_root': str(Path(__file__).parent)
     }
@@ -119,18 +102,15 @@ def save_backup(conversation_data=None, reason="auto"):
         f.write(f"**로컬 시간**: {datetime.now().strftime('%Y년 %m월 %d일 %H시 %M분 %S초')}\n\n")
         f.write(f"**백업 사유**: {reason}\n\n")
         f.write(f"## Git 상태\n\n```\n{backup_data['git_status']}\n```\n\n")
-        f.write(f"## 최근 수정된 파일 ({len(recent_files)}개)\n\n")
-        for file_info in recent_files:
-            f.write(f"- `{file_info['path']}` (수정: {file_info['modified']}, 크기: {file_info['size']} bytes)\n")
-        f.write(f"\n## 백업된 파일 내용 ({len(file_contents)}개 파일)\n\n")
-        f.write(f"백업 JSON 파일에 {len(file_contents)}개 파일의 내용이 저장되었습니다.\n\n")
+        f.write(f"## 최근 수정된 파일\n\n")
+        for file_info in backup_data['recent_files']:
+            f.write(f"- `{file_info['path']}` (수정: {file_info['modified']})\n")
         f.write(f"\n## 대화 내용\n\n")
         if conversation_data:
             f.write(f"```json\n{json.dumps(conversation_data, ensure_ascii=False, indent=2)}\n```\n")
     
     print(f"✅ 백업 완료: {backup_file}")
     print(f"✅ 마크다운 백업: {md_file}")
-    print(f"📦 {len(file_contents)}개 파일 내용 저장됨")
     
     return backup_file, md_file
 

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>테스트 메뉴 - 100만원을 9억으로 만든 기획자</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Global Navigation -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <div class="nav-logo">Hybrid Planner. Kwon</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li>
+                    <a href="profile.html" class="nav-link">Profile</a>
+                </li>
+                <li class="nav-item-has-sub">
+                    <a href="javascript:void(0)" class="nav-link active">Portfolio</a>
+                    <div class="nav-submenu">
+                        <a href="strategy.html" class="nav-sublink">전략 기획</a>
+                        <a href="service.html" class="nav-sublink">서비스 기획</a>
+                        <a href="next.html" class="nav-sublink">진행 중 프로젝트</a>
+                        <a href="personal.html" class="nav-sublink">개인 커스텀 Tool</a>
+                        <a href="test.html" class="nav-sublink active">테스트 메뉴</a>
+                    </div>
+                </li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="section test-section">
+        <div class="test-container">
+            <!-- Sidebar -->
+            <aside class="test-sidebar">
+                <ul class="test-sidebar-menu">
+                    <li><a href="#" class="test-sidebar-link active" data-filter="all">전체 보기</a></li>
+                    <li><a href="#" class="test-sidebar-link" data-filter="strategy">전략 기획</a></li>
+                    <li><a href="#" class="test-sidebar-link" data-filter="service">서비스 기획</a></li>
+                    <li><a href="#" class="test-sidebar-link" data-filter="next">Next Step</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="test-main-content">
+                <!-- Grid View -->
+                <div class="test-thumbnail-grid" id="thumbnailGrid">
+                    <div class="test-thumbnail-box" data-box="1">
+                        <!-- 썸네일 이미지가 들어갈 영역 -->
+                    </div>
+                    <div class="test-thumbnail-box service-box" data-box="2">
+                        <div class="service-content">
+                            <div class="slide-container">
+                                <!-- Decorative Background Elements -->
+                                <div class="deco-circle-large"></div>
+                                <div class="deco-circle-small"></div>
+                                <!-- Accent Bar -->
+                                <div class="accent-bar"></div>
+                                <!-- Main Content -->
+                                <div class="content-wrapper">
+                                    <!-- Text Content Area -->
+                                    <div class="text-content">
+                                        <div class="tag-pill">
+                                            Fintech Project Portfolio
+                                        </div>
+                                        <h1 class="main-title">
+                                            모바일 로보어드바이저
+                                            <span class="highlight">KIWI 서비스 기획</span>
+                                        </h1>
+                                        <p class="sub-title">
+                                            시간과 장소에 구애받지 않는<br>
+                                            모바일 자산관리 서비스
+                                        </p>
+                                        <div class="summary-box">
+                                            <div class="summary-label">
+                                                <i class="fas fa-bullseye mr-2" style="color: #A4C639;"></i> Core Value Proposition
+                                            </div>
+                                            <p class="summary-text">
+                                                손 안의 <strong>'원클릭' 자동투자</strong> 경험 제공
+                                            </p>
+                                            <p class="summary-text" style="font-size: 16px; margin-top: 16px; color: #64748b;">
+                                                전문 지식 없이도 알고리즘이 <strong>포트폴리오 구성·리밸런싱을 자동 수행</strong>하는<br>
+                                                모바일 투자일임 서비스
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- Image Content Area -->
+                                </div>
+                                <!-- Footer -->
+                                <div class="footer"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="test-thumbnail-box" data-box="3">
+                        <!-- 썸네일 이미지가 들어갈 영역 -->
+                    </div>
+                    <div class="test-thumbnail-box" data-box="4">
+                        <!-- 썸네일 이미지가 들어갈 영역 -->
+                    </div>
+                </div>
+
+                <!-- Expanded View -->
+                <div class="test-expanded-view hidden" id="expandedView">
+                    <div class="test-expanded-box" id="expandedBox">
+                        <!-- 확대된 박스 -->
+                    </div>
+                    <div class="test-slide-list" id="slideList">
+                        <!-- 슬라이드 리스트가 들어갈 영역 -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </section>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
+
