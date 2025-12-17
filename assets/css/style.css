@@ -2739,6 +2739,227 @@ body {
     display: none;
 }
 
+/* Work Table 스타일 (썸네일 박스용) */
+.test-thumbnail-box.service-box .work-table {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 8px;
+}
+
+.test-thumbnail-box.service-box .work-row {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 6px;
+    align-items: center;
+}
+
+.test-thumbnail-box.service-box .work-label {
+    font-size: 5px;
+    color: #111827;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.test-thumbnail-box.service-box .work-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+}
+
+.test-thumbnail-box.service-box .work-progress-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+/* Service Box 2.md 스타일 (data-box="3") */
+.test-thumbnail-box.service-box .sidebar {
+    width: 80px;
+    background-color: #A4C639;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 8px 6px;
+    flex-shrink: 0;
+    border-right: 1px solid #e5e7eb;
+}
+
+.test-thumbnail-box.service-box .chapter-label {
+    font-size: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 4px;
+    font-weight: 700;
+}
+
+.test-thumbnail-box.service-box .chapter-title {
+    font-size: 8px;
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+.test-thumbnail-box.service-box .nav-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.test-thumbnail-box.service-box .nav-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+    transition: opacity 0.3s, color 0.3s;
+    color: #ffffff;
+    opacity: 0.7;
+    font-size: 4px;
+}
+
+.test-thumbnail-box.service-box .nav-item.active {
+    opacity: 1;
+    color: #000000;
+    font-weight: 600;
+}
+
+.test-thumbnail-box.service-box .nav-number {
+    font-size: 4px;
+    font-weight: 700;
+    margin-right: 3px;
+    width: 8px;
+    color: inherit;
+}
+
+.test-thumbnail-box.service-box .nav-text {
+    font-size: 4px;
+    font-weight: 500;
+    color: inherit;
+    line-height: 1.2;
+}
+
+.test-thumbnail-box.service-box .main-content {
+    flex: 1;
+    padding: 8px 10px;
+    background-color: #f9fafb;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.test-thumbnail-box.service-box .page-header {
+    margin-bottom: 6px;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 4px;
+}
+
+.test-thumbnail-box.service-box .page-title {
+    font-size: 7px;
+    font-weight: 800;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    line-height: 1.2;
+}
+
+.test-thumbnail-box.service-box .page-title i {
+    color: #A4C639;
+    margin-right: 4px;
+    font-size: 7px;
+}
+
+.test-thumbnail-box.service-box .analysis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 4px;
+    flex: 1;
+}
+
+.test-thumbnail-box.service-box .card {
+    background: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
+    padding: 6px;
+    border-left: 2px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.test-thumbnail-box.service-box .card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.test-thumbnail-box.service-box .card-icon {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 4px;
+    font-size: 6px;
+    color: #111827;
+    flex-shrink: 0;
+}
+
+.test-thumbnail-box.service-box .card-title {
+    font-size: 5px;
+    font-weight: 800;
+    color: #1f2937;
+    line-height: 1.2;
+}
+
+.test-thumbnail-box.service-box .card-content {
+    color: #4b5563;
+    font-size: 4px;
+    line-height: 1.3;
+    flex: 1;
+    overflow: hidden;
+}
+
+.test-thumbnail-box.service-box .bullet-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.test-thumbnail-box.service-box .bullet-list li {
+    position: relative;
+    padding-left: 6px;
+    margin-bottom: 2px;
+    line-height: 1.2;
+}
+
+.test-thumbnail-box.service-box .bullet-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #9ca3af;
+    font-weight: bold;
+    font-size: 4px;
+}
+
+.test-thumbnail-box.service-box .highlight-text {
+    font-weight: 700;
+    color: #111827;
+    background-color: #f3f4f6;
+    padding: 0 1px;
+    border-radius: 1px;
+}
+
+.test-thumbnail-box.service-box .brand-highlight {
+    color: #65801c;
+    font-weight: 700;
+}
+
 .test-thumbnail-box.service-box .deco-circle-large {
     position: absolute;
     right: -40px;
@@ -2761,6 +2982,159 @@ body {
     background-color: #ecfccb;
     z-index: 0;
     opacity: 0.6;
+}
+
+/* Strategy2 Box Content Styling */
+.test-thumbnail-box.strategy2-box {
+    overflow: visible;
+}
+
+.test-thumbnail-box.strategy2-box .strategy2-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.test-thumbnail-box.strategy2-box .slide-container {
+    width: 100%;
+    height: 100%;
+    background-color: #051c2c;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Noto Sans KR', sans-serif;
+    justify-content: center;
+    align-items: center;
+}
+
+.test-thumbnail-box.strategy2-box .grid-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.test-thumbnail-box.strategy2-box .geo-shape {
+    position: absolute;
+    z-index: 0;
+    opacity: 0.1;
+    border: 2px solid #94a3b8;
+}
+
+.test-thumbnail-box.strategy2-box .shape-circle-1 {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    top: -40px;
+    left: -40px;
+    border-color: #60a5fa;
+}
+
+.test-thumbnail-box.strategy2-box .shape-square-1 {
+    width: 100px;
+    height: 100px;
+    bottom: 20px;
+    right: 20px;
+    border: 2px solid #94a3b8;
+    transform: rotate(15deg);
+}
+
+.test-thumbnail-box.strategy2-box .line-deco {
+    position: absolute;
+    background-color: #475569;
+    z-index: 0;
+    opacity: 0.3;
+}
+
+.test-thumbnail-box.strategy2-box .line-vertical {
+    width: 1px;
+    height: 100%;
+    left: 20%;
+    top: 0;
+}
+
+.test-thumbnail-box.strategy2-box .line-horizontal {
+    width: 100%;
+    height: 1px;
+    top: 85%;
+    left: 0;
+}
+
+.test-thumbnail-box.strategy2-box .content-wrapper {
+    z-index: 10;
+    text-align: center;
+    max-width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.test-thumbnail-box.strategy2-box .portfolio-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: #94a3b8;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    position: relative;
+}
+
+.test-thumbnail-box.strategy2-box .portfolio-label::after {
+    content: '';
+    display: block;
+    width: 25px;
+    height: 1.5px;
+    background-color: #60a5fa;
+    margin: 6px auto 0;
+}
+
+.test-thumbnail-box.strategy2-box .main-headline {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #f8fafc;
+    word-break: keep-all;
+    margin: 0;
+}
+
+.test-thumbnail-box.strategy2-box .main-headline .highlight {
+    color: #60a5fa;
+}
+
+.test-thumbnail-box.strategy2-box .main-headline p {
+    margin: 4px 0;
+}
+
+.test-thumbnail-box.strategy2-box .project-period {
+    margin-top: 12px;
+    font-size: 11px;
+    color: #cbd5e1;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 3px;
+    background-color: rgba(5, 28, 44, 0.5);
+}
+
+.test-thumbnail-box.strategy2-box .period-icon {
+    font-size: 10px;
+    color: #60a5fa;
 }
 
 /* Expanded view에서 서비스 박스 스타일 */
