@@ -79,6 +79,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const expandedView = document.getElementById("expandedView");
     const expandedBox = document.getElementById("expandedBox");
     const slideList = document.getElementById("slideList");
+    const prevSlideBtn = document.getElementById("prevSlideBtn");
+    const nextSlideBtn = document.getElementById("nextSlideBtn");
+    
+    // 현재 슬라이드 정보 추적
+    let currentBoxNumber = null;
+    let currentSlideNumber = 1;
+    let maxSlideCount = 0;
 
     // 확대 뷰 닫기 함수
     function closeExpandedView() {
@@ -106,6 +113,40 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // 확대 뷰 표시
         expandedView.classList.remove("hidden");
+        
+        // 화살표 버튼 위치 조정 (test-expanded-box의 중앙에 맞춤)
+        const updateButtonPosition = () => {
+            if (prevSlideBtn && nextSlideBtn && expandedBox) {
+                const expandedBoxRect = expandedBox.getBoundingClientRect();
+                const expandedViewRect = expandedView.getBoundingClientRect();
+                const boxTop = expandedBoxRect.top - expandedViewRect.top;
+                const boxLeft = expandedBoxRect.left - expandedViewRect.left;
+                const boxCenter = boxTop + expandedBoxRect.height / 2;
+                
+                // 세로 위치 (중앙)
+                prevSlideBtn.style.top = `${boxCenter}px`;
+                nextSlideBtn.style.top = `${boxCenter}px`;
+                prevSlideBtn.style.transform = 'translateY(-50%)';
+                nextSlideBtn.style.transform = 'translateY(-50%)';
+                
+                // 가로 위치
+                const boxRight = boxLeft + expandedBoxRect.width;
+                const expandedViewWidth = expandedViewRect.width;
+                const currentRightOffset = expandedViewWidth - boxRight;
+                
+                // 왼쪽 버튼: 박스 왼쪽에서 16px 왼쪽에 위치
+                prevSlideBtn.style.left = `${boxLeft - 16}px`;
+                
+                // 오른쪽 버튼: 박스 오른쪽 경계선에서 현재 오프셋만큼 더 오른쪽으로 이동
+                // right 값이 작을수록 더 오른쪽에 위치하므로, 현재 오프셋만큼 빼서 더 오른쪽으로 이동
+                nextSlideBtn.style.right = `${-currentRightOffset}px`; // 현재 오프셋만큼 더 오른쪽으로 이동
+            }
+        };
+        
+        // 즉시 실행 및 약간의 지연 후 재실행 (레이아웃 완료 대기)
+        updateButtonPosition();
+        setTimeout(updateButtonPosition, 100);
+        setTimeout(updateButtonPosition, 300);
 
         // 메인박스에 내용 로드
         // 1번 박스인 경우 전략1-1 내용을 메인박스에 표시
@@ -140,10 +181,17 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
+        // 현재 박스 번호와 슬라이드 번호 저장
+        currentBoxNumber = boxNumber;
+        currentSlideNumber = 1;
+        maxSlideCount = boxNumber === "1" ? 8 : 5; // 전략1은 8개, 나머지는 5개
+        
+        // 화살표 버튼 상태 업데이트
+        updateNavButtons();
+        
         // 슬라이드 리스트 생성 - 박스 번호에 따라 개수 다름
         slideList.innerHTML = "";
-        const slideCount = boxNumber === "1" ? 8 : 5; // 전략1은 8개, 나머지는 5개
-        for (let i = 1; i <= slideCount; i++) {
+        for (let i = 1; i <= maxSlideCount; i++) {
             const slideItem = document.createElement("div");
             slideItem.className = "test-slide-item service-slide-item";
             // 네이밍: 1-1, 1-2, ... 형식
@@ -168,16 +216,19 @@ document.addEventListener("DOMContentLoaded", () => {
             slideItem.addEventListener("click", (e) => {
                 e.stopPropagation();
                 
-                const slideNum = slideItem.getAttribute("data-slide-number");
+                const slideNum = parseInt(slideItem.getAttribute("data-slide-number"));
+                currentSlideNumber = slideNum;
+                updateNavButtons();
+                
                 if (boxNumber === "1") {
                     // 전략1 박스인 경우 전략1 파일 내용 로드
-                    loadStrategy1ContentToMainBox(expandedBox, parseInt(slideNum));
+                    loadStrategy1ContentToMainBox(expandedBox, slideNum);
                 } else if (boxNumber === "2") {
                     // 2번 박스인 경우 서비스 파일 내용 로드
-                    loadService1ContentToMainBox(expandedBox, parseInt(slideNum));
+                    loadService1ContentToMainBox(expandedBox, slideNum);
                 } else if (boxNumber === "5") {
                     // 전략2 박스인 경우 전략2 파일 내용 로드
-                    loadStrategy2ContentToMainBox(expandedBox, parseInt(slideNum));
+                    loadStrategy2ContentToMainBox(expandedBox, slideNum);
                 } else {
                     // 나머지 박스는 추후 동일한 방식으로 구현 예정
                     console.log(`슬라이드 아이템 클릭: ${slideName}`);
@@ -186,6 +237,70 @@ document.addEventListener("DOMContentLoaded", () => {
             
             slideList.appendChild(slideItem);
         }
+    }
+    
+    // 화살표 버튼 상태 업데이트 함수
+    function updateNavButtons() {
+        if (!prevSlideBtn || !nextSlideBtn) return;
+        
+        // 첫 번째 슬라이드면 왼쪽 버튼 비활성화
+        prevSlideBtn.disabled = currentSlideNumber <= 1;
+        
+        // 마지막 슬라이드면 오른쪽 버튼 비활성화
+        nextSlideBtn.disabled = currentSlideNumber >= maxSlideCount;
+    }
+    
+    // 다음 슬라이드로 이동
+    function goToNextSlide() {
+        if (currentSlideNumber >= maxSlideCount || !currentBoxNumber) return;
+        
+        currentSlideNumber++;
+        updateNavButtons();
+        
+        if (currentBoxNumber === "1") {
+            loadStrategy1ContentToMainBox(expandedBox, currentSlideNumber);
+        } else if (currentBoxNumber === "2") {
+            loadService1ContentToMainBox(expandedBox, currentSlideNumber);
+        } else if (currentBoxNumber === "5") {
+            loadStrategy2ContentToMainBox(expandedBox, currentSlideNumber);
+        }
+        
+        // 스크롤 이동 제거 (사용자가 보고 있는 화면에서 스크롤이 이동하지 않도록)
+    }
+    
+    // 이전 슬라이드로 이동
+    function goToPrevSlide() {
+        if (currentSlideNumber <= 1 || !currentBoxNumber) return;
+        
+        currentSlideNumber--;
+        updateNavButtons();
+        
+        if (currentBoxNumber === "1") {
+            loadStrategy1ContentToMainBox(expandedBox, currentSlideNumber);
+        } else if (currentBoxNumber === "2") {
+            loadService1ContentToMainBox(expandedBox, currentSlideNumber);
+        } else if (currentBoxNumber === "5") {
+            loadStrategy2ContentToMainBox(expandedBox, currentSlideNumber);
+        }
+        
+        // 스크롤 이동 제거 (사용자가 보고 있는 화면에서 스크롤이 이동하지 않도록)
+    }
+    
+    // 화살표 버튼 클릭 이벤트 추가
+    if (prevSlideBtn) {
+        prevSlideBtn.addEventListener("click", (e) => {
+            e.preventDefault(); // 기본 동작 방지 (스크롤 이동 방지)
+            e.stopPropagation();
+            goToPrevSlide();
+        });
+    }
+    
+    if (nextSlideBtn) {
+        nextSlideBtn.addEventListener("click", (e) => {
+            e.preventDefault(); // 기본 동작 방지 (스크롤 이동 방지)
+            e.stopPropagation();
+            goToNextSlide();
+        });
     }
 
     // 서비스1 파일 내용을 객체로 저장
@@ -5164,7 +5279,7 @@ document.addEventListener("DOMContentLoaded", () => {
             border-radius: 4px;
             text-transform: uppercase;
             width: fit-content;
-            border-left: 4px solid #1f2937;
+            border-left: none;
         }
         .title-section {
             margin-bottom: 50px;
@@ -5193,7 +5308,7 @@ document.addEventListener("DOMContentLoaded", () => {
             line-height: 1.5;
             margin-bottom: 0;
             padding-left: 20px;
-            border-left: 1px solid #d1d5db;
+            border-left: none;
             flex: 1;
         }
         .info-section {
@@ -5482,7 +5597,7 @@ document.addEventListener("DOMContentLoaded", () => {
             border-radius: 8px;
             padding: 32px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            border-left: 4px solid transparent;
+            border-left: none;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -5490,17 +5605,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         .card-bg {
             flex: 1;
-            border-left-color: #3b82f6;
+            border-left: none;
         }
         
         .card-crisis {
             flex: 1;
-            border-left-color: #ef4444;
+            border-left: none;
         }
 
         .card-diagram {
             height: 180px;
-            border-left-color: #f59e0b;
+            border-left: none;
             justify-content: center;
             flex-shrink: 0;
         }
@@ -5652,11 +5767,11 @@ document.addEventListener("DOMContentLoaded", () => {
 </header>
 <div class="content-layout">
 <div class="top-section">
-<!-- 1. 배경 (Background) -->
+<!-- 1. 배경 -->
 <div class="card card-bg">
 <div class="card-header">
 <div class="card-icon icon-bg"><i class="fas fa-history"></i></div>
-<h3 class="card-title">배경 (Background)</h3>
+<h3 class="card-title">배경</h3>
 </div>
 <div class="card-content">
 <ul class="bullet-list">
@@ -5855,7 +5970,7 @@ document.addEventListener("DOMContentLoaded", () => {
             border-radius: 8px;
             padding: 24px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border-left: 4px solid #1f2937;
+            border-left: none;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -5976,14 +6091,14 @@ document.addEventListener("DOMContentLoaded", () => {
             bottom: 24px;
             left: 0;
             width: 4px;
-            background-color: #d1d5db;
+            background-color: transparent;
         }
         .news-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.08);
         }
-        .news-card.alert::before { background-color: #ef4444; }
-        .news-card.info::before { background-color: #3b82f6; }
+        .news-card.alert::before { background-color: transparent; }
+        .news-card.info::before { background-color: transparent; }
 
         .news-title {
             font-size: 16px;
@@ -6067,7 +6182,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="analysis-box">
 <div class="section-title">
 <i class="fas fa-brain"></i>
-<span>핵심 인식 (Key Insight)</span>
+<span>핵심 인식</span>
 </div>
 <ul class="insight-list">
 <li>단순한 질병 이슈가 아닌 <strong>글로벌 금융 시스템 위기</strong>로 인식</li>
@@ -6085,7 +6200,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="chart-box">
 <div class="section-title">
 <i class="fas fa-chart-area"></i>
-<span>참고 지표: 시장 변동성 지수 (VIX)</span>
+<span>참고 지표: 공포 지수 (VIX)</span>
 </div>
 <div class="chart-image-container">
 <img alt="VIX Index Chart showing spike in 2020" class="chart-image" src="assets/images/vix지수.jpg"/>
@@ -6249,7 +6364,7 @@ document.addEventListener("DOMContentLoaded", () => {
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            border-left: 4px solid transparent;
+            border-left: none;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -6257,20 +6372,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         .card-org {
             flex: 1;
-            border-left-color: #64748b;
+            border-left: none;
         }
         
         .card-role {
             flex: 1.2;
-            border-left-color: #3b82f6;
-            background-color: #f0f9ff;
-            border: 1px solid #e0f2fe;
-            border-left-width: 4px;
+            border-left: none;
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
         }
 
         .card-diagram {
             height: 160px;
-            border-left-color: #10b981;
+            border-left: none;
             justify-content: center;
             flex-shrink: 0;
         }
@@ -6467,7 +6581,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="card card-org">
 <div class="card-header">
 <div class="card-icon icon-org"><i class="fas fa-sitemap"></i></div>
-<h3 class="card-title">기존 조직 구성 (R&amp;R)</h3>
+<h3 class="card-title">R&amp;R</h3>
 </div>
 <div class="card-content">
 <div class="role-group">
@@ -6491,7 +6605,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="card card-role">
 <div class="card-header">
 <div class="card-icon icon-role"><i class="fas fa-chess-knight"></i></div>
-<h3 class="card-title">나의 역할 (Strategic Planner)</h3>
+<h3 class="card-title">나의 역할</h3>
 </div>
 <div class="card-content">
 <div class="role-group">
@@ -6923,7 +7037,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <i class="fas fa-code-branch text-blue-600 mr-3"></i>
                 생존과 성장을 위한 전략적 옵션 비교 및 결단
             </h2>
-<span class="page-subtitle">Strategic Options &amp; Decision Making</span>
+<span class="page-subtitle"></span>
 </header>
 <div class="framework-container">
 <!-- 1. Top Strategy Box -->
@@ -7187,7 +7301,7 @@ document.addEventListener("DOMContentLoaded", () => {
             background-color: #f8fafc;
             padding: 12px;
             border-radius: 8px;
-            border-left: 3px solid #94a3b8;
+            border-left: none;
         }
         .data-label {
             font-size: 12px;
@@ -7289,11 +7403,11 @@ document.addEventListener("DOMContentLoaded", () => {
             top: 12px;
             bottom: 12px;
             width: 4px;
-            background-color: #cbd5e1;
+            background-color: transparent;
             border-radius: 0 4px 4px 0;
         }
         .news-card.highlight::before {
-            background-color: #2563eb;
+            background-color: transparent;
         }
         .news-title {
             font-size: 14px;
@@ -7498,7 +7612,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <i class="fas fa-magnifying-glass-chart text-blue-600 mr-3"></i>
 <p>객관적 자료를 기반으로 과감한 전략적 피보팅</p>
 </h2>
-<span class="page-subtitle">Analysis &amp; Decision Making</span>
+<span class="page-subtitle"></span>
 </header>
 <div class="content-body">
 <!-- 1. Top Section -->
@@ -7515,7 +7629,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 <div class="data-point">
 <span class="data-label">매출 구조 / 한계</span>
-<p class="data-value">단일 프로그램 판매<br/>평균 객단가 약 100만 원</p>
+<p class="data-value">단일 프로그램 판매 평균 객단가<br/>구독형 한달 30만 원</p>
 </div>
 </div>
 <div class="insight-box">
@@ -7868,7 +7982,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .quote-box {
             margin-top: auto;
             background-color: #f0fdf4;
-            border-left: 3px solid #16a34a;
+            border-left: none;
             padding: 8px;
             font-size: 11px;
             font-style: italic;
@@ -7944,36 +8058,61 @@ document.addEventListener("DOMContentLoaded", () => {
 <i class="fas fa-flag-checkered text-blue-600 mr-3"></i>
                 전략적 실행을 통한 투자 유치 및 성장 기반 확보
             </h2>
-<span class="page-subtitle">Execution, Collaboration &amp; Outcomes</span>
+<span class="page-subtitle"></span>
 </header>
 <div class="content-grid">
 <!-- 1. Quantitative Results -->
 <div class="result-card">
 <div class="card-header">
 <div class="card-icon icon-growth"><i class="fas fa-coins"></i></div>
-<h3 class="card-title">정량적 성과 (Quantitative)</h3>
+<h3 class="card-title">정량적 성과</h3>
 </div>
-<div class="stat-row">
-<span class="stat-value">17억</span>
-<span class="stat-unit">원</span>
-<div class="growth-badge">총 투자 유치</div>
-</div>
-<div class="sub-stat-grid">
-<div class="sub-stat-box">
-<span class="sub-stat-label">단계별 유치 금액</span>
-<span class="sub-stat-text text-blue-700">3억 / 9억 / 5억</span>
-</div>
-<div class="sub-stat-box">
-<span class="sub-stat-label">자본금 변화</span>
-<span class="sub-stat-text text-blue-700">100만 원 → 9억 원</span>
-</div>
+<div class="flex flex-col h-full">
+  <!-- Total Funding -->
+  <div class="flex items-end mb-4">
+    <span class="text-5xl font-extrabold text-blue-600">17억</span>
+    <span class="ml-2 mb-2 text-lg text-slate-500">원</span>
+    <span class="ml-auto text-xs font-bold bg-blue-100 text-blue-800 px-2 py-1 rounded">
+      총 투자금액
+    </span>
+  </div>
+  <!-- Graph Area -->
+  <div class="flex-1 grid grid-cols-2 gap-4">
+    <!-- Funding Bars -->
+    <div class="flex items-end justify-between px-3">
+      <div class="flex flex-col items-center">
+        <div class="w-6 h-10 bg-blue-300 rounded"></div>
+        <span class="mt-1 text-xs font-bold">3억</span>
+        <span class="text-[11px] text-slate-400">Seed</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-6 h-20 bg-blue-600 rounded"></div>
+        <span class="mt-1 text-xs font-bold">9억</span>
+        <span class="text-[11px] text-slate-400">A</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="w-6 h-14 bg-blue-400 rounded"></div>
+        <span class="mt-1 text-xs font-bold">5억</span>
+        <span class="text-[11px] text-slate-400">Bridge</span>
+      </div>
+    </div>
+    <!-- Capital Change -->
+    <div class="flex flex-col justify-center items-center bg-slate-50 rounded-lg border border-slate-200">
+      <span class="text-xs text-slate-500 mb-2">자본금 변화</span>
+      <div class="flex items-center gap-3">
+        <span class="text-xs font-bold text-slate-600">100만</span>
+        <div class="w-12 h-[2px] bg-slate-300"></div>
+        <span class="text-sm font-extrabold text-blue-700">9억</span>
+      </div>
+    </div>
+  </div>
 </div>
 </div>
 <!-- 2. Execution Design -->
 <div class="result-card">
 <div class="card-header">
 <div class="card-icon icon-design"><i class="fas fa-compass-drafting"></i></div>
-<h3 class="card-title">실행 설계 (Execution Design)</h3>
+<h3 class="card-title">실행 설계</h3>
 </div>
 <div class="design-list">
 <div class="design-item">
@@ -8031,7 +8170,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="result-card">
 <div class="card-header">
 <div class="card-icon icon-qualitative"><i class="fas fa-star"></i></div>
-<h3 class="card-title">정성적 성과 (Qualitative)</h3>
+<h3 class="card-title">정성적 성과</h3>
 </div>
 <div class="qual-grid">
 <div class="qual-item">
@@ -8187,7 +8326,7 @@ document.addEventListener("DOMContentLoaded", () => {
             border-radius: 12px;
             padding: 24px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            border-left: 5px solid transparent;
+            border-left: none;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -8195,20 +8334,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
         /* Difficulty Card */
         .card-difficulty {
-            border-left-color: #ef4444;
+            border-left: none;
         }
         .card-difficulty .card-icon {
-            background-color: #fee2e2;
-            color: #ef4444;
+            background-color: transparent;
+            color: #1e293b;
         }
 
         /* Learning Card */
         .card-learning {
-            border-left-color: #10b981;
+            border-left: none;
         }
         .card-learning .card-icon {
-            background-color: #d1fae5;
-            color: #10b981;
+            background-color: transparent;
+            color: #1e293b;
         }
 
         .card-header {
@@ -8358,7 +8497,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <i class="fas fa-quote-right text-blue-600 mr-3"></i>
                     위기를 넘어 성장의 자산으로
                 </h2>
-<span class="page-subtitle">Reflection &amp; Insight</span>
+<span class="page-subtitle"></span>
 </header>
 <div class="content-body">
 <!-- Top Row: Reflection Cards -->
@@ -8369,7 +8508,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="card-icon">
 <i class="fas fa-mountain"></i>
 </div>
-<h3 class="card-title">당시의 어려움 (Pain Points)</h3>
+<h3 class="card-title">당시의 어려움</h3>
 </div>
 <ul class="card-list">
 <li>
@@ -8386,7 +8525,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="card-icon">
 <i class="fas fa-rotate-right"></i>
 </div>
-<h3 class="card-title">다시 한다면 (Lesson Learned)</h3>
+<h3 class="card-title">다시 한다면</h3>
 </div>
 <ul class="card-list">
 <li>
@@ -8419,6 +8558,135 @@ document.addEventListener("DOMContentLoaded", () => {
 </html>`
     };
 
+    // iframe 스케일 정보 저장을 위한 전역 배열
+    const iframeScaleInfo = [];
+
+    // iframe 스케일 재계산 함수 (최적화)
+    function recalculateIframeScale(iframeInfo) {
+        const { container, iframe, slideWidth, slideHeight } = iframeInfo;
+        
+        if (!container || !iframe) return false;
+        
+        let iframeDoc;
+        try {
+            iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        } catch (e) {
+            return false; // CORS 또는 아직 로드되지 않음
+        }
+        
+        if (!iframeDoc) return false;
+        
+        const slideContainer = iframeDoc.querySelector('.slide-container') || iframeDoc.querySelector('.slide-container-1');
+        if (!slideContainer) return false;
+        
+        // 컨테이너 크기 확인 (여러 방법으로 확인하여 정확도 향상)
+        let containerWidth = container.offsetWidth;
+        let containerHeight = container.offsetHeight;
+        
+        // offsetWidth가 0이면 getBoundingClientRect 사용
+        if (containerWidth === 0 || containerHeight === 0) {
+            const rect = container.getBoundingClientRect();
+            containerWidth = rect.width || containerWidth;
+            containerHeight = rect.height || containerHeight;
+        }
+        
+        // 여전히 0이면 clientWidth/Height 사용
+        if (containerWidth === 0 || containerHeight === 0) {
+            containerWidth = container.clientWidth || containerWidth;
+            containerHeight = container.clientHeight || containerHeight;
+        }
+        
+        // 최종 확인: 컨테이너가 보이는지 확인
+        const isVisible = containerWidth > 0 && containerHeight > 0 && 
+                         container.offsetParent !== null;
+        
+        if (!isVisible) {
+            return false;
+        }
+        
+        // 컨테이너 크기에 맞게 스케일 계산
+        const scale = Math.min(containerWidth / slideWidth, containerHeight / slideHeight);
+        const scaledWidth = slideWidth * scale;
+        const scaledHeight = slideHeight * scale;
+        
+        // 스타일 일괄 적용 (리플로우 최소화)
+        slideContainer.style.cssText = `width: ${slideWidth}px; height: ${slideHeight}px; transform: scale(${scale}); transform-origin: top left; margin-left: ${(containerWidth - scaledWidth) / 2}px; margin-top: ${(containerHeight - scaledHeight) / 2}px;`;
+        
+        // body와 html 스타일 조정
+        const iframeBody = iframeDoc.body;
+        if (iframeBody) {
+            iframeBody.style.cssText = 'margin: 0; padding: 0; overflow: hidden; width: ' + scaledWidth + 'px; height: ' + scaledHeight + 'px;';
+        }
+        
+        const htmlEl = iframeDoc.documentElement;
+        if (htmlEl) {
+            htmlEl.style.cssText = 'margin: 0; padding: 0; overflow: hidden; width: ' + scaledWidth + 'px; height: ' + scaledHeight + 'px;';
+        }
+        
+        return true;
+    }
+
+    // 모든 iframe 스케일 재계산
+    function recalculateAllIframeScales() {
+        iframeScaleInfo.forEach(info => {
+            recalculateIframeScale(info);
+        });
+    }
+
+    // window resize 이벤트 리스너 (디바운스 적용)
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            // 모든 iframe 스케일 재계산
+            recalculateAllIframeScales();
+            
+            // 썸네일 박스가 있는 경우 추가로 재계산 (브라우저 최소화/최대화 대응)
+            const service1ThumbnailBox = document.querySelector('.test-thumbnail-box[data-box="2"]');
+            const strategy1ThumbnailBox = document.querySelector('.test-thumbnail-box[data-box="1"]');
+            
+            if (service1ThumbnailBox) {
+                const index = iframeScaleInfo.findIndex(info => info.container === service1ThumbnailBox);
+                if (index !== -1) {
+                    requestAnimationFrame(() => {
+                        recalculateIframeScale(iframeScaleInfo[index]);
+                    });
+                }
+            }
+            
+            if (strategy1ThumbnailBox) {
+                const index = iframeScaleInfo.findIndex(info => info.container === strategy1ThumbnailBox);
+                if (index !== -1) {
+                    requestAnimationFrame(() => {
+                        recalculateIframeScale(iframeScaleInfo[index]);
+                    });
+                }
+            }
+        }, 100);
+    });
+    
+    // 페이지 로드 완료 후 모든 iframe 스케일 재계산
+    if (document.readyState === 'complete') {
+        setTimeout(() => {
+            recalculateAllIframeScales();
+        }, 200);
+    } else {
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                recalculateAllIframeScales();
+            }, 200);
+        });
+    }
+    
+    // DOMContentLoaded 후에도 재계산 (레이아웃이 준비된 후)
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                recalculateAllIframeScales();
+            }, 100);
+        });
+    }
+
     // HTML 콘텐츠를 iframe으로 렌더링하는 범용 함수
     function loadContentToIframe(container, html, isMainBox = false) {
         try {
@@ -8435,9 +8703,24 @@ document.addEventListener("DOMContentLoaded", () => {
             // 컨테이너 초기화
             container.innerHTML = '';
             
-            // iframe 생성 (srcdoc 속성 사용 - Blob URL 불필요)
+            // HTML 문자열에서 width와 height 추출 (더 빠른 방식)
+            let slideWidth = 1280;
+            let slideHeight = 720;
+            
+            // 정규식 대신 indexOf 사용으로 더 빠르게
+            const widthIdx = html.indexOf('width:');
+            const heightIdx = html.indexOf('height:');
+            if (widthIdx !== -1 && heightIdx !== -1) {
+                const widthStr = html.substring(widthIdx, widthIdx + 30);
+                const heightStr = html.substring(heightIdx, heightIdx + 30);
+                const widthMatch = widthStr.match(/(\d+)px/i);
+                const heightMatch = heightStr.match(/(\d+)px/i);
+                if (widthMatch) slideWidth = parseInt(widthMatch[1]);
+                if (heightMatch) slideHeight = parseInt(heightMatch[1]);
+            }
+            
+            // iframe 생성 및 스타일 설정
             const iframe = document.createElement('iframe');
-            iframe.srcdoc = html;  // srcdoc 속성으로 HTML 직접 삽입
             iframe.frameBorder = '0';
             iframe.className = isMainBox ? 'service-main-iframe' : 'service-slide-iframe';
             iframe.style.cssText = 'width: 100%; height: 100%; border: none; overflow: hidden;';
@@ -8447,7 +8730,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 iframe.style.borderRadius = '12px';
             }
             
-            // 컨테이너에 iframe 삽입
+            // 컨테이너에 iframe 먼저 삽입 (브라우저가 렌더링 시작)
             container.appendChild(iframe);
             
             // 슬라이드 아이템인 경우 has-iframe 클래스 추가
@@ -8455,123 +8738,78 @@ document.addEventListener("DOMContentLoaded", () => {
                 container.classList.add('has-iframe');
             }
             
-            // iframe 로드 완료 후 처리
-            iframe.addEventListener('load', () => {
-                console.log('iframe 로드 완료');
-                
+            // iframe 정보 저장 (로드 전에 미리 추가하여 resize 이벤트 즉시 작동)
+            const iframeInfo = {
+                container: container,
+                iframe: iframe,
+                slideWidth: slideWidth,
+                slideHeight: slideHeight,
+                isMainBox: isMainBox
+            };
+            
+            // iframe 정보를 배열에 미리 추가
+            iframeScaleInfo.push(iframeInfo);
+            
+            // srcdoc 설정 (DOM에 추가한 후 설정하면 더 빠름)
+            iframe.srcdoc = html;
+            
+            // iframe 로드 완료 후 처리 (즉시 시도하고 실패하면 이벤트 대기)
+            const tryScale = () => {
                 try {
                     const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                    const iframeBody = iframeDoc.body;
-                    const slideContainer = iframeDoc.querySelector('.slide-container') || iframeDoc.querySelector('.slide-container-1');
-                    
-                    if (slideContainer) {
-                        if (isMainBox) {
-                            // 메인 박스: 컨테이너 크기에 맞게 스케일링
-                            const containerWidth = container.offsetWidth;
-                            const containerHeight = container.offsetHeight;
-                            
-                            // HTML에서 slide-container의 크기 추출 시도
-                            let slideWidth = 1280; // 기본값 (서비스 콘텐츠)
-                            let slideHeight = 720; // 기본값 (서비스 콘텐츠)
-                            
-                            // HTML 문자열에서 width와 height 추출
-                            const widthMatch = html.match(/width:\s*(\d+)px/i);
-                            const heightMatch = html.match(/height:\s*(\d+)px/i);
-                            
-                            if (widthMatch && heightMatch) {
-                                slideWidth = parseInt(widthMatch[1]);
-                                slideHeight = parseInt(heightMatch[1]);
-                            }
-                            
-                            // 컨테이너 크기에 맞게 스케일 계산 (비율 유지하면서 fit)
-                            const scaleX = containerWidth / slideWidth;
-                            const scaleY = containerHeight / slideHeight;
-                            const scale = Math.min(scaleX, scaleY); // 더 작은 스케일 사용하여 내용이 잘리지 않게
-                            
-                            // 원본 크기 유지하면서 스케일 적용
-                            slideContainer.style.width = slideWidth + 'px';
-                            slideContainer.style.height = slideHeight + 'px';
-                            slideContainer.style.transform = `scale(${scale})`;
-                            slideContainer.style.transformOrigin = 'top left';
-                            
-                            // 컨테이너 중앙 정렬을 위한 추가 스타일
-                            const scaledWidth = slideWidth * scale;
-                            const scaledHeight = slideHeight * scale;
-                            const offsetX = (containerWidth - scaledWidth) / 2;
-                            const offsetY = (containerHeight - scaledHeight) / 2;
-                            
-                            slideContainer.style.marginLeft = offsetX + 'px';
-                            slideContainer.style.marginTop = offsetY + 'px';
-                            
-                            // body 스타일 조정
-                            iframeBody.style.margin = '0';
-                            iframeBody.style.padding = '0';
-                            iframeBody.style.overflow = 'hidden';
-                            iframeBody.style.width = scaledWidth + 'px';
-                            iframeBody.style.height = scaledHeight + 'px';
-                            
-                            // html 스타일 조정
-                            iframeDoc.documentElement.style.margin = '0';
-                            iframeDoc.documentElement.style.padding = '0';
-                            iframeDoc.documentElement.style.overflow = 'hidden';
-                            iframeDoc.documentElement.style.width = scaledWidth + 'px';
-                            iframeDoc.documentElement.style.height = scaledHeight + 'px';
-                        } else {
-                            // 작은 박스: 일부분만 보이도록 스케일링
-                            const containerWidth = container.offsetWidth;
-                            const containerHeight = container.offsetHeight;
-                            
-                            // HTML에서 slide-container의 크기 추출 시도
-                            let slideWidth = 1280; // 기본값 (서비스 콘텐츠)
-                            let slideHeight = 720; // 기본값 (서비스 콘텐츠)
-                            
-                            // HTML 문자열에서 width와 height 추출
-                            const widthMatch = html.match(/width:\s*(\d+)px/i);
-                            const heightMatch = html.match(/height:\s*(\d+)px/i);
-                            
-                            if (widthMatch && heightMatch) {
-                                slideWidth = parseInt(widthMatch[1]);
-                                slideHeight = parseInt(heightMatch[1]);
-                            }
-                            
-                            // 컨테이너 크기에 맞게 스케일 계산 (작은 박스에 맞게 fit)
-                            const scaleX = containerWidth / slideWidth;
-                            const scaleY = containerHeight / slideHeight;
-                            const scale = Math.min(scaleX, scaleY); // 더 작은 스케일 사용하여 내용이 잘리지 않게
-                            
-                            slideContainer.style.width = slideWidth + 'px';
-                            slideContainer.style.height = slideHeight + 'px';
-                            slideContainer.style.transform = `scale(${scale})`;
-                            slideContainer.style.transformOrigin = 'top left';
-                            
-                            // 컨테이너 중앙 정렬을 위한 추가 스타일
-                            const scaledWidth = slideWidth * scale;
-                            const scaledHeight = slideHeight * scale;
-                            const offsetX = (containerWidth - scaledWidth) / 2;
-                            const offsetY = (containerHeight - scaledHeight) / 2;
-                            
-                            slideContainer.style.marginLeft = offsetX + 'px';
-                            slideContainer.style.marginTop = offsetY + 'px';
-                            
-                            // body 스타일 조정
-                            iframeBody.style.margin = '0';
-                            iframeBody.style.padding = '0';
-                            iframeBody.style.overflow = 'hidden';
-                            iframeBody.style.width = scaledWidth + 'px';
-                            iframeBody.style.height = scaledHeight + 'px';
-                            
-                            // html 스타일 조정
-                            iframeDoc.documentElement.style.margin = '0';
-                            iframeDoc.documentElement.style.padding = '0';
-                            iframeDoc.documentElement.style.overflow = 'hidden';
-                            iframeDoc.documentElement.style.width = scaledWidth + 'px';
-                            iframeDoc.documentElement.style.height = scaledHeight + 'px';
-                        }
+                    if (iframeDoc && iframeDoc.readyState === 'complete') {
+                        recalculateIframeScale(iframeInfo);
+                        return true;
                     }
                 } catch (e) {
-                    console.warn('iframe 내부 스타일 조정 실패 (CORS 가능성):', e);
+                    // 아직 로드되지 않음
                 }
-            });
+                return false;
+            };
+            
+            // 즉시 시도
+            if (!tryScale()) {
+                // 로드 완료 대기
+                iframe.addEventListener('load', () => {
+                    // 여러 번 시도하여 확실하게 스케일 적용
+                    const applyScale = (attempt = 0) => {
+                        if (recalculateIframeScale(iframeInfo)) {
+                            // 성공한 경우에도 추가 재계산 (레이아웃 안정화 대기)
+                            requestAnimationFrame(() => {
+                                recalculateIframeScale(iframeInfo);
+                            });
+                            
+                            // 작은 박스인 경우에도 추가 재계산
+                            if (!isMainBox && attempt < 2) {
+                                setTimeout(() => {
+                                    recalculateIframeScale(iframeInfo);
+                                }, 100);
+                            }
+                        } else if (attempt < 5) {
+                            // 실패하면 다시 시도 (최대 5번)
+                            setTimeout(() => {
+                                applyScale(attempt + 1);
+                            }, 100);
+                        }
+                    };
+                    
+                    requestAnimationFrame(() => {
+                        applyScale();
+                    });
+                }, { once: true });
+            } else {
+                // 즉시 성공한 경우에도 추가 재계산
+                requestAnimationFrame(() => {
+                    recalculateIframeScale(iframeInfo);
+                });
+                
+                // 작은 박스인 경우 추가 재계산
+                if (!isMainBox) {
+                    setTimeout(() => {
+                        recalculateIframeScale(iframeInfo);
+                    }, 100);
+                }
+            }
             
             // 에러 처리
             iframe.addEventListener('error', (e) => {
@@ -8588,21 +8826,41 @@ document.addEventListener("DOMContentLoaded", () => {
     // 서비스1 파일 내용을 메인박스에 로드하는 함수
     function loadService1ContentToMainBox(mainBox, slideNumber) {
         try {
-            console.log('loadService1ContentToMainBox 호출됨, slideNumber:', slideNumber);
-            console.log('service1Contents 키:', Object.keys(service1Contents));
+            // 이전 iframe 정보 제거
+            const index = iframeScaleInfo.findIndex(info => info.container === mainBox);
+            if (index !== -1) {
+                iframeScaleInfo.splice(index, 1);
+            }
             
             const html = service1Contents[slideNumber];
             if (!html) {
-                console.error(`서비스 파일 ${slideNumber}를 찾을 수 없습니다.`);
                 throw new Error(`서비스 파일 ${slideNumber}를 찾을 수 없습니다.`);
             }
-            
-            console.log(`서비스 파일 ${slideNumber} 로드됨, 길이:`, html.length);
             
             // iframe으로 로드
             loadContentToIframe(mainBox, html, true);
             mainBox.setAttribute("data-box", "2");
             mainBox.classList.add("service-box");
+            
+            // 로드 후 강제 스케일 재계산 (여러 번 시도)
+            const forceRecalculate = () => {
+                const newIndex = iframeScaleInfo.findIndex(info => info.container === mainBox);
+                if (newIndex !== -1) {
+                    if (!recalculateIframeScale(iframeScaleInfo[newIndex])) {
+                        // 실패하면 다시 시도
+                        setTimeout(forceRecalculate, 100);
+                    }
+                }
+            };
+            
+            // 즉시 시도
+            requestAnimationFrame(() => {
+                forceRecalculate();
+            });
+            
+            // 추가 시도 (100ms, 300ms 후)
+            setTimeout(forceRecalculate, 100);
+            setTimeout(forceRecalculate, 300);
         } catch (error) {
             console.error(`Failed to load service ${slideNumber}:`, error);
             mainBox.innerHTML = '<div class="service-slide-content">콘텐츠를 불러올 수 없습니다.</div>';
@@ -8612,15 +8870,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // 서비스1 파일 내용 로드 함수 (슬라이드용)
     function loadService1Content(slideItem, slideNumber) {
         try {
-            console.log('loadService1Content 호출됨, slideNumber:', slideNumber);
-            
             const html = service1Contents[slideNumber];
             if (!html) {
-                console.error(`서비스1 파일 ${slideNumber}를 찾을 수 없습니다.`);
                 throw new Error(`서비스1 파일 ${slideNumber}를 찾을 수 없습니다.`);
             }
-            
-            console.log(`서비스1 파일 ${slideNumber} 로드됨, 길이:`, html.length);
             
             // iframe으로 로드
             loadContentToIframe(slideItem, html, false);
@@ -8633,21 +8886,41 @@ document.addEventListener("DOMContentLoaded", () => {
     // 전략2 파일 내용을 메인박스에 로드하는 함수
     function loadStrategy2ContentToMainBox(mainBox, slideNumber) {
         try {
-            console.log('loadStrategy2ContentToMainBox 호출됨, slideNumber:', slideNumber);
-            console.log('strategy2Contents 키:', Object.keys(strategy2Contents));
+            // 이전 iframe 정보 제거
+            const index = iframeScaleInfo.findIndex(info => info.container === mainBox);
+            if (index !== -1) {
+                iframeScaleInfo.splice(index, 1);
+            }
             
             const html = strategy2Contents[slideNumber];
             if (!html) {
-                console.error(`전략2 파일 ${slideNumber}를 찾을 수 없습니다.`);
                 throw new Error(`전략2 파일 ${slideNumber}를 찾을 수 없습니다.`);
             }
-            
-            console.log(`전략2 파일 ${slideNumber} 로드됨, 길이:`, html.length);
             
             // iframe으로 로드
             loadContentToIframe(mainBox, html, true);
             mainBox.setAttribute("data-box", "5");
             mainBox.classList.remove("service-box");
+            
+            // 로드 후 강제 스케일 재계산 (여러 번 시도)
+            const forceRecalculate = () => {
+                const newIndex = iframeScaleInfo.findIndex(info => info.container === mainBox);
+                if (newIndex !== -1) {
+                    if (!recalculateIframeScale(iframeScaleInfo[newIndex])) {
+                        // 실패하면 다시 시도
+                        setTimeout(forceRecalculate, 100);
+                    }
+                }
+            };
+            
+            // 즉시 시도
+            requestAnimationFrame(() => {
+                forceRecalculate();
+            });
+            
+            // 추가 시도 (100ms, 300ms 후)
+            setTimeout(forceRecalculate, 100);
+            setTimeout(forceRecalculate, 300);
         } catch (error) {
             console.error(`Failed to load strategy2 ${slideNumber}:`, error);
             mainBox.innerHTML = '<div class="service-slide-content">콘텐츠를 불러올 수 없습니다.</div>';
@@ -8657,15 +8930,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // 전략2 파일 내용 로드 함수 (슬라이드용)
     function loadStrategy2Content(slideItem, slideNumber) {
         try {
-            console.log('loadStrategy2Content 호출됨, slideNumber:', slideNumber);
-            
             const html = strategy2Contents[slideNumber];
             if (!html) {
-                console.error(`전략2 파일 ${slideNumber}를 찾을 수 없습니다.`);
                 throw new Error(`전략2 파일 ${slideNumber}를 찾을 수 없습니다.`);
             }
-            
-            console.log(`전략2 파일 ${slideNumber} 로드됨, 길이:`, html.length);
             
             // iframe으로 로드
             loadContentToIframe(slideItem, html, false);
@@ -8678,21 +8946,41 @@ document.addEventListener("DOMContentLoaded", () => {
     // 전략1 파일 내용을 메인박스에 로드하는 함수
     function loadStrategy1ContentToMainBox(mainBox, slideNumber) {
         try {
-            console.log('loadStrategy1ContentToMainBox 호출됨, slideNumber:', slideNumber);
-            console.log('strategy1Contents 키:', Object.keys(strategy1Contents));
+            // 이전 iframe 정보 제거
+            const index = iframeScaleInfo.findIndex(info => info.container === mainBox);
+            if (index !== -1) {
+                iframeScaleInfo.splice(index, 1);
+            }
             
             const html = strategy1Contents[slideNumber];
             if (!html) {
-                console.error(`전략1 파일 ${slideNumber}를 찾을 수 없습니다.`);
                 throw new Error(`전략1 파일 ${slideNumber}를 찾을 수 없습니다.`);
             }
-            
-            console.log(`전략1 파일 ${slideNumber} 로드됨, 길이:`, html.length);
             
             // iframe으로 로드
             loadContentToIframe(mainBox, html, true);
             mainBox.setAttribute("data-box", "1");
             mainBox.classList.remove("service-box");
+            
+            // 로드 후 강제 스케일 재계산 (여러 번 시도)
+            const forceRecalculate = () => {
+                const newIndex = iframeScaleInfo.findIndex(info => info.container === mainBox);
+                if (newIndex !== -1) {
+                    if (!recalculateIframeScale(iframeScaleInfo[newIndex])) {
+                        // 실패하면 다시 시도
+                        setTimeout(forceRecalculate, 100);
+                    }
+                }
+            };
+            
+            // 즉시 시도
+            requestAnimationFrame(() => {
+                forceRecalculate();
+            });
+            
+            // 추가 시도 (100ms, 300ms 후)
+            setTimeout(forceRecalculate, 100);
+            setTimeout(forceRecalculate, 300);
         } catch (error) {
             console.error(`Failed to load strategy1 ${slideNumber}:`, error);
             mainBox.innerHTML = '<div class="service-slide-content">콘텐츠를 불러올 수 없습니다.</div>';
@@ -8702,15 +8990,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // 전략1 파일 내용 로드 함수 (슬라이드용)
     function loadStrategy1Content(slideItem, slideNumber) {
         try {
-            console.log('loadStrategy1Content 호출됨, slideNumber:', slideNumber);
-            
             const html = strategy1Contents[slideNumber];
             if (!html) {
-                console.error(`전략1 파일 ${slideNumber}를 찾을 수 없습니다.`);
                 throw new Error(`전략1 파일 ${slideNumber}를 찾을 수 없습니다.`);
             }
-            
-            console.log(`전략1 파일 ${slideNumber} 로드됨, 길이:`, html.length);
             
             // iframe으로 로드
             loadContentToIframe(slideItem, html, false);
@@ -8720,9 +9003,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // 서비스1 박스 썸네일 로드
+    // 서비스1 박스 썸네일 로드 (HTML에 이미 있으면 스킵)
     const service1ThumbnailBox = document.querySelector('.test-thumbnail-box[data-box="2"]');
-    if (service1ThumbnailBox && typeof service1Contents !== 'undefined') {
+    if (service1ThumbnailBox && service1ThumbnailBox.innerHTML.trim() === '' && typeof service1Contents !== 'undefined') {
         const html = service1Contents[1];
         if (html) {
             service1ThumbnailBox.innerHTML = '';
@@ -8730,9 +9013,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // 전략1 박스 썸네일 로드
+    // 전략1 박스 썸네일 로드 (HTML에 이미 있으면 스킵)
     const strategy1ThumbnailBox = document.querySelector('.test-thumbnail-box[data-box="1"]');
-    if (strategy1ThumbnailBox && typeof strategy1Contents !== 'undefined') {
+    if (strategy1ThumbnailBox && strategy1ThumbnailBox.innerHTML.trim() === '' && typeof strategy1Contents !== 'undefined') {
         const html = strategy1Contents[1];
         if (html) {
             strategy1ThumbnailBox.innerHTML = '';

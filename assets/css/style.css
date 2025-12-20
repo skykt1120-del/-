@@ -3292,6 +3292,7 @@ body {
     flex-direction: column;
     gap: 24px;
     width: 100%;
+    position: relative;
 }
 
 .test-expanded-view.hidden {
@@ -3308,6 +3309,50 @@ body {
     position: relative;
     width: 100%;
     transition: all 0.3s ease;
+}
+
+/* 슬라이드 네비게이션 버튼 */
+.slide-nav-btn {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #e5e7eb;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    color: #1d1d1f;
+    font-size: 18px;
+    /* 위치는 JavaScript로 동적으로 설정됨 */
+}
+
+.slide-nav-btn:hover {
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.slide-nav-btn:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.slide-nav-btn-left {
+    /* left는 JavaScript로 동적으로 설정됨 */
+}
+
+.slide-nav-btn-right {
+    /* right는 JavaScript로 동적으로 설정됨 */
+}
+
+.slide-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 .test-expanded-box.service-box {
