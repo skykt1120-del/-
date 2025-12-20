@@ -3009,8 +3009,8 @@ body {
     display: flex;
     flex-direction: column;
     font-family: 'Noto Sans KR', sans-serif;
-    /* 원본: 80px 100px → 썸네일: clamp(10px, 2vw, 20px) clamp(12px, 2.5vw, 25px) */
-    padding: clamp(10px, 2vw, 20px) clamp(12px, 2.5vw, 25px);
+    /* 원본: 80px 100px → 썸네일: 컨테이너 크기에 비례하여 조정 */
+    padding: clamp(8px, 1.5vw, 18px) clamp(10px, 2vw, 22px);
 }
 
 .test-thumbnail-box.strategy1-box .top-deco-line {
@@ -3117,18 +3117,18 @@ body {
 
 .test-thumbnail-box.strategy1-box .graph-section {
     position: absolute;
-    /* 원본: 60px → 썸네일: clamp(8px, 2vw, 16px) */
-    bottom: clamp(8px, 2vw, 16px);
-    /* 원본: 100px → 썸네일: clamp(8px, 2.5vw, 20px) */
-    right: clamp(8px, 2.5vw, 20px);
-    /* 원본: 500px → 썸네일: clamp(100px, 12vw, 140px) */
-    width: clamp(100px, 12vw, 140px);
+    /* 원본: 60px → 썸네일: clamp(6px, 1.5vw, 14px) */
+    bottom: clamp(6px, 1.5vw, 14px);
+    /* 원본: 100px → 썸네일: clamp(6px, 2vw, 18px) */
+    right: clamp(6px, 2vw, 18px);
+    /* 원본: 500px → 썸네일: clamp(90px, 11vw, 130px) - 썸네일 크기에 맞게 조정 */
+    width: clamp(90px, 11vw, 130px);
     background-color: #fafafa;
-    /* 원본: 24px 32px → 썸네일: clamp(4px, 1vw, 8px) clamp(6px, 1.2vw, 10px) */
-    padding: clamp(4px, 1vw, 8px) clamp(6px, 1.2vw, 10px);
+    /* 원본: 24px 32px → 썸네일: clamp(3px, 0.8vw, 7px) clamp(5px, 1vw, 9px) */
+    padding: clamp(3px, 0.8vw, 7px) clamp(5px, 1vw, 9px);
     border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     z-index: 10;
 }
 
