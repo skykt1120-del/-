@@ -2989,6 +2989,10 @@ body {
     overflow: visible;
 }
 
+.test-thumbnail-box.strategy1-box {
+    overflow: visible;
+}
+
 .test-thumbnail-box.strategy1-box .strategy1-content {
     position: absolute;
     top: 0;
@@ -2999,7 +3003,7 @@ body {
     pointer-events: none;
 }
 
-/* 전략1 썸네일: 원본 1280x720 기준으로 비율 유지 */
+/* 전략1 썸네일: 원본 1280x720 기준으로 정확한 비율 계산 */
 .test-thumbnail-box.strategy1-box .slide-container {
     width: 100%;
     height: 100%;
@@ -3009,8 +3013,8 @@ body {
     display: flex;
     flex-direction: column;
     font-family: 'Noto Sans KR', sans-serif;
-    /* 원본: 80px (720px 기준 11.1%) 100px (1280px 기준 7.8%) → 썸네일: 비율 유지 */
-    padding: clamp(7px, 1.4vw, 17px) clamp(8px, 1.8vw, 20px);
+    /* 원본: 80px 100px → 썸네일: 약 0.25배 스케일, 비율 유지 */
+    padding: clamp(18px, 2vw, 22px) clamp(22px, 2.5vw, 28px);
 }
 
 .test-thumbnail-box.strategy1-box .top-deco-line {
@@ -3018,8 +3022,8 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    /* 원본: 12px → 썸네일: clamp(2px, 0.3vw, 4px) */
-    height: clamp(2px, 0.3vw, 4px);
+    /* 원본: 12px → 썸네일: clamp(2.5px, 0.35vw, 4px) */
+    height: clamp(2.5px, 0.35vw, 4px);
     background-color: #1f2937;
     z-index: 1;
 }
@@ -3046,51 +3050,51 @@ body {
 
 .test-thumbnail-box.strategy1-box .tag-pill {
     display: inline-block;
-    /* 원본: 6px 14px → 썸네일: clamp(2px, 0.4vw, 4px) clamp(4px, 0.8vw, 7px) */
-    padding: clamp(2px, 0.4vw, 4px) clamp(4px, 0.8vw, 7px);
+    /* 원본: 6px 14px → 썸네일: clamp(1.5px, 0.5vw, 3.5px) clamp(3px, 1vw, 7px) */
+    padding: clamp(1.5px, 0.5vw, 3.5px) clamp(3px, 1vw, 7px);
     background-color: #f3f4f6;
     color: #374151;
-    /* 원본: 14px → 썸네일: clamp(6px, 1vw, 10px) */
-    font-size: clamp(6px, 1vw, 10px);
+    /* 원본: 14px → 썸네일: clamp(3px, 1.2vw, 10px) */
+    font-size: clamp(3px, 1.2vw, 10px);
     font-weight: 700;
     letter-spacing: 0.5px;
-    /* 원본: 30px → 썸네일: clamp(6px, 1.5vw, 12px) */
-    margin-bottom: clamp(6px, 1.5vw, 12px);
+    /* 원본: 30px → 썸네일: clamp(6px, 1.8vw, 12px) */
+    margin-bottom: clamp(6px, 1.8vw, 12px);
     border-radius: 4px;
     text-transform: uppercase;
     width: fit-content;
 }
 
 .test-thumbnail-box.strategy1-box .main-title {
-    /* 원본: 52px → 썸네일: clamp(14px, 2.5vw, 22px) */
-    font-size: clamp(14px, 2.5vw, 22px);
+    /* 원본: 52px → 썸네일: clamp(12px, 3vw, 20px) */
+    font-size: clamp(12px, 3vw, 20px);
     font-weight: 900;
     line-height: 1.25;
     color: #111827;
-    /* 원본: 24px → 썸네일: clamp(4px, 1vw, 8px) */
-    margin-bottom: clamp(4px, 1vw, 8px);
+    /* 원본: 24px → 썸네일: clamp(5px, 1.2vw, 8px) */
+    margin-bottom: clamp(5px, 1.2vw, 8px);
     letter-spacing: -0.025em;
     word-break: keep-all;
 }
 
 .test-thumbnail-box.strategy1-box .sub-title {
-    /* 원본: 24px → 썸네일: clamp(8px, 1.2vw, 14px) */
-    font-size: clamp(8px, 1.2vw, 14px);
+    /* 원본: 24px → 썸네일: clamp(5px, 1.5vw, 12px) */
+    font-size: clamp(5px, 1.5vw, 12px);
     font-weight: 400;
     color: #4b5563;
     line-height: 1.5;
-    /* 원본: 50px → 썸네일: clamp(8px, 2vw, 16px) */
-    margin-bottom: clamp(8px, 2vw, 16px);
-    /* 원본: 20px → 썸네일: clamp(4px, 0.8vw, 8px) */
-    padding-left: clamp(4px, 0.8vw, 8px);
+    /* 원본: 50px → 썸네일: clamp(10px, 2.5vw, 18px) */
+    margin-bottom: clamp(10px, 2.5vw, 18px);
+    /* 원본: 20px → 썸네일: clamp(4px, 1vw, 8px) */
+    padding-left: clamp(4px, 1vw, 8px);
 }
 
 .test-thumbnail-box.strategy1-box .info-grid {
     display: flex;
-    /* 원본: 40px (1280px 기준 3.125%) → 썸네일: clamp(6px, 1.2vw, 14px) */
-    gap: clamp(6px, 1.2vw, 14px);
-    /* 원본: 40px (720px 기준 5.56%) → 썸네일: clamp(4px, 1.2vw, 12px) */
-    margin-bottom: clamp(4px, 1.2vw, 12px);
+    /* 원본: 40px → 썸네일: clamp(8px, 2vw, 14px) */
+    gap: clamp(8px, 2vw, 14px);
+    /* 원본: 40px → 썸네일: clamp(8px, 2.2vw, 14px) */
+    margin-bottom: clamp(8px, 2.2vw, 14px);
 }
 
 .test-thumbnail-box.strategy1-box .info-item {
@@ -3099,58 +3103,58 @@ body {
 }
 
 .test-thumbnail-box.strategy1-box .info-label {
-    /* 원본: 13px → 썸네일: clamp(5px, 0.7vw, 9px) */
-    font-size: clamp(5px, 0.7vw, 9px);
+    /* 원본: 13px → 썸네일: clamp(3px, 0.9vw, 8px) */
+    font-size: clamp(3px, 0.9vw, 8px);
     color: #9ca3af;
     font-weight: 700;
-    /* 원본: 6px → 썸네일: clamp(2px, 0.3vw, 4px) */
-    margin-bottom: clamp(2px, 0.3vw, 4px);
+    /* 원본: 6px → 썸네일: clamp(1.5px, 0.4vw, 3px) */
+    margin-bottom: clamp(1.5px, 0.4vw, 3px);
     text-transform: uppercase;
 }
 
 .test-thumbnail-box.strategy1-box .info-value {
-    /* 원본: 18px → 썸네일: clamp(7px, 1vw, 12px) */
-    font-size: clamp(7px, 1vw, 12px);
+    /* 원본: 18px → 썸네일: clamp(4px, 1.2vw, 10px) */
+    font-size: clamp(4px, 1.2vw, 10px);
     color: #1f2937;
     font-weight: 600;
 }
 
 .test-thumbnail-box.strategy1-box .graph-section {
     position: absolute;
-    /* 원본: 60px (720px 기준 8.33%) → 썸네일: clamp(5px, 1.3vw, 13px) */
-    bottom: clamp(5px, 1.3vw, 13px);
-    /* 원본: 100px (1280px 기준 7.81%) → 썸네일: clamp(5px, 1.8vw, 17px) */
-    right: clamp(5px, 1.8vw, 17px);
-    /* 원본: 500px (1280px 기준 39.06%) → 썸네일: clamp(85px, 10.5vw, 125px) */
-    width: clamp(85px, 10.5vw, 125px);
+    /* 원본: 60px → 썸네일: clamp(12px, 2vw, 18px) */
+    bottom: clamp(12px, 2vw, 18px);
+    /* 원본: 100px → 썸네일: clamp(20px, 2.5vw, 28px) */
+    right: clamp(20px, 2.5vw, 28px);
+    /* 원본: 500px → 썸네일: clamp(100px, 12.5vw, 140px) */
+    width: clamp(100px, 12.5vw, 140px);
     background-color: #fafafa;
-    /* 원본: 24px 32px (500px 기준 4.8% 6.4%) → 썸네일: clamp(3px, 0.75vw, 7px) clamp(4px, 0.95vw, 9px) */
-    padding: clamp(3px, 0.75vw, 7px) clamp(4px, 0.95vw, 9px);
+    /* 원본: 24px 32px → 썸네일: clamp(5px, 1.2vw, 8px) clamp(7px, 1.6vw, 10px) */
+    padding: clamp(5px, 1.2vw, 8px) clamp(7px, 1.6vw, 10px);
     border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     z-index: 10;
 }
 
 .test-thumbnail-box.strategy1-box .graph-title {
-    /* 원본: 14px → 썸네일: clamp(6px, 0.9vw, 10px) */
-    font-size: clamp(6px, 0.9vw, 10px);
+    /* 원본: 14px → 썸네일: clamp(3px, 1vw, 8px) */
+    font-size: clamp(3px, 1vw, 8px);
     font-weight: 700;
     color: #374151;
-    /* 원본: 16px → 썸네일: clamp(3px, 0.7vw, 7px) */
-    margin-bottom: clamp(3px, 0.7vw, 7px);
+    /* 원본: 16px → 썸네일: clamp(3px, 0.9vw, 7px) */
+    margin-bottom: clamp(3px, 0.9vw, 7px);
     display: block;
     border-bottom: 2px solid #1f2937;
-    /* 원본: 8px → 썸네일: clamp(2px, 0.4vw, 4px) */
-    padding-bottom: clamp(2px, 0.4vw, 4px);
+    /* 원본: 8px → 썸네일: clamp(1.5px, 0.5vw, 3px) */
+    padding-bottom: clamp(1.5px, 0.5vw, 3px);
     width: fit-content;
 }
 
 .test-thumbnail-box.strategy1-box .progress-row {
     display: flex;
     align-items: center;
-    /* 원본: 12px → 썸네일: clamp(2px, 0.5vw, 5px) */
-    margin-bottom: clamp(2px, 0.5vw, 5px);
+    /* 원본: 12px → 썸네일: clamp(2.5px, 0.7vw, 5px) */
+    margin-bottom: clamp(2.5px, 0.7vw, 5px);
 }
 
 .test-thumbnail-box.strategy1-box .progress-row:last-child {
@@ -3158,23 +3162,23 @@ body {
 }
 
 .test-thumbnail-box.strategy1-box .progress-label {
-    /* 원본: 140px → 썸네일: clamp(30px, 4vw, 50px) */
-    width: clamp(30px, 4vw, 50px);
-    /* 원본: 13px → 썸네일: clamp(5px, 0.7vw, 9px) */
-    font-size: clamp(5px, 0.7vw, 9px);
+    /* 원본: 140px → 썸네일: clamp(30px, 4.5vw, 60px) */
+    width: clamp(30px, 4.5vw, 60px);
+    /* 원본: 13px → 썸네일: clamp(3px, 0.9vw, 8px) */
+    font-size: clamp(3px, 0.9vw, 8px);
     font-weight: 600;
     color: #4b5563;
     text-align: right;
-    /* 원본: 16px → 썸네일: clamp(3px, 0.6vw, 6px) */
-    margin-right: clamp(3px, 0.6vw, 6px);
+    /* 원본: 16px → 썸네일: clamp(3px, 0.8vw, 6px) */
+    margin-right: clamp(3px, 0.8vw, 6px);
     flex-shrink: 0;
     line-height: 1.2;
 }
 
 .test-thumbnail-box.strategy1-box .progress-bar-bg {
     flex: 1;
-    /* 원본: 8px → 썸네일: clamp(2px, 0.3vw, 4px) */
-    height: clamp(2px, 0.3vw, 4px);
+    /* 원본: 8px → 썸네일: clamp(1.5px, 0.5vw, 3px) */
+    height: clamp(1.5px, 0.5vw, 3px);
     background-color: #e5e7eb;
     border-radius: 4px;
     overflow: hidden;
