@@ -3008,7 +3008,7 @@ body {
     display: flex;
     flex-direction: column;
     font-family: 'Noto Sans KR', sans-serif;
-    padding: 80px 100px;
+    padding: 12px 16px;
 }
 
 .test-thumbnail-box.strategy1-box .top-deco-line {
@@ -3016,7 +3016,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 12px;
+    height: 3px;
     background-color: #1f2937;
     z-index: 1;
 }
@@ -3043,41 +3043,41 @@ body {
 
 .test-thumbnail-box.strategy1-box .tag-pill {
     display: inline-block;
-    padding: 6px 14px;
+    padding: 2px 6px;
     background-color: #f3f4f6;
     color: #374151;
-    font-size: 14px;
+    font-size: 6px;
     font-weight: 700;
-    letter-spacing: 1px;
-    margin-bottom: 30px;
-    border-radius: 4px;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    border-radius: 2px;
     text-transform: uppercase;
     width: fit-content;
 }
 
 .test-thumbnail-box.strategy1-box .main-title {
-    font-size: 52px;
+    font-size: 18px;
     font-weight: 900;
-    line-height: 1.25;
+    line-height: 1.2;
     color: #111827;
-    margin-bottom: 24px;
-    letter-spacing: -0.025em;
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
     word-break: keep-all;
 }
 
 .test-thumbnail-box.strategy1-box .sub-title {
-    font-size: 24px;
+    font-size: 10px;
     font-weight: 400;
     color: #4b5563;
-    line-height: 1.5;
-    margin-bottom: 50px;
-    padding-left: 20px;
+    line-height: 1.3;
+    margin-bottom: 8px;
+    padding-left: 8px;
 }
 
 .test-thumbnail-box.strategy1-box .info-grid {
     display: flex;
-    gap: 40px;
-    margin-bottom: 40px;
+    gap: 12px;
+    margin-bottom: 8px;
 }
 
 .test-thumbnail-box.strategy1-box .info-item {
@@ -3086,47 +3086,47 @@ body {
 }
 
 .test-thumbnail-box.strategy1-box .info-label {
-    font-size: 13px;
+    font-size: 5px;
     color: #9ca3af;
     font-weight: 700;
-    margin-bottom: 6px;
+    margin-bottom: 2px;
     text-transform: uppercase;
 }
 
 .test-thumbnail-box.strategy1-box .info-value {
-    font-size: 18px;
+    font-size: 8px;
     color: #1f2937;
     font-weight: 600;
 }
 
 .test-thumbnail-box.strategy1-box .graph-section {
     position: absolute;
-    bottom: 60px;
-    right: 100px;
-    width: 500px;
+    bottom: 8px;
+    right: 12px;
+    width: 120px;
     background-color: #fafafa;
-    padding: 24px 32px;
+    padding: 6px 8px;
     border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     z-index: 10;
 }
 
 .test-thumbnail-box.strategy1-box .graph-title {
-    font-size: 14px;
+    font-size: 5px;
     font-weight: 700;
     color: #374151;
-    margin-bottom: 16px;
+    margin-bottom: 4px;
     display: block;
-    border-bottom: 2px solid #1f2937;
-    padding-bottom: 8px;
+    border-bottom: 1px solid #1f2937;
+    padding-bottom: 2px;
     width: fit-content;
 }
 
 .test-thumbnail-box.strategy1-box .progress-row {
     display: flex;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 3px;
 }
 
 .test-thumbnail-box.strategy1-box .progress-row:last-child {
@@ -3134,27 +3134,28 @@ body {
 }
 
 .test-thumbnail-box.strategy1-box .progress-label {
-    width: 140px;
-    font-size: 13px;
+    width: 35px;
+    font-size: 4px;
     font-weight: 600;
     color: #4b5563;
     text-align: right;
-    margin-right: 16px;
+    margin-right: 4px;
     flex-shrink: 0;
+    line-height: 1.2;
 }
 
 .test-thumbnail-box.strategy1-box .progress-bar-bg {
     flex: 1;
-    height: 8px;
+    height: 3px;
     background-color: #e5e7eb;
-    border-radius: 4px;
+    border-radius: 2px;
     overflow: hidden;
 }
 
 .test-thumbnail-box.strategy1-box .progress-bar-fill {
     height: 100%;
     background-color: #4b5563;
-    border-radius: 4px;
+    border-radius: 2px;
 }
 
 /* Strategy2 Box Content Styling */
