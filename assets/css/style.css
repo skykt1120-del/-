@@ -3097,16 +3097,23 @@ body {
 }
 
 .test-thumbnail-box.strategy1-box .info-grid {
+    position: absolute;
+    /* 원본: top은 padding-top과 동일한 위치 (80px), right는 padding-right와 동일 (100px) */
+    /* 썸네일: padding-top과 동일한 위치, padding-right와 동일한 위치 */
+    top: clamp(25px, 6.25vw, 50px);
+    right: clamp(31px, 7.81vw, 62px);
     display: flex;
+    flex-direction: column;
     /* 원본: 40px → 썸네일: clamp(8px, 2vw, 14px) */
     gap: clamp(8px, 2vw, 14px);
-    /* 원본: 40px → 썸네일: clamp(8px, 2.2vw, 14px) */
-    margin-bottom: clamp(8px, 2.2vw, 14px);
+    z-index: 15;
 }
 
 .test-thumbnail-box.strategy1-box .info-item {
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
 }
 
 .test-thumbnail-box.strategy1-box .info-label {
@@ -3128,12 +3135,13 @@ body {
 
 .test-thumbnail-box.strategy1-box .graph-section {
     position: absolute;
-    /* 원본: 60px → 썸네일: clamp(12px, 2vw, 18px) */
-    bottom: clamp(12px, 2vw, 18px);
-    /* 원본: 100px → 썸네일: clamp(20px, 2.5vw, 28px) */
-    right: clamp(20px, 2.5vw, 28px);
-    /* 원본: 500px → 썸네일: clamp(100px, 12.5vw, 140px) */
-    width: clamp(100px, 12.5vw, 140px);
+    /* 원본: bottom 60px (720px 기준 8.33%) → 썸네일: aspect-ratio 16:9 고려 */
+    /* 썸네일 높이 = 너비 × 9/16, bottom = 높이 × 8.33% = 너비 × 4.69% */
+    bottom: clamp(18px, 4.69vw, 38px);
+    /* 원본: right 100px (1280px 기준 7.81%) → 썸네일: 너비의 7.81% */
+    right: clamp(31px, 7.81vw, 62px);
+    /* 원본: width 500px (1280px 기준 39.06%) → 썸네일: 너비의 39.06% */
+    width: clamp(156px, 39.06vw, 312px);
     background-color: #fafafa;
     /* 원본: 24px 32px → 썸네일: clamp(5px, 1.2vw, 8px) clamp(7px, 1.6vw, 10px) */
     padding: clamp(5px, 1.2vw, 8px) clamp(7px, 1.6vw, 10px);
