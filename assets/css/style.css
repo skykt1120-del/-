@@ -3008,6 +3008,153 @@ body {
     display: flex;
     flex-direction: column;
     font-family: 'Noto Sans KR', sans-serif;
+    padding: 80px 100px;
+}
+
+.test-thumbnail-box.strategy1-box .top-deco-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background-color: #1f2937;
+    z-index: 1;
+}
+
+.test-thumbnail-box.strategy1-box .bg-pattern {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 40%;
+    height: 100%;
+    background-color: #f9fafb;
+    z-index: 0;
+    clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.test-thumbnail-box.strategy1-box .content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 10;
+    position: relative;
+}
+
+.test-thumbnail-box.strategy1-box .tag-pill {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #f3f4f6;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    width: fit-content;
+}
+
+.test-thumbnail-box.strategy1-box .main-title {
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1.25;
+    color: #111827;
+    margin-bottom: 24px;
+    letter-spacing: -0.025em;
+    word-break: keep-all;
+}
+
+.test-thumbnail-box.strategy1-box .sub-title {
+    font-size: 24px;
+    font-weight: 400;
+    color: #4b5563;
+    line-height: 1.5;
+    margin-bottom: 50px;
+    padding-left: 20px;
+}
+
+.test-thumbnail-box.strategy1-box .info-grid {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.test-thumbnail-box.strategy1-box .info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.test-thumbnail-box.strategy1-box .info-label {
+    font-size: 13px;
+    color: #9ca3af;
+    font-weight: 700;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.test-thumbnail-box.strategy1-box .info-value {
+    font-size: 18px;
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.test-thumbnail-box.strategy1-box .graph-section {
+    position: absolute;
+    bottom: 60px;
+    right: 100px;
+    width: 500px;
+    background-color: #fafafa;
+    padding: 24px 32px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+}
+
+.test-thumbnail-box.strategy1-box .graph-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 16px;
+    display: block;
+    border-bottom: 2px solid #1f2937;
+    padding-bottom: 8px;
+    width: fit-content;
+}
+
+.test-thumbnail-box.strategy1-box .progress-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.test-thumbnail-box.strategy1-box .progress-row:last-child {
+    margin-bottom: 0;
+}
+
+.test-thumbnail-box.strategy1-box .progress-label {
+    width: 140px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4b5563;
+    text-align: right;
+    margin-right: 16px;
+    flex-shrink: 0;
+}
+
+.test-thumbnail-box.strategy1-box .progress-bar-bg {
+    flex: 1;
+    height: 8px;
+    background-color: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.test-thumbnail-box.strategy1-box .progress-bar-fill {
+    height: 100%;
+    background-color: #4b5563;
+    border-radius: 4px;
 }
 
 /* Strategy2 Box Content Styling */
