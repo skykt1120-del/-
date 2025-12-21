@@ -38,6 +38,25 @@ document.addEventListener("DOMContentLoaded", () => {
             link.classList.add('active');
         }
     });
+    
+    // 브라우저 뒤로 가기 버튼 처리
+    window.addEventListener('popstate', (e) => {
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        // portfolio.html 페이지에서 뒤로 가기 시 확대 뷰만 닫기
+        if (currentPage === 'portfolio.html' || currentPage === 'portfolio') {
+            const expandedView = document.getElementById("expandedView");
+            const thumbnailGrid = document.getElementById("thumbnailGrid");
+            if (expandedView && thumbnailGrid && !expandedView.classList.contains("hidden")) {
+                expandedView.classList.add("hidden");
+                thumbnailGrid.classList.remove("hidden");
+                // 모든 박스 다시 표시
+                const thumbnailBoxes = document.querySelectorAll('.test-thumbnail-box');
+                thumbnailBoxes.forEach(box => {
+                    box.classList.remove("hidden");
+                });
+            }
+        }
+    });
 
     // 드롭다운 메뉴가 너무 빨리 사라지지 않도록 약간의 지연을 줍니다.
     const subItems = document.querySelectorAll(".nav-item-has-sub");
@@ -92,6 +111,15 @@ document.addEventListener("DOMContentLoaded", () => {
         if (expandedView && thumbnailGrid) {
             expandedView.classList.add("hidden");
             thumbnailGrid.classList.remove("hidden");
+            // 모든 박스 다시 표시
+            const thumbnailBoxes = document.querySelectorAll('.test-thumbnail-box');
+            thumbnailBoxes.forEach(box => {
+                box.classList.remove("hidden");
+            });
+        }
+        // history에서 확대 뷰 상태가 있으면 제거
+        if (window.history.state && window.history.state.expanded) {
+            window.history.back();
         }
     }
 
@@ -113,6 +141,13 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // 확대 뷰 표시
         expandedView.classList.remove("hidden");
+        
+        // 현재 페이지가 portfolio.html인 경우에만 history 상태 추가
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        if (currentPage === 'portfolio.html' || currentPage === 'portfolio') {
+            // 확대 뷰 상태를 history에 추가
+            window.history.pushState({ expanded: true, boxNumber: boxNumber }, '', window.location.href);
+        }
         
         // 화살표 버튼 위치 조정 (test-expanded-box의 중앙에 맞춤)
         const updateButtonPosition = () => {
