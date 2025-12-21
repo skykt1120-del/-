@@ -3995,6 +3995,163 @@ body {
         gap: 12px;
     }
 
+    /* Strategy1 Box 모바일 스타일 */
+    .test-thumbnail-box.strategy1-box {
+        overflow: hidden;
+    }
+
+    .test-thumbnail-box.strategy1-box .slide-container {
+        padding: clamp(12px, 3vw, 20px) clamp(12px, 3vw, 20px);
+    }
+
+    .test-thumbnail-box.strategy1-box .main-title {
+        font-size: clamp(10px, 2.5vw, 16px);
+        margin-bottom: clamp(4px, 1vw, 6px);
+    }
+
+    .test-thumbnail-box.strategy1-box .sub-title {
+        font-size: clamp(8px, 2vw, 11px);
+        margin-bottom: clamp(8px, 2vw, 12px);
+    }
+
+    .test-thumbnail-box.strategy1-box .tag-pill {
+        font-size: clamp(6px, 1.5vw, 9px);
+        padding: clamp(2px, 0.5vw, 3px) clamp(4px, 1vw, 6px);
+        margin-bottom: clamp(4px, 1vw, 6px);
+    }
+
+    .test-thumbnail-box.strategy1-box .project-period {
+        font-size: clamp(8px, 1.8vw, 11px);
+        padding: clamp(3px, 0.8vw, 6px) clamp(8px, 1.8vw, 14px);
+        gap: clamp(3px, 0.8vw, 5px);
+    }
+
+    .test-thumbnail-box.strategy1-box .info-grid {
+        top: clamp(12px, 3vw, 20px);
+        right: clamp(12px, 3vw, 20px);
+        gap: clamp(4px, 1vw, 8px);
+    }
+
+    .test-thumbnail-box.strategy1-box .info-label {
+        font-size: clamp(6px, 1.2vw, 8px);
+    }
+
+    .test-thumbnail-box.strategy1-box .info-value {
+        font-size: clamp(7px, 1.5vw, 10px);
+    }
+
+    .test-thumbnail-box.strategy1-box .graph-section {
+        bottom: clamp(10px, 2.5vw, 20px);
+        right: clamp(12px, 3vw, 20px);
+        width: clamp(120px, 35vw, 200px);
+        padding: clamp(4px, 1vw, 6px) clamp(5px, 1.2vw, 8px);
+    }
+
+    .test-thumbnail-box.strategy1-box .graph-title {
+        font-size: clamp(6px, 1.2vw, 8px);
+        margin-bottom: clamp(2px, 0.5vw, 4px);
+        padding-bottom: clamp(1px, 0.3vw, 2px);
+    }
+
+    .test-thumbnail-box.strategy1-box .progress-label {
+        width: clamp(25px, 6vw, 45px);
+        font-size: clamp(6px, 1.2vw, 8px);
+        margin-right: clamp(2px, 0.5vw, 4px);
+    }
+
+    .test-thumbnail-box.strategy1-box .progress-bar-bg {
+        height: clamp(2px, 0.4vw, 3px);
+    }
+
+    /* Strategy2 Box 모바일 스타일 */
+    .test-thumbnail-box.strategy2-box {
+        overflow: hidden;
+    }
+
+    .test-thumbnail-box.strategy2-box .shape-circle-1 {
+        width: clamp(80px, 20vw, 120px);
+        height: clamp(80px, 20vw, 120px);
+        top: clamp(-20px, -5vw, -30px);
+        left: clamp(-20px, -5vw, -30px);
+    }
+
+    .test-thumbnail-box.strategy2-box .shape-square-1 {
+        width: clamp(50px, 12vw, 80px);
+        height: clamp(50px, 12vw, 80px);
+        bottom: clamp(10px, 2.5vw, 15px);
+        right: clamp(10px, 2.5vw, 15px);
+    }
+
+    .test-thumbnail-box.strategy2-box .main-headline {
+        font-size: clamp(14px, 3.5vw, 18px);
+    }
+
+    .test-thumbnail-box.strategy2-box .main-headline p {
+        margin: clamp(2px, 0.5vw, 3px) 0;
+    }
+
+    .test-thumbnail-box.strategy2-box .portfolio-label {
+        font-size: clamp(7px, 1.5vw, 9px);
+    }
+
+    .test-thumbnail-box.strategy2-box .project-period {
+        font-size: clamp(8px, 1.8vw, 10px);
+        padding: clamp(4px, 1vw, 5px) clamp(5px, 1.2vw, 10px);
+        gap: clamp(3px, 0.8vw, 5px);
+    }
+
+    .test-thumbnail-box.strategy2-box .period-icon {
+        font-size: clamp(7px, 1.5vw, 9px);
+    }
+
+    /* Service Box 모바일 스타일 */
+    .test-thumbnail-box.service-box {
+        overflow: hidden;
+    }
+
+    .test-thumbnail-box.service-box .deco-circle-large {
+        width: clamp(80px, 25vw, 150px);
+        height: clamp(80px, 25vw, 150px);
+        right: clamp(-20px, -5vw, -30px);
+        top: clamp(-15px, -4vw, -20px);
+    }
+
+    .test-thumbnail-box.service-box .deco-circle-small {
+        width: clamp(30px, 8vw, 50px);
+        height: clamp(30px, 8vw, 50px);
+        right: clamp(30px, 10vw, 60px);
+        bottom: clamp(-8px, -2vw, -10px);
+    }
+
+    .test-thumbnail-box.service-box .main-headline {
+        font-size: clamp(12px, 3vw, 18px);
+    }
+
+    .test-thumbnail-box.service-box .main-headline p {
+        margin: clamp(2px, 0.5vw, 3px) 0;
+    }
+
+    .test-thumbnail-box.service-box .sub-title {
+        font-size: clamp(8px, 2vw, 11px);
+        margin-bottom: clamp(8px, 2vw, 12px);
+        margin-top: clamp(3px, 0.8vw, 5px);
+    }
+
+    .test-thumbnail-box.service-box .portfolio-label {
+        font-size: clamp(7px, 1.5vw, 9px);
+    }
+
+    .test-thumbnail-box.service-box .project-period {
+        font-size: clamp(8px, 1.8vw, 10px);
+        padding: clamp(4px, 1vw, 5px) clamp(5px, 1.2vw, 10px);
+        gap: clamp(3px, 0.8vw, 5px);
+        margin-top: clamp(8px, 2vw, 10px);
+    }
+
+    .test-thumbnail-box.service-box .period-icon {
+        font-size: clamp(7px, 1.5vw, 9px);
+    }
+
     .test-slide-list {
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
