@@ -546,14 +546,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </body>
 </html>`,
         2: `<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Chapter 1. 프로젝트 개요 &amp; 기획 목표</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+// ... existing code ...
 <style>
         body {
             font-family: 'Noto Sans KR', sans-serif;
@@ -5474,377 +5467,10 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
 </div>
 </div>
+</div>
 </body>
 </html>`,
         2: `<!DOCTYPE html>
-
-<html lang="ko">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Chapter 1. 배경과 문제 정의</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f3f4f6;
-            overflow: hidden;
-        }
-        .slide-container {
-            width: 1280px;
-            height: 720px;
-            background-color: #ffffff;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-        }
-        /* Left Sidebar */
-        .sidebar {
-            width: 280px;
-            background-color: #051c2c;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            padding: 60px 40px;
-            flex-shrink: 0;
-        }
-        .chapter-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #9ca3af;
-            margin-bottom: 16px;
-            font-weight: 700;
-        }
-        .chapter-title {
-            font-size: 30px;
-            font-weight: 900;
-            line-height: 1.3;
-            margin-bottom: 40px;
-            color: #ffffff;
-        }
-        .nav-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 24px;
-            opacity: 0.5;
-            transition: opacity 0.3s;
-        }
-        .nav-item.active {
-            opacity: 1;
-            color: #60a5fa;
-        }
-        .nav-number {
-            font-size: 12px;
-            font-weight: 700;
-            margin-right: 12px;
-            width: 20px;
-        }
-        .nav-text {
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            padding: 60px 80px;
-            background-color: #f9fafb;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .page-header {
-            margin-bottom: 30px;
-            border-bottom: 1px solid #e5e7eb;
-            padding-bottom: 20px;
-        }
-        .page-title {
-            font-size: 26px;
-            font-weight: 800;
-            color: #111827;
-            display: flex;
-            align-items: center;
-        }
-        .page-title i {
-            color: #ef4444;
-            margin-right: 16px;
-            font-size: 22px;
-        }
-        
-        /* Custom Layout for 3 Sections */
-        .content-layout {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            gap: 24px;
-            overflow: hidden;
-        }
-        
-        .top-section {
-            display: flex;
-            gap: 24px;
-            flex: 1;
-            min-height: 0;
-        }
-
-        .card {
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 32px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            border-left: none;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .card-bg {
-            flex: 1;
-            border-left: none;
-        }
-        
-        .card-crisis {
-            flex: 1;
-            border-left: none;
-        }
-
-        .card-diagram {
-            height: 180px;
-            border-left: none;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .card-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 16px;
-            font-size: 16px;
-        }
-        .card-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1f2937;
-        }
-        
-        /* Icon Colors */
-        .icon-bg { background-color: #dbeafe; color: #3b82f6; }
-        .icon-crisis { background-color: #fee2e2; color: #ef4444; }
-        .icon-diagram { background-color: #fef3c7; color: #f59e0b; }
-
-        .card-content {
-            color: #4b5563;
-            font-size: 13px;
-            line-height: 1.6;
-            flex: 1;
-            overflow-y: auto;
-        }
-        .bullet-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .bullet-list li {
-            position: relative;
-            padding-left: 16px;
-            margin-bottom: 10px;
-        }
-        .bullet-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: #9ca3af;
-            font-weight: bold;
-        }
-
-        .highlight-text {
-            font-weight: 600;
-            color: #111827;
-            background-color: #f3f4f6;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        /* Flow Diagram Styling */
-        .flow-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-            width: 100%;
-        }
-        .flow-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            width: 180px;
-            padding: 16px;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
-            background-color: #f9fafb;
-        }
-        .flow-item.highlight {
-            border-color: #fecaca;
-            background-color: #fef2f2;
-        }
-        .flow-item.end {
-            border-color: #fca5a5;
-            background-color: #fee2e2;
-            box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.1);
-        }
-        
-        .flow-icon {
-            font-size: 22px;
-            margin-bottom: 10px;
-            color: #6b7280;
-        }
-        .highlight .flow-icon { color: #ef4444; }
-        .end .flow-icon { color: #b91c1c; }
-        
-        .flow-text {
-            font-size: 12px;
-            font-weight: 700;
-            color: #374151;
-            line-height: 1.3;
-        }
-        .highlight .flow-text { color: #ef4444; }
-        .end .flow-text { color: #991b1b; }
-
-        .flow-arrow {
-            color: #9ca3af;
-            font-size: 18px;
-        }
-    </style>
-</head>
-<body>
-<div class="slide-container">
-<!-- Sidebar -->
-<aside class="sidebar">
-<div class="chapter-label">Current Chapter</div>
-<h1 class="chapter-title">배경과<br/>문제 정의</h1>
-<div class="nav-group">
-<div class="nav-item active">
-<span class="nav-number">01</span>
-<span class="nav-text">Context &amp; Diagnosis</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">02</span>
-<span class="nav-text">Strategic Response</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">03</span>
-<span class="nav-text">Fundraising Execution</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">04</span>
-<span class="nav-text">Results &amp; Impact</span>
-</div>
-</div>
-</aside>
-<!-- Main Content -->
-<main class="main-content">
-<header class="page-header">
-<h2 class="page-title">
-<i class="fas fa-exclamation-triangle"></i>
-                    설립 직후 직면한 통제 불가능한 외부 위기
-                </h2>
-</header>
-<div class="content-layout">
-<div class="top-section">
-<!-- 1. 배경 -->
-<div class="card card-bg">
-<div class="card-header">
-<div class="card-icon icon-bg"><i class="fas fa-history"></i></div>
-<h3 class="card-title">배경</h3>
-</div>
-<div class="card-content">
-<ul class="bullet-list">
-<li>
-<p>개인 PC 설치형 <strong>로보어드바이저 판매</strong>를 핵심 아이템으로 출발</p>
-</li>
-<li>
-<p>'우리만의 매출로 성장'이라는 비교적 <strong>폐쇄적인 방향</strong>에서 출발</p>
-</li>
-<li>
-<p>설립 직후 통제 불가능한 <span class="highlight-text">외부 위기 발생: 코로나19</span></p>
-</li>
-</ul>
-</div>
-</div>
-<!-- 2. 초기 위기 인식 (Crisis Recognition) -->
-<div class="card card-crisis">
-<div class="card-header">
-<div class="card-icon icon-crisis"><i class="fas fa-bolt"></i></div>
-<h3 class="card-title">초기 위기 인식</h3>
-</div>
-<div class="card-content">
-<ul class="bullet-list">
-<li>
-<p>법인의 진입 시장: <strong>금융 산업</strong> (국내 정책 및 글로벌 환경에 고도로 민감)</p>
-</li>
-<li>
-<p>초기 스타트업 특성상 <strong>금융위기 = 즉각적인 재무 위기</strong> 가능성</p>
-</li>
-<li>
-<p>업력이 짧은 금융 IT 기업에 대한 <strong>낮은 시장 신뢰</strong> 및 실적 가시화 장기 소요</p>
-</li>
-<li>
-<p>팬데믹 지속 기간의 <strong>극심한 불확실성</strong></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<!-- 3. 도식화 (Diagram) -->
-<div class="card card-diagram">
-<div class="card-header" style="margin-bottom: 10px;">
-<div class="card-icon icon-diagram"><i class="fas fa-project-diagram"></i></div>
-<h3 class="card-title">위기 전이 메커니즘</h3>
-</div>
-<div class="flow-container">
-<div class="flow-item highlight">
-<i class="fas fa-virus flow-icon"></i>
-<span class="flow-text">코로나19<br/>팬데믹</span>
-</div>
-<i class="fas fa-chevron-right flow-arrow"></i>
-<div class="flow-item">
-<i class="fas fa-globe-americas flow-icon"></i>
-<span class="flow-text">글로벌<br/>금융 충격</span>
-</div>
-<i class="fas fa-chevron-right flow-arrow"></i>
-<div class="flow-item">
-<i class="fas fa-landmark flow-icon"></i>
-<span class="flow-text">금융 산업<br/>전반 위축</span>
-</div>
-<i class="fas fa-chevron-right flow-arrow"></i>
-<div class="flow-item end">
-<i class="fas fa-coins flow-icon"></i>
-<span class="flow-text">초기 스타트업<br/>자금 리스크</span>
-</div>
-</div>
-</div>
-</div>
-</main>
-</div>
-</body>
-</html>`,
-        3: `<!DOCTYPE html>
 
 <html lang="ko">
 <head>
@@ -6201,6 +5827,396 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="section-title">
 <i class="fas fa-chart-area"></i>
 <span>참고 지표: 공포 지수 (VIX)</span>
+</div>
+<div class="chart-image-container">
+<img alt="VIX Index Chart showing spike in 2020" class="chart-image" src="assets/images/vix지수.jpg"/>
+</div>
+<div class="chart-caption">
+                        * 2020년 3월 팬데믹 선언 직후 역대 최고 수준 급등 (불확실성 극대화)
+                    </div>
+</div>
+</div>
+<!-- Bottom Section: News Cards -->
+<div class="bottom-section">
+<!-- News Card 1 -->
+<div class="news-card alert">
+<div class="news-label">Market Warning</div>
+<h3 class="news-title">"코로나19 경제적 피해,<br/>사스(SARS) 충격 뛰어 넘을 것"</h3>
+<div class="news-source">
+<span>하나금융경영연구소</span>
+<span>2020.02.16</span>
+</div>
+<div class="news-body">
+<p>사태 장기화 시 제조업 전반 타격 불가피. 코로나19의 경제적 파급력은 과거 사스 충격보다 훨씬 강력할 가능성 제기됨.</p>
+</div>
+</div>
+<!-- News Card 2 -->
+<div class="news-card info">
+<div class="news-label">Industry Impact</div>
+<h3 class="news-title">코로나19 팬데믹에 급속 위축…<br/>신산업 발굴·융합 시급해져</h3>
+<div class="news-source">
+<span>디지털타임스</span>
+<span>2020.06.21</span>
+</div>
+<div class="news-body">
+<p>기업 영업이익률 급감 및 투자심리 급속 위축. 생산·수출 감소세 뚜렷하며 해외직접투자 규모 15.3% 감소 기록.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body>
+</html>`,
+        3: `<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chapter 1. 진짜 문제 인식</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+        }
+        /* Left Sidebar */
+        .sidebar {
+            width: 280px;
+            background-color: #051c2c;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            padding: 60px 40px;
+            flex-shrink: 0;
+        }
+        .chapter-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #9ca3af;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+        .chapter-title {
+            font-size: 32px;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 40px;
+            color: #ffffff;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        .nav-item.active {
+            opacity: 1;
+            color: #60a5fa;
+        }
+        .nav-number {
+            font-size: 14px;
+            font-weight: 700;
+            margin-right: 12px;
+            width: 20px;
+        }
+        .nav-text {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 50px 70px;
+            background-color: #f9fafb;
+            display: flex;
+            flex-direction: column;
+        }
+        .page-header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .page-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #111827;
+            display: flex;
+            align-items: center;
+        }
+        .page-title i {
+            color: #ef4444;
+            margin-right: 16px;
+            font-size: 24px;
+        }
+
+        /* Content Layout */
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            flex: 1;
+        }
+
+        /* Top Section: Analysis & Chart */
+        .top-section {
+            display: flex;
+            gap: 24px;
+            height: 280px; /* Fixed height for consistency */
+        }
+        
+        .analysis-box {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: none;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 10px;
+            color: #4b5563;
+        }
+
+        .insight-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            margin-bottom: 4px;
+        }
+        .insight-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            font-size: 15px;
+            color: #374151;
+            line-height: 1.5;
+        }
+        .insight-list li::before {
+            content: "•";
+            position: absolute;
+            left: 4px;
+            color: #1e293b;
+            font-weight: bold;
+        }
+        
+        .indicator-tags {
+            margin-top: 0px;
+            margin-bottom: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .indicator-tag {
+            background-color: #f3f4f6;
+            color: #4b5563;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid #e5e7eb;
+        }
+
+        .chart-box {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+        }
+        .chart-image-container {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-color: #f9fafb;
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chart-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .chart-caption {
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Bottom Section: News Cards */
+        .bottom-section {
+            display: flex;
+            gap: 24px;
+            flex: 1;
+        }
+        
+        .news-card {
+            flex: 1;
+            background-color: #fff;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: transform 0.2s;
+        }
+        .news-card::before {
+            content: "";
+            position: absolute;
+            top: 24px;
+            bottom: 24px;
+            left: 0;
+            width: 4px;
+            background-color: transparent;
+        }
+        .news-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        }
+        .news-card.alert::before { background-color: transparent; }
+        .news-card.info::before { background-color: transparent; }
+
+        .news-source {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            padding-left: 16px;
+        }
+        .news-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            padding-left: 16px;
+            min-height: 50px; /* Align heights */
+        }
+        .news-body {
+            font-size: 14px;
+            color: #4b5563;
+            line-height: 1.6;
+            padding-left: 16px;
+            border-top: 1px solid #f3f4f6;
+            padding-top: 12px;
+            margin-top: auto;
+        }
+        
+        /* Decorative Label */
+        .news-label {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background-color: #1f2937;
+            color: white;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Sidebar -->
+<aside class="sidebar">
+<div class="chapter-label">Current Chapter</div>
+<h1 class="chapter-title">배경과<br/>문제 정의</h1>
+<div class="nav-group">
+<div class="nav-item active">
+<span class="nav-number">01</span>
+<span class="nav-text">Context &amp; Diagnosis</span>
+</div>
+<div class="nav-item">
+<span class="nav-number">02</span>
+<span class="nav-text">Strategic Response</span>
+</div>
+<div class="nav-item">
+<span class="nav-number">03</span>
+<span class="nav-text">Fundraising Execution</span>
+</div>
+<div class="nav-item">
+<span class="nav-number">04</span>
+<span class="nav-text">Results &amp; Impact</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="main-content">
+<header class="page-header">
+<h2 class="page-title">
+<i class="fas fa-magnifying-glass-chart"></i>
+<p>'진짜 문제'에 대한 심층적 인식과 판단 근거</p>
+</h2>
+</header>
+<div class="content-wrapper">
+<!-- Top Section -->
+<div class="top-section">
+<!-- Insight Box -->
+<div class="analysis-box">
+<div class="section-title">
+<i class="fas fa-brain"></i>
+<span>핵심 인식 (Key Insight)</span>
+</div>
+<ul class="insight-list">
+<li>단순한 질병 이슈가 아닌 <strong>글로벌 금융 시스템 위기</strong>로 인식</li>
+<li>각국의 무역·여행·산업 전반 <strong>동시다발적 봉쇄(Lockdown)</strong> 시작</li>
+<li>2000년대 후반 <span class="text-red-600 font-bold">서브프라임 모기지 사태보다 심각한 국면</span>으로 판단</li>
+</ul>
+<div class="indicator-tags">
+<span class="indicator-tag"><i class="fas fa-check mr-1"></i>시장 뉴스</span>
+<span class="indicator-tag"><i class="fas fa-check mr-1"></i>규제/정책 변화</span>
+<span class="indicator-tag"><i class="fas fa-check mr-1"></i>KOSPI/KOSDAQ</span>
+<span class="indicator-tag text-red-600 border-red-200 bg-red-50"><i class="fas fa-chart-line mr-1"></i>시장 공포 지수 (VIX)</span>
+</div>
+</div>
+<!-- Chart Box -->
+<div class="chart-box">
+<div class="section-title">
+<i class="fas fa-chart-area"></i>
+<span>참고 지표: 시장 변동성 지수 (VIX)</span>
 </div>
 <div class="chart-image-container">
 <img alt="VIX Index Chart showing spike in 2020" class="chart-image" src="assets/images/vix지수.jpg"/>

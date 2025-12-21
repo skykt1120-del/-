@@ -1,0 +1,14 @@
+{
+  "name": "portfolio-extractor",
+  "version": "1.0.0",
+  "description": "Extract strategy1-1 thumbnail as JPG",
+  "main": "extract_strategy1.js",
+  "scripts": {
+    "extract": "node extract_strategy1.js"
+  },
+  "dependencies": {
+    "puppeteer": "^21.0.0"
+  }
+}
+
+
