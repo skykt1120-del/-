@@ -1493,7 +1493,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 </div>
 </body>
-</html>`,
+</html></html>`,
         7: `<!DOCTYPE html>
 
 <html lang="ko">
@@ -1591,7 +1591,7 @@ document.addEventListener("DOMContentLoaded", () => {
             font-size: 15px;
         }
         .criteria-list li::before {
-            content: '\\f00c';
+            content: '00c';
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             position: absolute;
@@ -1823,7 +1823,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     </script>
 </body>
-</html>`,
+</html></html>`,
         8: `<!DOCTYPE html>
 
 <html lang="ko">
@@ -1980,7 +1980,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- Content -->
 <div class="content-wrapper">
 <div class="narrative-container">
-<div class="quote-deco">"</div>
+<div class="quote-deco">“</div>
 <div class="text-block">
 <p>한 시각장애인 고객이 투자일임사를 통해 문의를 보내왔습니다.</p>
 <div class="quote-text">
@@ -2023,7 +2023,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 </div>
 </body>
-</html>`
+</html></html></html>`
     };
 
     // 전략1 파일 내용을 객체로 저장
@@ -3939,7 +3939,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>전략 판단 ② 전략 패키지</title>
+<title>Chapter 2. 분석 과정과 의사결정 기여</title>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
@@ -3949,10 +3949,6 @@ document.addEventListener("DOMContentLoaded", () => {
             margin: 0;
             padding: 0;
             background-color: #f3f4f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
         }
         .slide-container {
             width: 1280px;
@@ -3962,299 +3958,368 @@ document.addEventListener("DOMContentLoaded", () => {
             overflow: hidden;
             display: flex;
         }
-
-        /* Sidebar Styling */
+        /* Left Sidebar */
         .sidebar {
-            width: 260px;
-            background-color: #1e293b; /* Slate-800 */
+            width: 280px;
+            background-color: #051c2c;
             color: #ffffff;
             display: flex;
             flex-direction: column;
-            padding: 40px 30px;
+            padding: 60px 40px;
             flex-shrink: 0;
-            z-index: 10;
         }
-        
-        .logo-area {
-            font-size: 18px;
+        .chapter-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #9ca3af;
+            margin-bottom: 16px;
             font-weight: 700;
-            margin-bottom: 60px;
-            color: #94a3b8; /* Slate-400 */
-            letter-spacing: -0.02em;
         }
-
-        .nav-list {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
+        .chapter-title {
+            font-size: 32px;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 40px;
+            color: #ffffff;
         }
-
         .nav-item {
             display: flex;
             align-items: center;
-            color: #64748b; /* Slate-500 */
-            font-size: 15px;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            margin-bottom: 24px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
         }
-
         .nav-item.active {
-            color: #ffffff;
+            opacity: 1;
+            color: #60a5fa;
+        }
+        .nav-number {
+            font-size: 14px;
             font-weight: 700;
+            margin-right: 12px;
+            width: 20px;
+        }
+        .nav-text {
+            font-size: 16px;
+            font-weight: 500;
         }
         
-        .nav-item.active .nav-icon {
-            background-color: #3b82f6; /* Blue-500 */
-            border-color: #3b82f6;
-            color: white;
-        }
-
-        .nav-icon {
-            width: 24px;
-            height: 24px;
-            border: 2px solid #475569;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 10px;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
-
-        /* Main Content Styling */
+        /* Main Content */
         .main-content {
             flex: 1;
-            background-color: #f8fafc; /* Slate-50 */
-            padding: 50px 60px;
+            padding: 50px 70px;
+            background-color: #f8fafc;
             display: flex;
             flex-direction: column;
         }
-
-        .header-area {
-            margin-bottom: 40px;
+        .page-header {
+            margin-bottom: 24px;
             border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 20px;
+            padding-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
         }
-
-        .chapter-title {
-            font-size: 14px;
-            color: #64748b;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 8px;
-        }
-
         .page-title {
-            font-size: 32px;
+            font-size: 26px;
             font-weight: 800;
-            color: #0f172a; /* Slate-900 */
-            letter-spacing: -0.03em;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+        }
+        .page-subtitle {
+            font-size: 16px;
+            color: #64748b;
+            font-weight: 500;
         }
 
-        /* Diagram Area */
-        .diagram-area {
+        /* Content Layout */
+        .content-body {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex: 1;
+        }
+
+        /* 1. Top Section: Analysis & News */
+        .top-row {
+            display: flex;
+            gap: 20px;
+            height: 240px;
+        }
+        
+        /* Analysis Box */
+        .analysis-container {
+            flex: 1.2;
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+        }
+        .box-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 16px;
+        }
+        .box-header i {
+            margin-right: 8px;
+            color: #3b82f6;
+        }
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            flex: 1;
+        }
+        .data-point {
+            background-color: #f8fafc;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: none;
+        }
+        .data-label {
+            font-size: 12px;
+            color: #64748b;
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+        .data-value {
+            font-size: 14px;
+            color: #0f172a;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+        .insight-box {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+            border: 1px solid #e5e7eb;
+        }
+        .insight-text {
+            font-size: 13px;
+            color: #1e293b;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        /* News Box */
+        .news-container {
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            gap: 12px;
+            height: 100%;
+        }
+        .news-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
             position: relative;
+            padding-left: 20px;
+            min-height: 0;
+        }
+        .news-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 12px;
+            bottom: 12px;
+            width: 4px;
+            background-color: transparent;
+            border-radius: 0 4px 4px 0;
+        }
+        .news-card.highlight::before {
+            background-color: transparent;
+        }
+        .news-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+        .news-meta {
+            font-size: 9px;
+            color: #94a3b8;
+            display: flex;
+            justify-content: space-between;
+        }
+        .news-snippet {
+            font-size: 10px;
+            color: #64748b;
+            margin-top: 6px;
+            line-height: 1.4;
         }
 
-        .strategy-flow {
+        /* 2. Middle Section: Pivot Banner */
+        .pivot-banner {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
-        }
-
-        /* Step 1: Before */
-        .step-before {
-            width: 200px;
-            padding: 24px;
-            background-color: #f1f5f9;
-            border: 1px dashed #94a3b8;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            color: #64748b;
-        }
-
-        .step-label {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            letter-spacing: 0.05em;
-        }
-
-        .step-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #475569;
-        }
-
-        .step-desc {
-            font-size: 13px;
-            line-height: 1.4;
-        }
-
-        /* Step 2: Package (Main) */
-        .step-package {
-            flex: 1;
-            background-color: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            background-color: white; /* Changed to white for cleaner look */
+            border-radius: 50px; /* Pill shape */
+            padding: 10px 30px;
+            border: 2px solid #e2e8f0;
             position: relative;
-            display: flex;
-            flex-direction: column;
-            z-index: 1;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        /* Background gradient effect */
+        .pivot-banner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            right: 0;
+            background-color: transparent;
+            z-index: 0;
         }
         
-        .step-package::before {
-            content: "STRATEGIC PACKAGE";
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #1e293b;
-            color: white;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 12px;
-            letter-spacing: 0.1em;
-        }
-
-        .package-content {
+        .pivot-side {
+            position: relative;
+            z-index: 1;
             display: flex;
-            gap: 20px;
             align-items: center;
-        }
-
-        .package-card {
+            gap: 12px;
             flex: 1;
-            background-color: #f8fafc;
-            border-radius: 12px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            transition: all 0.3s;
-            border: 1px solid #e2e8f0;
         }
-
-        .package-card.mobile {
-            background-color: #eff6ff;
-            border-color: #bfdbfe;
+        .pivot-side.right {
+            justify-content: flex-end;
         }
-
-        .package-card.alliance {
-            background-color: #eef2ff;
-            border-color: #c7d2fe;
+        .pivot-label {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 700;
+            text-transform: uppercase;
         }
-
-        .card-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            margin-bottom: 16px;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .mobile .card-icon { color: #3b82f6; }
-        .alliance .card-icon { color: #6366f1; }
-
-        .card-title {
+        .pivot-text {
             font-size: 16px;
             font-weight: 800;
-            margin-bottom: 8px;
+            color: #475569;
+        }
+        .pivot-side.right .pivot-text {
             color: #1e293b;
         }
-
-        .card-desc {
-            font-size: 13px;
-            color: #475569;
-            line-height: 1.4;
-            word-break: keep-all;
+        .pivot-arrow {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            background-color: transparent;
+            color: #1e293b;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            border: 2px solid #e5e7eb;
         }
 
-        .plus-sign {
-            font-size: 24px;
-            color: #94a3b8;
-            font-weight: 300;
-        }
-
-        /* Step 3: Result */
-        .step-result {
-            width: 220px;
-            padding: 24px;
-            background-color: #1e293b;
+        /* 3. Bottom Section: Flow & Contribution */
+        .bottom-row {
+            flex: 1;
+            background-color: white;
             border-radius: 12px;
+            padding: 20px 24px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        .flow-process {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            padding-top: 8px;
+        }
+        /* Connecting Line */
+        .flow-process::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 60px;
+            right: 60px;
+            height: 2px;
+            background-color: #e2e8f0;
+            z-index: 0;
+        }
+        
+        .process-step {
+            position: relative;
+            z-index: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 22%;
             text-align: center;
-            color: white;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-
-        .result-icon {
-            width: 48px;
-            height: 48px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+        .step-icon {
+            width: 44px;
+            height: 44px;
+            background-color: white;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
             display: flex;
+            align-items: center;
             justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            margin-bottom: 16px;
-            color: #60a5fa;
+            font-size: 18px;
+            color: #64748b;
+            margin-bottom: 8px;
+            transition: all 0.3s;
         }
-
-        /* Arrows */
-        .flow-arrow {
-            color: #cbd5e1;
-            font-size: 20px;
+        .process-step:hover .step-icon {
+            border-color: #e5e7eb;
+            color: #1e293b;
+            background-color: #ffffff;
+            transform: translateY(-2px);
         }
-
-        /* Bottom Note */
-        .strategy-note {
-            margin-top: 30px;
-            background-color: #f1f5f9;
-            border-radius: 8px;
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
+        .process-step:last-child .step-icon {
+            background-color: #ffffff;
+            border-color: #e5e7eb;
+            color: #1e293b;
         }
-
-        .note-tag {
-            background-color: #3b82f6;
-            color: white;
-            font-size: 12px;
-            font-weight: 700;
-            padding: 4px 8px;
-            border-radius: 4px;
-            white-space: nowrap;
-        }
-
-        .note-text {
+        
+        .step-title {
             font-size: 14px;
-            color: #475569;
-            font-weight: 500;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+        .step-desc {
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.3;
+            background-color: #f8fafc;
+            padding: 6px 8px;
+            border-radius: 6px;
+            width: 100%;
+        }
+        .step-desc p {
+            margin: 0;
+            line-height: 1.3;
+        }
+        .step-desc p + p {
+            margin-top: 4px;
         }
 
     </style>
@@ -4263,113 +4328,155 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="slide-container">
 <!-- Sidebar -->
 <aside class="sidebar">
-<div class="logo-area">
-<p>PORTFOLIO</p>
-</div>
-<nav class="nav-list">
+<div class="chapter-label">Current Chapter</div>
+<h1 class="chapter-title">전략 옵션과<br/>최종 선택</h1>
+<div class="nav-group">
 <div class="nav-item">
-<div class="nav-icon"><i class="fas fa-search"></i></div>
-<span>01. Problem Definition</span>
+<span class="nav-number">01</span>
+<span class="nav-text">Context &amp; Diagnosis</span>
 </div>
 <div class="nav-item active">
-<div class="nav-icon"><i class="fas fa-chess-knight"></i></div>
-<span>02. Strategic Decision</span>
+<span class="nav-number">02</span>
+<span class="nav-text">Strategic Choice</span>
 </div>
 <div class="nav-item">
-<div class="nav-icon"><i class="fas fa-mobile-screen"></i></div>
-<span>03. Execution: Mobile</span>
+<span class="nav-number">03</span>
+<span class="nav-text">Fundraising Execution</span>
 </div>
 <div class="nav-item">
-<div class="nav-icon"><i class="fas fa-handshake"></i></div>
-<span>04. Execution: Alliance</span>
+<span class="nav-number">04</span>
+<span class="nav-text">Results &amp; Impact</span>
 </div>
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-chart-line"></i></div>
-<span>05. Result &amp; Retro</span>
 </div>
-</nav>
 </aside>
 <!-- Main Content -->
 <main class="main-content">
-<!-- Header -->
-<header class="header-area">
-<p class="chapter-title">Chapter 02. 전략 판단</p>
-<h1 class="page-title">위기 돌파를 위한 통합 전략 패키지 (Strategic Package)</h1>
+<header class="page-header">
+<h2 class="page-title">
+<i class="fas fa-magnifying-glass-chart text-blue-600 mr-3"></i>
+<p>데이터 기반 분석을 통한 과감한 전략적 피보팅</p>
+</h2>
+<span class="page-subtitle">Analysis &amp; Decision Making</span>
 </header>
-<!-- Diagram Area -->
-<div class="diagram-area">
-<div class="strategy-flow">
-<!-- 1. Current State -->
-<div class="step-before">
-<span class="step-label">AS-IS</span>
-<div style="font-size: 32px; margin-bottom: 10px; color: #94a3b8;"><i class="fas fa-user-xmark"></i></div>
-<p class="step-title">B2C 직접 영업</p>
-<p class="step-desc">규제 리스크 및<br/>고객 이탈 가속화</p>
+<div class="content-body">
+<!-- 1. Top Section -->
+<div class="top-row">
+<!-- Analysis Box -->
+<div class="analysis-container">
+<div class="box-header">
+<i class="fas fa-chart-pie"></i> 현황 분석 및 시장 기회 포착
+                    </div>
+<div class="analysis-grid">
+<div class="data-point">
+<span class="data-label">Runway / 재무</span>
+<p class="data-value">대표자 가수금 의존<br/>유효 버티기 기간 산출 불가</p>
 </div>
-<!-- Arrow -->
-<div class="flow-arrow">
-<i class="fas fa-chevron-right"></i>
-</div>
-<!-- 2. Package (Main) -->
-<div class="step-package">
-<div class="package-content">
-<!-- Card 1: Mobile -->
-<div class="package-card mobile">
-<div class="card-icon">
-<i class="fas fa-mobile-screen-button"></i>
-</div>
-<p class="card-title">Mobile Transformation</p>
-<p class="card-desc">언제 어디서나 접근 가능한<br/>앱 기반 서비스로 전환</p>
-</div>
-<!-- Plus -->
-<div class="plus-sign">
-<i class="fas fa-plus"></i>
-</div>
-<!-- Card 2: Alliance -->
-<div class="package-card alliance">
-<div class="card-icon">
-<i class="fas fa-handshake-simple"></i>
-</div>
-<p class="card-title">Strategic Alliance</p>
-<p class="card-desc">제도권 금융사의 라이선스와<br/>신뢰도를 레버리지</p>
+<div class="data-point">
+<span class="data-label">매출 구조 / 한계</span>
+<p class="data-value">단일 프로그램 판매<br/>평균 객단가 약 100만 원</p>
 </div>
 </div>
-</div>
-<!-- Arrow -->
-<div class="flow-arrow">
-<i class="fas fa-arrow-right-long"></i>
-</div>
-<!-- 3. Result -->
-<div class="step-result">
-<span class="step-label" style="color: #94a3b8;">TO-BE</span>
-<div class="result-icon">
-<i class="fas fa-users-gear"></i>
-</div>
-<p class="step-title" style="color: white; margin-bottom: 4px;">공급형 모델 전환</p>
-<p style="font-size: 12px; color: #cbd5e1;">(B2B2C)</p>
-<div style="width: 40px; height: 2px; background-color: #475569; margin: 12px 0;"></div>
-<p class="step-desc" style="color: #cbd5e1;">사업 리스크 해소<br/>&amp; 안정적 수익 확보</p>
+<div class="insight-box">
+<p class="insight-text">
+<i class="fas fa-lightbulb mr-2"></i><strong>Key Insight:</strong> 
+                            시장 변동성 확대 속에서 '안정적 수익률'을 입증한 로보어드바이저의 투자가치 확인 (예적금 대비 우월)
+                        </p>
 </div>
 </div>
-<!-- Bottom Note -->
-<div class="strategy-note">
-<span class="note-tag">Synergy Effect</span>
-<p class="note-text">
-                        개별 추진 시 한계가 명확한 두 과제를 <span style="color: #1e293b; font-weight: 700; text-decoration: underline;">단일 패키지로 동시 추진</span>하여 상호 보완 효과 극대화
-                    </p>
+<!-- News Box -->
+<div class="news-container">
+<div class="news-card highlight">
+<h3 class="news-title">4대 은행 로보어드바이저 수익률,<br/>예적금보다 3배 높다</h3>
+<div class="news-snippet">
+<p>은행권 RA 펀드 평균 수익률 2.92% (vs 수신금리 0.81%). 불확실성 시대의 투자 대안 부상.</p>
+</div>
+<div class="news-meta mt-2">
+<span>이코노믹리뷰</span>
+<span>2020.10.21</span>
+</div>
+</div>
+<div class="news-card">
+<h3 class="news-title">대신증권, 장기투자?<br/>低보수 로보어드바이저가 답</h3>
+<div class="news-snippet">
+<p>총보수율 0.137%의 저렴한 비용 구조. 성과보수 체계로 장기 투자 수단으로서 효용성 검증.</p>
+</div>
+<div class="news-meta mt-2">
+<span>대신증권 보도자료</span>
+<span>2019.07.25</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 2. Pivot Banner -->
+<div class="pivot-banner">
+<div class="pivot-side">
+<span class="pivot-label">Before</span>
+<span class="pivot-text">아이템 중심 성장 전략</span>
+</div>
+<div class="pivot-arrow">
+<i class="fas fa-arrow-right"></i>
+</div>
+<div class="pivot-side right">
+<span class="pivot-text">투자 유치 중심 생존 전략</span>
+<span class="pivot-label">After</span>
+</div>
+</div>
+<!-- 3. Bottom Section: Decision Flow -->
+<div class="bottom-row">
+<div class="box-header" style="margin-bottom: 20px;">
+<i class="fas fa-project-diagram"></i> 의사결정 프로세스 및 기여
+                </div>
+<div class="flow-process">
+<!-- Step 1 -->
+<div class="process-step">
+<div class="step-icon"><i class="fas fa-search-dollar"></i></div>
+<h4 class="step-title">분석 (Analysis)</h4>
+<div class="step-desc">
+<p>Runway 정밀 진단</p>
+<p>시장 수익률 비교</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="process-step">
+<div class="step-icon"><i class="fas fa-comments-dollar"></i></div>
+<h4 class="step-title">제안 (Proposal)</h4>
+<div class="step-desc">
+<p>전략 방향 직접 제안</p>
+<p>재무/시장 근거 제시</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="process-step">
+<div class="step-icon"><i class="fas fa-map"></i></div>
+<h4 class="step-title">설계 (Design)</h4>
+<div class="step-desc">
+<p>실행 로드맵 설계</p>
+<p>투트랙(Two-Track) 구조</p>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="process-step">
+<div class="step-icon"><i class="fas fa-handshake"></i></div>
+<h4 class="step-title">실행 (Action)</h4>
+<div class="step-desc">
+<p>외부 커뮤니케이션</p>
+<p>가치 평가 및 협상</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </main>
 </div>
 </body>
-</html>`,
+</html></html>`,
         7: `<!DOCTYPE html>
 
 <html lang="ko">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>실행 방향 - 금융사 제휴 전략</title>
+<title>Chapter 3. 실행, 협업, 그리고 결과</title>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
@@ -4379,10 +4486,6 @@ document.addEventListener("DOMContentLoaded", () => {
             margin: 0;
             padding: 0;
             background-color: #f3f4f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
         }
         .slide-container {
             width: 1280px;
@@ -4392,422 +4495,415 @@ document.addEventListener("DOMContentLoaded", () => {
             overflow: hidden;
             display: flex;
         }
-
-        /* Sidebar Styling */
+        /* Left Sidebar */
         .sidebar {
-            width: 260px;
-            background-color: #1e293b; /* Slate-800 */
+            width: 280px;
+            background-color: #051c2c;
             color: #ffffff;
             display: flex;
             flex-direction: column;
-            padding: 40px 30px;
+            padding: 60px 40px;
             flex-shrink: 0;
-            z-index: 10;
         }
-        
-        .logo-area {
-            font-size: 18px;
+        .chapter-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #9ca3af;
+            margin-bottom: 16px;
             font-weight: 700;
-            margin-bottom: 60px;
-            color: #94a3b8; /* Slate-400 */
-            letter-spacing: -0.02em;
         }
-
-        .nav-list {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
+        .chapter-title {
+            font-size: 32px;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 40px;
+            color: #ffffff;
         }
-
         .nav-item {
             display: flex;
             align-items: center;
-            color: #64748b; /* Slate-500 */
-            font-size: 15px;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            margin-bottom: 24px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
         }
-
         .nav-item.active {
-            color: #ffffff;
+            opacity: 1;
+            color: #60a5fa;
+        }
+        .nav-number {
+            font-size: 14px;
             font-weight: 700;
+            margin-right: 12px;
+            width: 20px;
+        }
+        .nav-text {
+            font-size: 16px;
+            font-weight: 500;
         }
         
-        .nav-item.active .nav-icon {
-            background-color: #3b82f6; /* Blue-500 */
-            border-color: #3b82f6;
-            color: white;
-        }
-
-        .nav-icon {
-            width: 24px;
-            height: 24px;
-            border: 2px solid #475569;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 10px;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
-
-        /* Main Content Styling */
+        /* Main Content */
         .main-content {
             flex: 1;
-            background-color: #f8fafc; /* Slate-50 */
-            padding: 40px 50px;
+            padding: 30px 50px;
+            background-color: #f8fafc;
             display: flex;
             flex-direction: column;
         }
-
-        .header-area {
-            margin-bottom: 24px;
-            padding-bottom: 12px;
+        .page-header {
+            margin-bottom: 18px;
             border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
         }
-
-        .chapter-title {
+        .page-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+        }
+        .page-subtitle {
             font-size: 14px;
             color: #64748b;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 8px;
+            font-weight: 500;
         }
 
-        .page-title {
-            font-size: 32px;
-            font-weight: 800;
-            color: #0f172a; /* Slate-900 */
-            letter-spacing: -0.03em;
-        }
-
-        /* Content Layout */
-        .content-container {
+        /* 2x2 Grid Layout */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 18px;
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
         }
 
-        /* Section 1: Target Selection (Upper) */
-        .selection-section {
-            flex: 1;
+        /* Card Styles */
+        .result-card {
             background-color: white;
             border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            padding: 18px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             border: 1px solid #e2e8f0;
             display: flex;
             flex-direction: column;
         }
-
-        .section-header {
+        .card-header {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
-            font-size: 16px;
-            font-weight: 700;
-            color: #334155;
-            border-left: 4px solid #3b82f6;
-            padding-left: 12px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f1f5f9;
         }
-
-        .branch-diagram {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            flex: 1;
-        }
-
-        .branch-node {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            z-index: 2;
-            width: 160px;
-            background-color: white;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            padding: 12px;
-            transition: all 0.3s;
-        }
-
-        .branch-node.active {
-            border-color: #3b82f6;
-            background-color: #eff6ff;
-            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1);
-        }
-
-        .branch-node.final {
-            background-color: #1e293b;
-            color: white;
-            border-color: #1e293b;
-        }
-
-        .node-icon {
-            font-size: 20px;
-            margin-bottom: 8px;
-            color: #64748b;
-        }
-
-        .active .node-icon { color: #3b82f6; }
-        .final .node-icon { color: #60a5fa; }
-
-        .node-title {
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .node-desc {
-            font-size: 11px;
-            color: #64748b;
-            line-height: 1.3;
-        }
-
-        .final .node-desc { color: #cbd5e1; }
-
-        .branch-connector {
-            flex: 1;
-            height: 2px;
-            background-color: #cbd5e1;
-            position: relative;
-            margin: 0 10px;
-        }
-
-        .branch-connector::after {
-            content: "";
-            position: absolute;
-            right: 0;
-            top: -3px;
-            width: 0;
-            height: 0;
-            border-left: 6px solid #cbd5e1;
-            border-top: 4px solid transparent;
-            border-bottom: 4px solid transparent;
-        }
-
-        .branch-connector.active {
-            background-color: #3b82f6;
-        }
-        
-        .branch-connector.active::after {
-            border-left-color: #3b82f6;
-        }
-
-        /* Filter Badges */
-        .filter-badge {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #64748b;
-            color: white;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 10px;
-            white-space: nowrap;
-        }
-
-        /* Section 2: Timeline (Lower) */
-        .process-section {
-            height: 220px;
-            display: flex;
-            gap: 20px;
-        }
-
-        .timeline-card {
-            flex: 1;
-            background-color: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-        }
-
-        .timeline-number {
+        .card-icon {
             width: 28px;
             height: 28px;
-            background-color: #f1f5f9;
-            color: #64748b;
-            border-radius: 50%;
+            border-radius: 6px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 12px;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 14px;
         }
-
-        .timeline-card:last-child {
-            background-color: #eff6ff;
-            border-color: #bfdbfe;
-        }
-
-        .timeline-card:last-child .timeline-number {
-            background-color: #3b82f6;
-            color: white;
-        }
-
-        .timeline-title {
-            font-size: 15px;
+        .card-title {
+            font-size: 16px;
             font-weight: 700;
             color: #1e293b;
+        }
+
+        /* 1. Quantitative Results */
+        .icon-growth { background-color: #eff6ff; color: #3b82f6; }
+        .stat-row {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 12px;
+        }
+        .stat-value {
+            font-size: 36px;
+            font-weight: 900;
+            color: #1e293b;
+            line-height: 1;
+            margin-right: 6px;
+        }
+        .stat-unit {
+            font-size: 15px;
+            color: #64748b;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+        .growth-badge {
+            background-color: transparent;
+            color: #1e293b;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-left: auto;
+            margin-bottom: 6px;
+        }
+        .sub-stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: auto;
+        }
+        .sub-stat-box {
+            background-color: #f8fafc;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .sub-stat-label { font-size: 11px; color: #64748b; display: block; margin-bottom: 3px; }
+        .sub-stat-text { font-size: 13px; font-weight: 700; color: #334155; display: block; line-height: 1.3; }
+
+        /* 2. Execution Design */
+        .icon-design { background-color: transparent; color: #9333ea; }
+        .design-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            height: 100%;
+        }
+        .design-item {
+            display: flex;
+            align-items: center;
+            background-color: #f3f4f6;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #4b5563;
+        }
+        .design-icon-small {
+            color: #9333ea;
+            margin-right: 10px;
+            width: 18px;
+            text-align: center;
+        }
+
+        /* 3. Collaboration */
+        .icon-collab { background-color: transparent; color: #16a34a; }
+        .collab-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .collab-item {
+            display: flex;
+            align-items: flex-start;
             margin-bottom: 8px;
         }
-
-        .timeline-content {
+        .collab-check {
+            color: #16a34a;
+            margin-right: 8px;
+            margin-top: 3px;
+            font-size: 12px;
+        }
+        .collab-text strong {
+            color: #334155;
+            font-weight: 700;
+            display: block;
             font-size: 13px;
-            color: #475569;
-            line-height: 1.5;
+            margin-bottom: 2px;
+        }
+        .collab-text p {
+            color: #64748b;
+            font-size: 12px;
+            margin: 0;
+            line-height: 1.4;
+        }
+        .quote-box {
+            margin-top: auto;
+            background-color: #ffffff;
+            border-left: none;
+            padding: 8px;
+            font-size: 12px;
+            font-style: italic;
+            color: #1e293b;
+            font-weight: 600;
         }
 
-        .timeline-arrow {
-            position: absolute;
-            right: -14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #cbd5e1;
-            font-size: 16px;
-            z-index: 5;
+        /* 4. Qualitative Results */
+        .icon-qualitative { background-color: transparent; color: #ea580c; }
+        .qual-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            height: 100%;
         }
-
+        .qual-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 12px 6px;
+            border: 1px solid #e5e7eb;
+        }
+        .qual-icon {
+            font-size: 18px;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+        .qual-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 3px;
+        }
+        .qual-desc {
+            font-size: 11px;
+            color: #64748b;
+        }
     </style>
 </head>
 <body>
 <div class="slide-container">
 <!-- Sidebar -->
 <aside class="sidebar">
-<div class="logo-area">
-<p>PORTFOLIO</p>
-</div>
-<nav class="nav-list">
+<div class="chapter-label">Chapter 3</div>
+<h1 class="chapter-title">실행, 협업,<br/>그리고 결과</h1>
+<div class="nav-group">
 <div class="nav-item">
-<div class="nav-icon"><i class="fas fa-search"></i></div>
-<span>01. Problem Definition</span>
-</div>
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-chess-knight"></i></div>
-<span>02. Strategic Decision</span>
+<span class="nav-number">01</span>
+<span class="nav-text">Context &amp; Diagnosis</span>
 </div>
 <div class="nav-item">
-<div class="nav-icon"><i class="fas fa-mobile-screen"></i></div>
-<span>03. Execution: Mobile</span>
+<span class="nav-number">02</span>
+<span class="nav-text">Strategic Response</span>
 </div>
 <div class="nav-item active">
-<div class="nav-icon"><i class="fas fa-handshake"></i></div>
-<span>04. Execution: Alliance</span>
+<span class="nav-number">03</span>
+<span class="nav-text">Execution &amp; Results</span>
 </div>
 <div class="nav-item">
-<div class="nav-icon"><i class="fas fa-chart-line"></i></div>
-<span>05. Result &amp; Retro</span>
+<span class="nav-number">04</span>
+<span class="nav-text">Reflection</span>
 </div>
-</nav>
+</div>
 </aside>
 <!-- Main Content -->
 <main class="main-content">
-<!-- Header -->
-<header class="header-area">
-<p class="chapter-title">Chapter 04. 실행: 금융사 제휴</p>
-<h1 class="page-title">최적 파트너 선정 기준 및 제휴 추진 프로세스</h1>
+<header class="page-header">
+<h2 class="page-title">
+<i class="fas fa-flag-checkered text-blue-600 mr-3"></i>
+                전략적 실행을 통한 투자 유치 및 성장 기반 확보
+            </h2>
+<span class="page-subtitle">Execution, Collaboration &amp; Outcomes</span>
 </header>
-<!-- Content Container -->
-<div class="content-container">
-<!-- Upper: Target Selection Criteria -->
-<div class="selection-section">
-<div class="section-header">
-<span>Target Selection Criteria (대상 선정 기준)</span>
+<div class="content-grid">
+<!-- 1. Quantitative Results -->
+<div class="result-card">
+<div class="card-header">
+<div class="card-icon icon-growth"><i class="fas fa-coins"></i></div>
+<h3 class="card-title">정량적 성과 (Quantitative)</h3>
 </div>
-<div class="branch-diagram">
-<!-- Node 1: Pool -->
-<div class="branch-node active">
-<div class="node-icon"><i class="fas fa-building-columns"></i></div>
-<p class="node-title">전체 금융사</p>
-<p class="node-desc">은행, 증권, 운용사 등<br/>제도권 금융기관 Pool</p>
+<div class="stat-row">
+<span class="stat-value">17억</span>
+<span class="stat-unit">원</span>
+<div class="growth-badge">총 투자 유치</div>
 </div>
-<!-- Connector -->
-<div class="branch-connector active">
-<span class="filter-badge">Filter 01. 라이선스</span>
+<div class="sub-stat-grid">
+<div class="sub-stat-box">
+<span class="sub-stat-label">단계별 유치 금액</span>
+<span class="sub-stat-text text-blue-700">3억 / 9억 / 5억</span>
 </div>
-<!-- Node 2: License -->
-<div class="branch-node active">
-<div class="node-icon"><i class="fas fa-certificate"></i></div>
-<p class="node-title">투자일임업 보유</p>
-<p class="node-desc">로보어드바이저 서비스<br/>필수 자격 보유사</p>
-</div>
-<!-- Connector -->
-<div class="branch-connector active">
-<span class="filter-badge">Filter 02. 비즈니스 니즈</span>
-</div>
-<!-- Node 3: Needs -->
-<div class="branch-node active">
-<div class="node-icon"><i class="fas fa-chart-line-down"></i></div>
-<p class="node-title">성과 부진/고민</p>
-<p class="node-desc">기존 로보어드바이저<br/>수익률 정체로 고민 중</p>
-</div>
-<!-- Connector -->
-<div class="branch-connector active">
-<span class="filter-badge" style="background-color: #3b82f6;">Final Selection</span>
-</div>
-<!-- Node 4: Final -->
-<div class="branch-node final">
-<div class="node-icon"><i class="fas fa-bullseye"></i></div>
-<p class="node-title">Target A 그룹</p>
-<p class="node-desc">디지털 돌파구가 필요한<br/>전통 자산운용사</p>
+<div class="sub-stat-box">
+<span class="sub-stat-label">자본금 변화</span>
+<span class="sub-stat-text text-blue-700">100만 원 → 9억 원</span>
 </div>
 </div>
 </div>
-<!-- Lower: Process Timeline -->
-<div class="process-section">
-<!-- Step 1 -->
-<div class="timeline-card">
-<div class="timeline-number">01</div>
-<p class="timeline-title">제안 및 타겟팅</p>
-<div class="timeline-content">
-<p>• Target 금융사 리스트업</p>
-<p>• 맞춤형 제안서 작성</p>
-<p>• 제안 메일 발송 및 접촉</p>
+<!-- 2. Execution Design -->
+<div class="result-card">
+<div class="card-header">
+<div class="card-icon icon-design"><i class="fas fa-compass-drafting"></i></div>
+<h3 class="card-title">실행 설계 (Execution Design)</h3>
 </div>
-<i class="fas fa-chevron-right timeline-arrow"></i>
+<div class="design-list">
+<div class="design-item">
+<i class="fas fa-landmark design-icon-small"></i>
+<span>금융 정책 환경과 연계한 산업 성장성 강조</span>
 </div>
-<!-- Step 2 -->
-<div class="timeline-card">
-<div class="timeline-number">02</div>
-<p class="timeline-title">미팅 및 요건 정의</p>
-<div class="timeline-content">
-<p>• 다수 금융사 미팅 진행</p>
-<p>• 실무진/임원진 Needs 파악</p>
-<p>• 제휴 모델 및 요건 구체화</p>
+<div class="design-item">
+<i class="fas fa-file-powerpoint design-icon-small"></i>
+<span>법인 설립 전 테스트 결과 중심 IR 자료 구성</span>
 </div>
-<i class="fas fa-chevron-right timeline-arrow"></i>
+<div class="design-item">
+<i class="fas fa-users-gear design-icon-small"></i>
+<span>내부 조직 역량 점검 및 보완 계획 수립</span>
 </div>
-<!-- Step 3 -->
-<div class="timeline-card">
-<div class="timeline-number">03</div>
-<p class="timeline-title">협의 및 우선협상</p>
-<div class="timeline-content">
-<p>• 가장 적극적인 운용사 선정</p>
-<p>• 독점 제휴 조건 협의</p>
-<p>• 수익 배분 및 R&amp;R 조율</p>
+<div class="design-item">
+<i class="fas fa-user-tie design-icon-small"></i>
+<span>CEO 중심 대외 투자 유치 활동 전개</span>
 </div>
-<i class="fas fa-chevron-right timeline-arrow"></i>
 </div>
-<!-- Step 4 -->
-<div class="timeline-card">
-<div class="timeline-number"><i class="fas fa-check"></i></div>
-<p class="timeline-title" style="color: #1e40af;">독점 제휴 체결</p>
-<div class="timeline-content" style="color: #1e3a8a;">
-<p>• 라이선스 공유 계약 체결</p>
-<p>• 공동 마케팅 협약</p>
-<p>• <strong>로보어드바이저 독점 제휴</strong></p>
+</div>
+<!-- 3. Collaboration -->
+<div class="result-card">
+<div class="card-header">
+<div class="card-icon icon-collab"><i class="fas fa-handshake"></i></div>
+<h3 class="card-title">협업과 커뮤니케이션</h3>
+</div>
+<ul class="collab-list">
+<li class="collab-item">
+<i class="fas fa-check-circle collab-check"></i>
+<div class="collab-text">
+<strong>지분 희석 우려 해소</strong>
+<p>생존과 지분 희석 간의 균형 문제 제기 및 조율</p>
+</div>
+</li>
+<li class="collab-item">
+<i class="fas fa-check-circle collab-check"></i>
+<div class="collab-text">
+<strong>내부 합의 도출</strong>
+<p>경영진 및 주주 설득을 통한 만장일치 투자 유치</p>
+</div>
+</li>
+<li class="collab-item">
+<i class="fas fa-check-circle collab-check"></i>
+<div class="collab-text">
+<strong>실사(DD) 대응</strong>
+<p>투자자 커뮤니케이션 및 실사 자료 완벽 대응</p>
+</div>
+</li>
+</ul>
+<div class="quote-box">
+                    “생존 없이는 나눌 파이도 없다.”
+                </div>
+</div>
+<!-- 4. Qualitative Results -->
+<div class="result-card">
+<div class="card-header">
+<div class="card-icon icon-qualitative"><i class="fas fa-star"></i></div>
+<h3 class="card-title">정성적 성과 (Qualitative)</h3>
+</div>
+<div class="qual-grid">
+<div class="qual-item">
+<i class="fas fa-bullseye qual-icon"></i>
+<span class="qual-title">전략 가치 입증</span>
+<span class="qual-desc">전략기획 필요성 확인</span>
+</div>
+<div class="qual-item">
+<i class="fas fa-user-shield qual-icon"></i>
+<span class="qual-title">내부 신뢰 확보</span>
+<span class="qual-desc">의사결정 프로세스 정착</span>
+</div>
+<div class="qual-item">
+<i class="fas fa-network-wired qual-icon"></i>
+<span class="qual-title">조직 성장</span>
+<span class="qual-desc">4명 → 약 40명 규모</span>
+</div>
+<div class="qual-item">
+<i class="fas fa-eye qual-icon"></i>
+<span class="qual-title">시각 확장</span>
+<span class="qual-desc">외부 관점 반영 구조화</span>
 </div>
 </div>
 </div>
@@ -4815,14 +4911,14 @@ document.addEventListener("DOMContentLoaded", () => {
 </main>
 </div>
 </body>
-</html>`,
+</html></html>`,
         8: `<!DOCTYPE html>
 
 <html lang="ko">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>제휴 구조 설계</title>
+<title>Chapter 4. 회고와 학습</title>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
@@ -4832,10 +4928,6 @@ document.addEventListener("DOMContentLoaded", () => {
             margin: 0;
             padding: 0;
             background-color: #f3f4f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
         }
         .slide-container {
             width: 1280px;
@@ -4845,1189 +4937,235 @@ document.addEventListener("DOMContentLoaded", () => {
             overflow: hidden;
             display: flex;
         }
-
-        /* Sidebar Styling */
+        /* Left Sidebar */
         .sidebar {
-            width: 260px;
-            background-color: #1e293b; /* Slate-800 */
+            width: 280px;
+            background-color: #051c2c;
             color: #ffffff;
             display: flex;
             flex-direction: column;
-            padding: 40px 30px;
-            flex-shrink: 0;
-            z-index: 10;
-        }
-        
-        .logo-area {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 60px;
-            color: #94a3b8; /* Slate-400 */
-            letter-spacing: -0.02em;
-        }
-
-        .nav-list {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            color: #64748b; /* Slate-500 */
-            font-size: 15px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .nav-item.active {
-            color: #ffffff;
-            font-weight: 700;
-        }
-        
-        .nav-item.active .nav-icon {
-            background-color: #3b82f6; /* Blue-500 */
-            border-color: #3b82f6;
-            color: white;
-        }
-
-        .nav-icon {
-            width: 24px;
-            height: 24px;
-            border: 2px solid #475569;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 10px;
-            margin-right: 12px;
+            padding: 60px 40px;
             flex-shrink: 0;
         }
-
-        /* Main Content Styling */
-        .main-content {
-            flex: 1;
-            background-color: #f8fafc; /* Slate-50 */
-            padding: 50px 60px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .header-area {
-            margin-bottom: 30px;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 20px;
-        }
-
-        .chapter-title {
+        .chapter-label {
             font-size: 14px;
-            color: #64748b;
-            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 8px;
-        }
-
-        .page-title {
-            font-size: 32px;
-            font-weight: 800;
-            color: #0f172a; /* Slate-900 */
-            letter-spacing: -0.03em;
-        }
-
-        /* 3-Column Matrix Layout */
-        .matrix-container {
-            flex: 1;
-            display: flex;
-            gap: 24px;
-            align-items: stretch;
-        }
-
-        .matrix-column {
-            flex: 1;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transition: transform 0.2s;
-            border: 1px solid #e2e8f0;
-        }
-
-        .matrix-column:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Column Header */
-        .col-header {
-            padding: 24px;
-            background-color: #f8fafc;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .col-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
+            letter-spacing: 2px;
+            color: #9ca3af;
             margin-bottom: 16px;
-        }
-
-        .icon-type-1 { background-color: #eff6ff; color: #3b82f6; } /* Blue */
-        .icon-type-2 { background-color: #f0fdf4; color: #22c55e; } /* Green/Emerald */
-        .icon-type-3 { background-color: #f1f5f9; color: #64748b; } /* Slate/Gray */
-
-        .col-title {
-            font-size: 18px;
-            font-weight: 800;
-            color: #1e293b;
-            margin-bottom: 4px;
-        }
-
-        .col-subtitle {
-            font-size: 12px;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 600;
-        }
-
-        /* Column Body */
-        .col-body {
-            padding: 24px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .info-block {
-            background-color: #fff;
-            margin-bottom: 8px;
-        }
-
-        .block-title {
-            font-size: 14px;
             font-weight: 700;
-            color: #334155;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
         }
-
-        .block-title i {
-            margin-right: 8px;
-            font-size: 12px;
-            color: #94a3b8;
-        }
-
-        .block-desc {
-            font-size: 14px;
-            color: #475569;
-            line-height: 1.6;
-            padding-left: 20px;
-        }
-
-        /* Highlight Box within Column */
-        .highlight-box {
-            background-color: #f1f5f9;
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-size: 13px;
-            color: #475569;
-            margin-top: auto;
-            border-left: 3px solid #cbd5e1;
-        }
-
-        .type-1 .highlight-box { border-left-color: #3b82f6; background-color: #eff6ff; color: #1e40af; }
-        .type-2 .highlight-box { border-left-color: #22c55e; background-color: #f0fdf4; color: #166534; }
-        .type-3 .highlight-box { border-left-color: #64748b; background-color: #f8fafc; color: #334155; }
-
-        /* Bottom Summary */
-        .summary-area {
-            margin-top: 24px;
-            padding: 16px 24px;
-            background-color: #1e293b;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            color: white;
-        }
-
-        .summary-title {
-            font-weight: 700;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-        }
-
-        .summary-text {
-            font-size: 14px;
-            color: #cbd5e1;
-            margin-left: 20px;
-        }
-
-    </style>
-</head>
-<body>
-<div class="slide-container">
-<!-- Sidebar -->
-<aside class="sidebar">
-<div class="logo-area">
-<p>PORTFOLIO</p>
-</div>
-<nav class="nav-list">
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-search"></i></div>
-<span>01. Problem Definition</span>
-</div>
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-chess-knight"></i></div>
-<span>02. Strategic Decision</span>
-</div>
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-mobile-screen"></i></div>
-<span>03. Execution: Mobile</span>
-</div>
-<div class="nav-item active">
-<div class="nav-icon"><i class="fas fa-handshake"></i></div>
-<span>04. Execution: Alliance</span>
-</div>
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-chart-line"></i></div>
-<span>05. Result &amp; Retro</span>
-</div>
-</nav>
-</aside>
-<!-- Main Content -->
-<main class="main-content">
-<!-- Header -->
-<header class="header-area">
-<p class="chapter-title">Chapter 04. 실행: 제휴 구조 설계</p>
-<h1 class="page-title">지속 가능한 성장을 위한 Win-Win 제휴 구조</h1>
-</header>
-<!-- Matrix Container -->
-<div class="matrix-container">
-<!-- Column 1: Partnership Model -->
-<div class="matrix-column type-1">
-<div class="col-header">
-<div class="col-icon icon-type-1">
-<i class="fas fa-handshake-simple"></i>
-</div>
-<h2 class="col-title">제휴 형태</h2>
-<p class="col-subtitle">Partnership Structure</p>
-</div>
-<div class="col-body">
-<div class="info-block">
-<p class="block-title"><i class="fas fa-crown"></i>독점적 지위 확보</p>
-<p class="block-desc">해당 금융사 로보어드바이저 상품의 독점 개발 및 운영권 확보</p>
-</div>
-<div class="info-block">
-<p class="block-title"><i class="fas fa-user-gear"></i>운영 구조 설계</p>
-<p class="block-desc">단순 독점이 아닌, 실질적 서비스 운영이 가능한 프로세스 확립</p>
-</div>
-<div class="highlight-box">
-<p><strong>Effect:</strong> 안정적 사업 영위를 위한 배타적 사업권 확보</p>
-</div>
-</div>
-</div>
-<!-- Column 2: Profit Sharing -->
-<div class="matrix-column type-2">
-<div class="col-header">
-<div class="col-icon icon-type-2">
-<i class="fas fa-chart-pie"></i>
-</div>
-<h2 class="col-title">수익 배분</h2>
-<p class="col-subtitle">Profit Sharing Model</p>
-</div>
-<div class="col-body">
-<div class="info-block">
-<p class="block-title"><i class="fas fa-percent"></i>선취 수수료 차등</p>
-<p class="block-desc">고객 유입(Acquisition) 주체에 따라 수수료 배분 비율 조정</p>
-</div>
-<div class="info-block">
-<p class="block-title"><i class="fas fa-arrow-trend-up"></i>성과 보수 공유</p>
-<p class="block-desc">기준 수익률 초과 달성 시 발생하는 성과 보수 차등 적용</p>
-</div>
-<div class="highlight-box">
-<p><strong>Effect:</strong> 양사의 적극적 모객 및 운용 성과 달성 유인</p>
-</div>
-</div>
-</div>
-<!-- Column 3: Cost Structure -->
-<div class="matrix-column type-3">
-<div class="col-header">
-<div class="col-icon icon-type-3">
-<i class="fas fa-file-invoice-dollar"></i>
-</div>
-<h2 class="col-title">고정비 분담</h2>
-<p class="col-subtitle">Cost Allocation</p>
-</div>
-<div class="col-body">
-<div class="info-block">
-<p class="block-title"><i class="fas fa-server"></i>인프라 비용 명확화</p>
-<p class="block-desc">클라우드 서버, 데이터 사용료 등 고정비 부담 기준 수립</p>
-</div>
-<div class="info-block">
-<p class="block-title"><i class="fas fa-scale-balanced"></i>책임 소재 확립</p>
-<p class="block-desc">운영 중 발생하는 비용에 대한 귀책 및 분담 원칙 정의</p>
-</div>
-<div class="highlight-box">
-<p><strong>Effect:</strong> 불필요한 비용 분쟁 예방 및 책임 경영 강화</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Bottom Summary -->
-<div class="summary-area">
-<div class="summary-title">
-<i class="fas fa-check-circle text-blue-400 mr-2"></i>
-<span>Strategic Conclusion</span>
-</div>
-<p class="summary-text">
-                "단순 하청이 아닌, <strong>수익과 비용 리스크를 합리적으로 공유하는 파트너십</strong>을 통해 지속 가능한 사업 모델 구축"
-            </p>
-</div>
-</main>
-</div>
-</body>
-</html>`,
-        9: `<!DOCTYPE html>
-
-<html lang="ko">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>역할 분담 및 내부 조율</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f3f4f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .slide-container {
-            width: 1280px;
-            height: 720px;
-            background-color: #ffffff;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-        }
-
-        /* Sidebar Styling */
-        .sidebar {
-            width: 260px;
-            background-color: #1e293b; /* Slate-800 */
+        .chapter-title {
+            font-size: 32px;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 40px;
             color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            padding: 40px 30px;
-            flex-shrink: 0;
-            z-index: 10;
         }
-        
-        .logo-area {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 60px;
-            color: #94a3b8; /* Slate-400 */
-            letter-spacing: -0.02em;
-        }
-
-        .nav-list {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
         .nav-item {
             display: flex;
             align-items: center;
-            color: #64748b; /* Slate-500 */
-            font-size: 15px;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            margin-bottom: 24px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
         }
-
         .nav-item.active {
-            color: #ffffff;
+            opacity: 1;
+            color: #60a5fa;
+        }
+        .nav-number {
+            font-size: 14px;
             font-weight: 700;
+            margin-right: 12px;
+            width: 20px;
+        }
+        .nav-text {
+            font-size: 16px;
+            font-weight: 500;
         }
         
-        .nav-item.active .nav-icon {
-            background-color: #3b82f6; /* Blue-500 */
-            border-color: #3b82f6;
-            color: white;
-        }
-
-        .nav-icon {
-            width: 24px;
-            height: 24px;
-            border: 2px solid #475569;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 10px;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
-
-        /* Main Content Styling */
+        /* Main Content */
         .main-content {
             flex: 1;
-            background-color: #f8fafc; /* Slate-50 */
-            padding: 50px 60px;
+            padding: 50px 70px;
+            background-color: #f8fafc;
             display: flex;
             flex-direction: column;
         }
-
-        .header-area {
+        .page-header {
             margin-bottom: 30px;
             border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 20px;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
         }
-
-        .chapter-title {
-            font-size: 14px;
-            color: #64748b;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 8px;
-        }
-
         .page-title {
-            font-size: 32px;
-            font-weight: 800;
-            color: #0f172a; /* Slate-900 */
-            letter-spacing: -0.03em;
-        }
-
-        /* Role Comparison Layout */
-        .comparison-wrapper {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            gap: 40px;
-            padding: 20px 0;
-        }
-
-        /* Background Connecting Line */
-        .connector-line {
-            position: absolute;
-            top: 50%;
-            left: 10%;
-            right: 10%;
-            height: 2px;
-            background: repeating-linear-gradient(
-                to right,
-                #cbd5e1 0,
-                #cbd5e1 10px,
-                transparent 10px,
-                transparent 20px
-            );
-            z-index: 0;
-            transform: translateY(-50%);
-        }
-
-        /* Side Columns (Company & Partner) */
-        .side-col {
-            flex: 1;
-            background-color: white;
-            border-radius: 16px;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            height: 420px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
-            position: relative;
-            z-index: 1;
-        }
-
-        .side-col.left {
-            border-top: 4px solid #3b82f6; /* Blue for My Company */
-        }
-
-        .side-col.right {
-            border-top: 4px solid #64748b; /* Slate for Partner */
-        }
-
-        .col-header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 24px;
-            text-align: center;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .col-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .left .col-icon { background-color: #eff6ff; color: #3b82f6; }
-        .right .col-icon { background-color: #f1f5f9; color: #64748b; }
-
-        .col-title {
-            font-size: 18px;
+            font-size: 26px;
             font-weight: 800;
             color: #1e293b;
-            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
         }
-
-        .col-subtitle {
-            font-size: 13px;
+        .page-subtitle {
+            font-size: 16px;
             color: #64748b;
             font-weight: 500;
         }
 
-        /* Role List */
-        .role-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .role-item {
-            display: flex;
-            align-items: flex-start;
-        }
-
-        .role-item i {
-            margin-top: 4px;
-            margin-right: 12px;
-            font-size: 14px;
-        }
-
-        .left .role-item i { color: #3b82f6; }
-        .right .role-item i { color: #94a3b8; }
-
-        .role-text {
-            font-size: 15px;
-            color: #334155;
-            line-height: 1.5;
-        }
-
-        /* Center Hub Column */
-        .hub-col {
-            flex: 0 0 320px;
-            background-color: #1e293b; /* Dark Navy */
-            border-radius: 16px;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            height: 460px; /* Taller than sides */
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            position: relative;
-            z-index: 10;
-            overflow: hidden;
-            transform: translateY(-10px);
-        }
-
-        .hub-header {
-            background-color: #0f172a;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid #334155;
-        }
-
-        .hub-title {
-            color: white;
-            font-size: 18px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .hub-subtitle {
-            color: #94a3b8;
-            font-size: 12px;
-            margin-top: 4px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .hub-body {
-            padding: 30px 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            flex: 1;
-        }
-
-        .hub-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .hub-item {
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 12px 16px;
-            border-left: 3px solid #3b82f6;
-        }
-
-        .hub-item p {
-            color: #e2e8f0;
-            font-size: 14px;
-            line-height: 1.5;
-            margin: 0;
-        }
-        
-        .hub-item strong {
-            color: #60a5fa;
-            display: block;
-            font-size: 12px;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-        }
-
-        /* Arrows from Hub */
-        .hub-arrows {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 10px;
-            transform: translateY(-50%);
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .arrow-circle {
-            width: 32px;
-            height: 32px;
-            background-color: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #94a3b8;
-            font-size: 14px;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 5;
-        }
-        
-        .arrow-left { left: -16px; }
-        .arrow-right { right: -16px; }
-
-    </style>
-</head>
-<body>
-<div class="slide-container">
-<!-- Sidebar -->
-<aside class="sidebar">
-<div class="logo-area">
-<p>PORTFOLIO</p>
-</div>
-<nav class="nav-list">
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-search"></i></div>
-<span>01. Problem Definition</span>
-</div>
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-chess-knight"></i></div>
-<span>02. Strategic Decision</span>
-</div>
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-mobile-screen"></i></div>
-<span>03. Execution: Mobile</span>
-</div>
-<div class="nav-item active">
-<div class="nav-icon"><i class="fas fa-handshake"></i></div>
-<span>04. Execution: Alliance</span>
-</div>
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-chart-line"></i></div>
-<span>05. Result &amp; Retro</span>
-</div>
-</nav>
-</aside>
-<!-- Main Content -->
-<main class="main-content">
-<!-- Header -->
-<header class="header-area">
-<p class="chapter-title">Chapter 04. 실행: 역할 분담 및 조율</p>
-<h1 class="page-title">성공적 런칭을 위한 R&amp;R 구조 및 조율 전략</h1>
-</header>
-<!-- Comparison Wrapper -->
-<div class="comparison-wrapper">
-<!-- Background Line -->
-<div class="connector-line"></div>
-<!-- Left Column: Our Company -->
-<div class="side-col left">
-<div class="col-header">
-<div class="col-icon">
-<i class="fas fa-laptop-code"></i>
-</div>
-<h2 class="col-title">우리 회사</h2>
-<p class="col-subtitle">Tech &amp; Product</p>
-</div>
-<ul class="role-list">
-<li class="role-item">
-<i class="fas fa-check-circle"></i>
-<p class="role-text"><strong>서비스 고도화 기획</strong><br/>모바일 앱 UX/UI 설계 및 개발</p>
-</li>
-<li class="role-item">
-<i class="fas fa-check-circle"></i>
-<p class="role-text"><strong>기술 이슈 대응</strong><br/>서버 안정성 확보 및 인프라 관리</p>
-</li>
-<li class="role-item">
-<i class="fas fa-check-circle"></i>
-<p class="role-text"><strong>데이터 연동</strong><br/>API 연동 및 실시간 데이터 처리</p>
-</li>
-</ul>
-</div>
-<!-- Center Column: My Role (Hub) -->
-<div class="hub-col">
-<!-- Connectors -->
-<div class="arrow-circle arrow-left"><i class="fas fa-exchange-alt"></i></div>
-<div class="arrow-circle arrow-right"><i class="fas fa-exchange-alt"></i></div>
-<div class="hub-header">
-<h2 class="hub-title"><i class="fas fa-network-wired"></i> Internal Coordination</h2>
-<p class="hub-subtitle">Communication Hub</p>
-</div>
-<div class="hub-body">
-<div class="hub-list">
-<div class="hub-item">
-<p><strong>Communication</strong>투자일임사 - 개발조직 간 기술/비즈니스 언어 통역 및 조율</p>
-</div>
-<div class="hub-item">
-<p><strong>Decision Making</strong>기술적 제약과 기획 의도 사이 최적의 대안 제시 (Trade-off 조율)</p>
-</div>
-<div class="hub-item">
-<p><strong>Priority Management</strong>서비스 안정성과 런칭 일정 준수를 위한 기능 개발 우선순위 조정</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Right Column: Partner -->
-<div class="side-col right">
-<div class="col-header">
-<div class="col-icon">
-<i class="fas fa-building-columns"></i>
-</div>
-<h2 class="col-title">투자일임사</h2>
-<p class="col-subtitle">Operation &amp; Biz</p>
-</div>
-<ul class="role-list">
-<li class="role-item">
-<i class="fas fa-circle"></i>
-<p class="role-text"><strong>고객 CS</strong><br/>투자 관련 문의 응대 및 민원 처리</p>
-</li>
-<li class="role-item">
-<i class="fas fa-circle"></i>
-<p class="role-text"><strong>성과 모니터링</strong><br/>알고리즘 종목 운용 및 리밸런싱</p>
-</li>
-<li class="role-item">
-<i class="fas fa-circle"></i>
-<p class="role-text"><strong>QA 및 기획 제안</strong><br/>금융 관점의 요구사항 및 알고리즘 기획</p>
-</li>
-</ul>
-</div>
-</div>
-</main>
-</div>
-</body>
-</html>`,
-        10: `<!DOCTYPE html>
-
-<html lang="ko">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>성과 및 회고 통합</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f3f4f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .slide-container {
-            width: 1280px;
-            height: 720px;
-            background-color: #ffffff;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-        }
-
-        /* Sidebar Styling */
-        .sidebar {
-            width: 260px;
-            background-color: #1e293b; /* Slate-800 */
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            padding: 40px 30px;
-            flex-shrink: 0;
-            z-index: 10;
-        }
-        
-        .logo-area {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 60px;
-            color: #94a3b8; /* Slate-400 */
-            letter-spacing: -0.02em;
-        }
-
-        .nav-list {
+        /* Content Layout */
+        .content-body {
             display: flex;
             flex-direction: column;
             gap: 24px;
+            height: 100%;
         }
 
-        .nav-item {
-            display: flex;
-            align-items: center;
-            color: #64748b; /* Slate-500 */
-            font-size: 15px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .nav-item.active {
-            color: #ffffff;
-            font-weight: 700;
-        }
-        
-        .nav-item.active .nav-icon {
-            background-color: #3b82f6; /* Blue-500 */
-            border-color: #3b82f6;
-            color: white;
-        }
-
-        .nav-icon {
-            width: 24px;
-            height: 24px;
-            border: 2px solid #475569;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 10px;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
-
-        /* Main Content Styling */
-        .main-content {
-            flex: 1;
-            background-color: #f8fafc; /* Slate-50 */
-            padding: 40px 50px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .header-area {
-            margin-bottom: 24px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .chapter-title {
-            font-size: 14px;
-            color: #64748b;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 8px;
-        }
-
-        .page-title {
-            font-size: 32px;
-            font-weight: 800;
-            color: #0f172a; /* Slate-900 */
-            letter-spacing: -0.03em;
-        }
-
-        /* Dashboard Layout */
-        .dashboard-grid {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        /* Top Row: Metrics */
-        .metrics-row {
-            display: flex;
-            gap: 20px;
+        /* Top Row: Reflection Cards */
+        .reflection-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
             height: 240px;
         }
 
-        /* Main KPI Card */
-        .kpi-card {
-            flex: 0 0 35%;
+        .reflection-card {
             background-color: white;
             border-radius: 12px;
             padding: 30px;
-            border: 1px solid #e2e8f0;
-            border-left: 6px solid #3b82f6;
-            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-left: none;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            position: relative;
         }
 
-        .kpi-label {
-            font-size: 14px;
-            color: #64748b;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            letter-spacing: 0.05em;
+        /* Difficulty Card */
+        .card-difficulty {
+            border-left: none;
         }
-
-        .kpi-value-group {
-            display: flex;
-            align-items: baseline;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-
-        .kpi-value {
-            font-size: 72px;
-            font-weight: 900;
+        .card-difficulty .card-icon {
+            background-color: transparent;
             color: #1e293b;
-            line-height: 1;
-            letter-spacing: -2px;
         }
 
-        .kpi-unit {
-            font-size: 24px;
-            font-weight: 700;
-            color: #64748b;
+        /* Learning Card */
+        .card-learning {
+            border-left: none;
+        }
+        .card-learning .card-icon {
+            background-color: transparent;
+            color: #1e293b;
         }
 
-        .kpi-badge {
-            display: inline-flex;
-            align-items: center;
-            background-color: #eff6ff;
-            color: #3b82f6;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
-            align-self: flex-start;
-        }
-
-        /* Chart Card */
-        .chart-card {
-            flex: 1;
-            background-color: white;
-            border-radius: 12px;
-            padding: 20px 30px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .chart-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #334155;
+        .card-header {
             display: flex;
             align-items: center;
+            margin-bottom: 20px;
         }
-
-        .chart-container {
-            flex: 1;
-            position: relative;
-            width: 100%;
-        }
-
-        /* Bottom Row: Retro */
-        .retro-row {
-            flex: 1;
-            display: flex;
-            gap: 20px;
-        }
-
-        .retro-col {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .retro-col.left { flex: 1.2; }
-        .retro-col.right { flex: 0.8; }
-
-        /* Retro Box */
-        .retro-box {
-            background-color: white;
+        .card-icon {
+            width: 44px;
+            height: 44px;
             border-radius: 10px;
-            padding: 20px;
-            border: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            flex: 1;
-        }
-
-        .retro-header {
             display: flex;
             align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .retro-icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            display: flex;
             justify-content: center;
-            align-items: center;
-            margin-right: 10px;
-            font-size: 14px;
+            font-size: 20px;
+            margin-right: 16px;
         }
-
-        .icon-challenge { background-color: #fef2f2; color: #ef4444; }
-        .icon-action { background-color: #f0f9ff; color: #0ea5e9; }
-
-        .retro-title {
-            font-size: 15px;
+        .card-title {
+            font-size: 20px;
             font-weight: 700;
             color: #1e293b;
         }
 
-        .retro-list {
+        .card-list {
+            list-style: none;
             padding: 0;
             margin: 0;
-            list-style: none;
+            flex: 1;
         }
-
-        .retro-item {
-            font-size: 13px;
-            color: #475569;
-            line-height: 1.5;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: flex-start;
+        .card-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            color: #4b5563;
+            line-height: 1.6;
         }
-        
-        .retro-item::before {
+        .card-list li::before {
             content: "•";
-            color: #cbd5e1;
-            margin-right: 8px;
+            position: absolute;
+            left: 0;
             font-weight: bold;
+            font-size: 18px;
         }
+        .card-difficulty li::before { color: #1e293b; }
+        .card-learning li::before { color: #1e293b; }
 
-        /* Growth Highlight Box */
-        .growth-box {
-            background-color: #1e293b;
+        /* Bottom Row: Quote Section */
+        .quote-section {
+            flex: 1;
+            background-color: white; /* Clean white background */
             border-radius: 12px;
-            padding: 24px;
-            color: white;
+            padding: 0 60px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            height: 100%;
+            align-items: center;
+            text-align: center;
             position: relative;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
         }
-
-        .growth-box::after {
-            content: "";
+        
+        .quote-icon {
+            font-size: 40px;
+            color: #e2e8f0;
             position: absolute;
-            bottom: -20px;
-            right: -20px;
-            width: 100px;
-            height: 100px;
-            background-color: rgba(255,255,255,0.05);
-            border-radius: 50%;
+            top: 40px;
+            left: 40px;
+        }
+        .quote-icon-right {
+            font-size: 40px;
+            color: #e2e8f0;
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
         }
 
-        .growth-tag {
-            background-color: rgba(59, 130, 246, 0.2);
-            color: #60a5fa;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 12px;
-            align-self: flex-start;
-            margin-bottom: 16px;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-
-        .growth-main-text {
-            font-size: 20px;
-            font-weight: 800;
-            line-height: 1.4;
-            margin-bottom: 16px;
-        }
-
-        .growth-sub-text {
-            font-size: 13px;
-            color: #cbd5e1;
+        .quote-text {
+            font-size: 28px;
+            font-weight: 800; /* Extra bold */
+            color: #1e293b;
             line-height: 1.5;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 10;
+        }
+        .quote-highlight {
+            color: #1e293b;
+        }
+        
+        .quote-author {
+            font-size: 16px;
+            color: #64748b;
+            font-weight: 500;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 16px;
+            width: 200px;
         }
 
-        .highlight-blue {
-            color: #60a5fa;
+        /* Decorative Background */
+        .bg-pattern {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 200px;
+            height: 200px;
+            opacity: 0.03;
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
+            background-size: 20px 20px;
+            border-bottom-right-radius: 12px;
         }
 
     </style>
@@ -6036,188 +5174,93 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="slide-container">
 <!-- Sidebar -->
 <aside class="sidebar">
-<div class="logo-area">
-<p>PORTFOLIO</p>
-</div>
-<nav class="nav-list">
+<div class="chapter-label">Conclusion</div>
+<h1 class="chapter-title">회고와<br/>학습</h1>
+<div class="nav-group">
 <div class="nav-item">
-<div class="nav-icon"><i class="fas fa-search"></i></div>
-<span>01. Problem Definition</span>
-</div>
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-chess-knight"></i></div>
-<span>02. Strategic Decision</span>
+<span class="nav-number">01</span>
+<span class="nav-text">Context &amp; Diagnosis</span>
 </div>
 <div class="nav-item">
-<div class="nav-icon"><i class="fas fa-mobile-screen"></i></div>
-<span>03. Execution: Mobile</span>
+<span class="nav-number">02</span>
+<span class="nav-text">Strategic Response</span>
 </div>
 <div class="nav-item">
-<div class="nav-icon"><i class="fas fa-handshake"></i></div>
-<span>04. Execution: Alliance</span>
+<span class="nav-number">03</span>
+<span class="nav-text">Execution &amp; Results</span>
 </div>
 <div class="nav-item active">
-<div class="nav-icon"><i class="fas fa-chart-line"></i></div>
-<span>05. Result &amp; Retro</span>
+<span class="nav-number">04</span>
+<span class="nav-text">Reflection</span>
 </div>
-</nav>
+</div>
 </aside>
 <!-- Main Content -->
 <main class="main-content">
-<!-- Header -->
-<header class="header-area">
-<p class="chapter-title">Chapter 05. 성과 및 회고</p>
-<h1 class="page-title">성공적 런칭과 직무 확장의 계기</h1>
+<header class="page-header">
+<h2 class="page-title">
+<i class="fas fa-quote-right text-blue-600 mr-3"></i>
+                    위기를 넘어 성장의 자산으로
+                </h2>
+<span class="page-subtitle">Reflection &amp; Insight</span>
 </header>
-<!-- Dashboard Grid -->
-<div class="dashboard-grid">
-<!-- Top Row: Metrics -->
-<div class="metrics-row">
-<!-- KPI Card -->
-<div class="kpi-card">
-<p class="kpi-label">Cumulative AUM</p>
-<div class="kpi-value-group">
-<span class="kpi-value">80</span>
-<span class="kpi-unit">억 원</span>
+<div class="content-body">
+<!-- Top Row: Reflection Cards -->
+<div class="reflection-grid">
+<!-- Difficulty -->
+<div class="reflection-card card-difficulty">
+<div class="card-header">
+<div class="card-icon">
+<i class="fas fa-mountain"></i>
 </div>
-<div class="kpi-badge">
-<i class="fas fa-rocket mr-2"></i>출시 3개월 만에 달성
+<h3 class="card-title">당시의 어려움 (Pain Points)</h3>
+</div>
+<ul class="card-list">
+<li>
+<p>글로벌 금융위기가 회사 생존에 직접적인 영향을 미치는 <strong>위기 상황 최초 경험</strong></p>
+</li>
+<li>
+<p>경험이 전무한 상태에서 조직의 사활이 걸린 <strong>설득과 의사결정 수행에 따른 심리적 부담</strong></p>
+</li>
+</ul>
+</div>
+<!-- Learning/Next -->
+<div class="reflection-card card-learning">
+<div class="card-header">
+<div class="card-icon">
+<i class="fas fa-rotate-right"></i>
+</div>
+<h3 class="card-title">다시 한다면 (Lesson Learned)</h3>
+</div>
+<ul class="card-list">
+<li>
+<p>투자 유치 이후 단순 인원 확장이 아닌,</p>
+</li>
+<li>
+<p><strong>"매출 성장 기반의 인재 채용 구조"</strong>를 설계하여 자생력을 더욱 빠르게 확보할 것</p>
+</li>
+</ul>
+</div>
+</div>
+<!-- Bottom Row: Closing Quote -->
+<div class="quote-section">
+<i class="fas fa-quote-left quote-icon"></i>
+<i class="fas fa-quote-right quote-icon-right"></i>
+<div class="bg-pattern"></div>
+<p class="quote-text">
+                        "책임이란 결과가 나올 때까지 <span class="quote-highlight">자리를 지키는 것</span>이다.<br/>
+                        나는 전략기획자로서 모두의 생존이라는 선택지를 만들었고,<br/>
+                        그 판단이 끝나는 순간까지 함께했다."
+                    </p>
+<div class="quote-author">
+                        Strategic Planner's Epilogue
                     </div>
-</div>
-<!-- Chart Card -->
-<div class="chart-card">
-<div class="chart-header">
-<h3 class="chart-title"><i class="fas fa-chart-area mr-2 text-blue-500"></i>누적 계약고 성장 추이</h3>
-<span style="font-size: 12px; color: #64748b; background: #f1f5f9; padding: 2px 8px; border-radius: 4px;">(단위: 억 원)</span>
-</div>
-<div class="chart-container">
-<canvas id="growthChart"></canvas>
-</div>
-</div>
-</div>
-<!-- Bottom Row: Retro -->
-<div class="retro-row">
-<!-- Left Column: Context & Action -->
-<div class="retro-col left">
-<!-- Challenge Box -->
-<div class="retro-box">
-<div class="retro-header">
-<div class="retro-icon icon-challenge"><i class="fas fa-flag"></i></div>
-<h3 class="retro-title">Challenge &amp; Context</h3>
-</div>
-<ul class="retro-list">
-<li class="retro-item">
-                                    시장 위기 상황에서 CEO와 전략 전환 논의 후 즉각 실행 결정 (Top-down Alignment)
-                                </li>
-<li class="retro-item">
-                                    비개발 인력 충원이 불가능한 상황에서 내부 리소스 최적화 필요
-                                </li>
-</ul>
-</div>
-<!-- Action Box -->
-<div class="retro-box">
-<div class="retro-header">
-<div class="retro-icon icon-action"><i class="fas fa-bolt"></i></div>
-<h3 class="retro-title">My Action</h3>
-</div>
-<ul class="retro-list">
-<li class="retro-item">
-                                    기존 신사업 경험을 바탕으로 서비스 기획(PM/PO) 역할 주도적 수행
-                                </li>
-<li class="retro-item">
-                                    서비스 컨셉, 브랜딩, 앱 UX/UI 구조를 Zero-to-One으로 설계
-                                </li>
-</ul>
-</div>
-</div>
-<!-- Right Column: Growth (Highlight) -->
-<div class="retro-col right">
-<div class="growth-box">
-<span class="growth-tag">Key Takeaway</span>
-<p class="growth-main-text">
-                            전략기획자에서<br/>
-<span class="highlight-blue">서비스 기획자</span>로<br/>
-                            역할 확장
-                        </p>
-<p class="growth-sub-text">
-                            "단순 전략 수립을 넘어, 실질적인 Product를 만들어내며 업무 영역을 확장한 성장의 계기"
-                        </p>
-</div>
-</div>
 </div>
 </div>
 </main>
 </div>
-<script>
-        const ctx = document.getElementById('growthChart').getContext('2d');
-        // Create gradient
-        const gradient = ctx.createLinearGradient(0, 0, 0, 200);
-        gradient.addColorStop(0, 'rgba(59, 130, 246, 0.2)');
-        gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
-
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['M-1 (Pre)', 'M+1', 'M+2', 'M+3'],
-                datasets: [{
-                    label: '누적 계약고',
-                    data: [0, 25, 48, 80],
-                    borderColor: '#3b82f6',
-                    backgroundColor: gradient,
-                    borderWidth: 3,
-                    pointBackgroundColor: '#ffffff',
-                    pointBorderColor: '#3b82f6',
-                    pointBorderWidth: 2,
-                    pointRadius: 5,
-                    pointHoverRadius: 7,
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        backgroundColor: '#1e293b',
-                        padding: 10,
-                        titleFont: { size: 12 },
-                        bodyFont: { size: 13, weight: 'bold' },
-                        displayColors: false,
-                        callbacks: {
-                            label: function(context) {
-                                return context.parsed.y + ' 억 원';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: '#f1f5f9',
-                            drawBorder: false
-                        },
-                        ticks: {
-                            color: '#94a3b8',
-                            font: { size: 11 },
-                            maxTicksLimit: 5
-                        }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: {
-                            color: '#64748b',
-                            font: { size: 11, weight: 'bold' }
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 </body>
-</html>`
+</html></html></html>`
     };
 
     // iframe 스케일 정보 저장을 위한 전역 배열
@@ -8844,7 +7887,8 @@ document.addEventListener("DOMContentLoaded", () => {
 </main>
 </div>
 </body>
-</html>`,
+</html>\`,
+        8: \`</html>`,
         8: `<!DOCTYPE html>
 
 <html lang="ko">
@@ -9925,6 +8969,14 @@ document.addEventListener("DOMContentLoaded", () => {
             flex: 1;
             position: relative;
             width: 100%;
+            max-height: 200px;
+            min-height: 0;
+            overflow: hidden;
+        }
+        .chart-container canvas {
+            max-height: 100%;
+            width: 100% !important;
+            height: auto !important;
         }
 
         /* Bottom Row: Retro */
@@ -10206,6 +9258,14 @@ document.addEventListener("DOMContentLoaded", () => {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        top: 5,
+                        bottom: 5,
+                        left: 5,
+                        right: 5
+                    }
+                },
                 plugins: {
                     legend: { display: false },
                     tooltip: {
@@ -10230,15 +9290,17 @@ document.addEventListener("DOMContentLoaded", () => {
                         },
                         ticks: {
                             color: '#94a3b8',
-                            font: { size: 11 },
-                            maxTicksLimit: 5
+                            font: { size: 10 },
+                            maxTicksLimit: 5,
+                            padding: 5
                         }
                     },
                     x: {
                         grid: { display: false },
                         ticks: {
                             color: '#64748b',
-                            font: { size: 11, weight: 'bold' }
+                            font: { size: 10, weight: 'bold' },
+                            padding: 5
                         }
                     }
                 }
@@ -10250,6 +9312,11 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const iframeScaleInfo = [];
+
+    // DOM 조회 캐싱 헬퍼 함수
+    const getIframeInfo = (container) => {
+        return iframeScaleInfo.find(info => info.container === container);
+    };
 
     // iframe 스케일 재계산 함수 (최적화)
     function recalculateIframeScale(iframeInfo) {
@@ -10326,9 +9393,13 @@ document.addEventListener("DOMContentLoaded", () => {
         // 박스 타입 확인 (data-parent-box 또는 data-box 속성으로 서비스 박스인지 확인)
         const parentBox = container.getAttribute('data-parent-box') || container.getAttribute('data-box');
         const isServiceBoxType = parentBox === '2'; // 서비스 박스만
+        const isStrategy2BoxType = parentBox === '5'; // 전략2 박스
         
         // 서비스1-2부터 서비스1-8까지 큰 박스와 작은 박스 모두에서 95% 비율로 표시
         const isServiceBox = isServiceBoxType && slideNumber && ['2', '3', '4', '5', '6', '7', '8'].includes(slideNumber);
+        
+        // 전략2-10은 큰 박스에서 작은 박스와 동일한 padding 비율 적용
+        const isStrategy2_10 = isStrategy2BoxType && slideNumber === '10' && !isSmallBox;
         
         // 컨테이너 크기에 맞게 스케일 계산
         let scale;
@@ -10338,8 +9409,37 @@ document.addEventListener("DOMContentLoaded", () => {
             const targetWidth = containerWidth * contentPercent;
             const targetHeight = containerHeight * contentPercent;
             scale = Math.min(targetWidth / slideWidth, targetHeight / slideHeight);
+        } else if (isStrategy2_10) {
+            // 전략2-10 큰 박스: 작은 박스의 padding(8px)과 동일한 비율 적용
+            // 작은 박스의 실제 크기를 동적으로 가져와서 padding 비율 계산
+            const smallBoxPadding = 8; // 작은 박스의 padding (CSS에서 정의된 값)
+            let smallBoxWidth = 200; // 기본값 (대략적인 작은 박스 너비)
+            
+            // 작은 박스의 실제 크기를 찾아서 계산
+            const slideList = document.querySelector('.test-slide-list');
+            if (slideList) {
+                const smallBox = slideList.querySelector(`.test-slide-item[data-slide-number="10"][data-parent-box="5"]`);
+                if (smallBox) {
+                    const smallBoxRect = smallBox.getBoundingClientRect();
+                    smallBoxWidth = smallBoxRect.width;
+                }
+            }
+            
+            // 작은 박스의 padding 비율 계산 (양쪽 padding = 16px)
+            const paddingRatio = (smallBoxPadding * 2) / smallBoxWidth;
+            
+            // 큰 박스에서도 동일한 비율의 padding 적용
+            const effectivePaddingWidth = containerWidth * paddingRatio;
+            const effectivePaddingHeight = containerHeight * paddingRatio;
+            
+            // 실제 컨텐츠 영역 계산
+            const targetWidth = containerWidth - effectivePaddingWidth;
+            const targetHeight = containerHeight - effectivePaddingHeight;
+            
+            scale = Math.min(targetWidth / slideWidth, targetHeight / slideHeight);
         } else {
-            // 일반 스케일링 (전략1, 전략2 포함)
+            // 일반 스케일링 (전략1-1, 전략1-6, 전략1-7, 전략2 등 모두 동일하게 처리)
+            // 컨테이너 크기에 맞게 전체 컨텐츠를 조절
             scale = Math.min(containerWidth / slideWidth, containerHeight / slideHeight);
         }
         const scaledWidth = slideWidth * scale;
@@ -10507,21 +9607,15 @@ document.addEventListener("DOMContentLoaded", () => {
             // 컨테이너 초기화
             container.innerHTML = '';
             
-            // HTML 문자열에서 width와 height 추출 (더 빠른 방식)
+            // HTML 문자열에서 width와 height 추출 (최적화)
             let slideWidth = 1280;
             let slideHeight = 720;
             
-            // 정규식 대신 indexOf 사용으로 더 빠르게
-            const widthIdx = html.indexOf('width:');
-            const heightIdx = html.indexOf('height:');
-            if (widthIdx !== -1 && heightIdx !== -1) {
-                const widthStr = html.substring(widthIdx, widthIdx + 30);
-                const heightStr = html.substring(heightIdx, heightIdx + 30);
-                const widthMatch = widthStr.match(/(\d+)px/i);
-                const heightMatch = heightStr.match(/(\d+)px/i);
-                if (widthMatch) slideWidth = parseInt(widthMatch[1]);
-                if (heightMatch) slideHeight = parseInt(heightMatch[1]);
-            }
+            // 정규식으로 직접 매칭 (더 빠름)
+            const widthMatch = html.match(/width:\s*(\d+)px/i);
+            const heightMatch = html.match(/height:\s*(\d+)px/i);
+            if (widthMatch) slideWidth = parseInt(widthMatch[1]);
+            if (heightMatch) slideHeight = parseInt(heightMatch[1]);
             
             // iframe 생성 및 스타일 설정
             const iframe = document.createElement('iframe');
@@ -10728,34 +9822,23 @@ document.addEventListener("DOMContentLoaded", () => {
                         // 크로스 오리진 제한으로 접근 불가능한 경우 무시
                     }
                     
-                    // 여러 번 시도하여 확실하게 스케일 적용
+                    // 스케일 적용 최적화 (최대 2번만 시도)
                     const applyScale = (attempt = 0) => {
+                        if (attempt > 2) return; // 최대 2번만 시도
+                        
                         if (recalculateIframeScale(iframeInfo)) {
-                            // 성공한 경우에도 추가 재계산 (레이아웃 안정화 대기)
-                            requestAnimationFrame(() => {
-                                recalculateIframeScale(iframeInfo);
-                            });
-                            
-                            // 작은 박스인 경우 더 많은 재계산 시도
-                            if (!isMainBox) {
-                                // 작은 박스는 여러 번 재계산하여 확실하게 표시
-                                setTimeout(() => {
+                            // 성공하면 메인박스인 경우 한 번만 추가 재계산
+                            if (isMainBox) {
+                                requestAnimationFrame(() => {
                                     recalculateIframeScale(iframeInfo);
-                                }, 50);
-                                setTimeout(() => {
-                                    recalculateIframeScale(iframeInfo);
-                                }, 150);
-                                setTimeout(() => {
-                                    recalculateIframeScale(iframeInfo);
-                                }, 300);
+                                });
                             }
-                        } else if (attempt < 10) {
-                            // 실패하면 다시 시도 (최대 10번, 작은 박스는 더 많은 시도 필요)
-                            setTimeout(() => {
-                                applyScale(attempt + 1);
-                            }, 100);
-                        } else {
-                            console.warn('iframe 스케일 계산 실패:', { container: container.className, isMainBox, attempt });
+                            return;
+                        }
+                        
+                        // 실패하면 짧은 지연 후 재시도
+                        if (attempt < 2) {
+                            setTimeout(() => applyScale(attempt + 1), 50);
                         }
                     };
                     
@@ -10764,22 +9847,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                 }, { once: true });
             } else {
-                // 즉시 성공한 경우에도 추가 재계산
-                requestAnimationFrame(() => {
-                    recalculateIframeScale(iframeInfo);
-                });
-                
-                // 작은 박스인 경우 더 많은 재계산 시도
-                if (!isMainBox) {
-                    setTimeout(() => {
+                // 즉시 성공한 경우 메인박스만 한 번 추가 재계산
+                if (isMainBox) {
+                    requestAnimationFrame(() => {
                         recalculateIframeScale(iframeInfo);
-                    }, 50);
-                    setTimeout(() => {
-                        recalculateIframeScale(iframeInfo);
-                    }, 150);
-                    setTimeout(() => {
-                        recalculateIframeScale(iframeInfo);
-                    }, 300);
+                    });
                 }
             }
             
@@ -10832,25 +9904,21 @@ document.addEventListener("DOMContentLoaded", () => {
             mainBox.setAttribute("data-box", "2");
             mainBox.classList.add("service-box");
             
-            // 모든 서비스 슬라이드에 일반 스케일 재계산 적용
-            const forceRecalculate = () => {
-                const newIndex = iframeScaleInfo.findIndex(info => info.container === mainBox);
-                if (newIndex !== -1) {
-                    if (!recalculateIframeScale(iframeScaleInfo[newIndex])) {
-                        // 실패하면 다시 시도
-                        setTimeout(forceRecalculate, 100);
+            // 스케일 재계산 최적화 (단일 재계산)
+            const scheduleRecalculate = () => {
+                const iframeInfo = getIframeInfo(mainBox);
+                if (iframeInfo) {
+                    // 한 번만 시도하고, 실패하면 짧은 지연 후 재시도
+                    if (!recalculateIframeScale(iframeInfo)) {
+                        setTimeout(() => {
+                            recalculateIframeScale(iframeInfo);
+                        }, 50);
                     }
                 }
             };
             
-            // 즉시 시도
-            requestAnimationFrame(() => {
-                forceRecalculate();
-            });
-            
-            // 추가 시도 (100ms, 300ms 후)
-            setTimeout(forceRecalculate, 100);
-            setTimeout(forceRecalculate, 300);
+            // requestAnimationFrame으로 한 번만 실행
+            requestAnimationFrame(scheduleRecalculate);
         } catch (error) {
             console.error(`Failed to load service ${slideNumber}:`, error);
             mainBox.innerHTML = '<div class="service-slide-content">콘텐츠를 불러올 수 없습니다.</div>';
@@ -10879,24 +9947,20 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // 서비스1-2부터 서비스1-8까지 작은 박스도 비율을 유지한 채 스케일링 적용
             if (slideNumber >= 2 && slideNumber <= 8) {
-                const forceRecalculate = () => {
-                    const index = iframeScaleInfo.findIndex(info => info.container === slideItem);
-                    if (index !== -1) {
-                        if (!recalculateIframeScale(iframeScaleInfo[index])) {
-                            // 실패하면 다시 시도
-                            setTimeout(forceRecalculate, 100);
+                const scheduleRecalculate = () => {
+                    const iframeInfo = getIframeInfo(slideItem);
+                    if (iframeInfo) {
+                        // 한 번만 시도하고, 실패하면 짧은 지연 후 재시도
+                        if (!recalculateIframeScale(iframeInfo)) {
+                            setTimeout(() => {
+                                recalculateIframeScale(iframeInfo);
+                            }, 50);
                         }
                     }
                 };
                 
-                // 즉시 시도
-                requestAnimationFrame(() => {
-                    forceRecalculate();
-                });
-                
-                // 추가 시도 (100ms, 300ms 후)
-                setTimeout(forceRecalculate, 100);
-                setTimeout(forceRecalculate, 300);
+                // requestAnimationFrame으로 한 번만 실행
+                requestAnimationFrame(scheduleRecalculate);
             }
         } catch (error) {
             console.error(`Failed to load service1 ${slideNumber}:`, error);
@@ -10932,25 +9996,21 @@ document.addEventListener("DOMContentLoaded", () => {
             mainBox.setAttribute("data-box", "5");
             mainBox.classList.remove("service-box");
             
-            // 로드 후 강제 스케일 재계산 (여러 번 시도)
-            const forceRecalculate = () => {
-                const newIndex = iframeScaleInfo.findIndex(info => info.container === mainBox);
-                if (newIndex !== -1) {
-                    if (!recalculateIframeScale(iframeScaleInfo[newIndex])) {
-                        // 실패하면 다시 시도
-                        setTimeout(forceRecalculate, 100);
+            // 스케일 재계산 최적화 (단일 재계산)
+            const scheduleRecalculate = () => {
+                const iframeInfo = getIframeInfo(mainBox);
+                if (iframeInfo) {
+                    // 한 번만 시도하고, 실패하면 짧은 지연 후 재시도
+                    if (!recalculateIframeScale(iframeInfo)) {
+                        setTimeout(() => {
+                            recalculateIframeScale(iframeInfo);
+                        }, 50);
                     }
                 }
             };
             
-            // 즉시 시도
-            requestAnimationFrame(() => {
-                forceRecalculate();
-            });
-            
-            // 추가 시도 (100ms, 300ms 후)
-            setTimeout(forceRecalculate, 100);
-            setTimeout(forceRecalculate, 300);
+            // requestAnimationFrame으로 한 번만 실행
+            requestAnimationFrame(scheduleRecalculate);
         } catch (error) {
             console.error(`Failed to load strategy2 ${slideNumber}:`, error);
             mainBox.innerHTML = '<div class="service-slide-content">콘텐츠를 불러올 수 없습니다.</div>';
@@ -11001,25 +10061,21 @@ document.addEventListener("DOMContentLoaded", () => {
             mainBox.setAttribute("data-box", "1");
             mainBox.classList.remove("service-box");
             
-            // 로드 후 강제 스케일 재계산 (여러 번 시도)
-            const forceRecalculate = () => {
-                const newIndex = iframeScaleInfo.findIndex(info => info.container === mainBox);
-                if (newIndex !== -1) {
-                    if (!recalculateIframeScale(iframeScaleInfo[newIndex])) {
-                        // 실패하면 다시 시도
-                        setTimeout(forceRecalculate, 100);
+            // 스케일 재계산 최적화 (단일 재계산)
+            const scheduleRecalculate = () => {
+                const iframeInfo = getIframeInfo(mainBox);
+                if (iframeInfo) {
+                    // 한 번만 시도하고, 실패하면 짧은 지연 후 재시도
+                    if (!recalculateIframeScale(iframeInfo)) {
+                        setTimeout(() => {
+                            recalculateIframeScale(iframeInfo);
+                        }, 50);
                     }
                 }
             };
             
-            // 즉시 시도
-            requestAnimationFrame(() => {
-                forceRecalculate();
-            });
-            
-            // 추가 시도 (100ms, 300ms 후)
-            setTimeout(forceRecalculate, 100);
-            setTimeout(forceRecalculate, 300);
+            // requestAnimationFrame으로 한 번만 실행
+            requestAnimationFrame(scheduleRecalculate);
         } catch (error) {
             console.error(`Failed to load strategy1 ${slideNumber}:`, error);
             mainBox.innerHTML = '<div class="service-slide-content">콘텐츠를 불러올 수 없습니다.</div>';
