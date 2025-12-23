@@ -3427,6 +3427,31 @@ body {
     margin: 4px 0;
 }
 
+.test-thumbnail-box.strategy2-box .sub-title-section {
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
+.test-thumbnail-box.strategy2-box .sub-title {
+    font-size: 11px;
+    font-weight: 400;
+    color: #cbd5e1;
+    line-height: 1.5;
+    text-align: center;
+    max-width: 95%;
+    word-break: keep-all;
+}
+
+.test-thumbnail-box.strategy2-box .sub-title strong {
+    font-size: 10px;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+}
+
 .test-thumbnail-box.strategy2-box .project-period {
     margin-top: 12px;
     font-size: 11px;
@@ -3456,6 +3481,9 @@ body {
 .test-expanded-box.service-box .slide-container {
     width: 100%;
     height: 100%;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box;
 }
 
 /* iframe 스타일 */
@@ -3477,9 +3505,15 @@ body {
     border-radius: 16px;
 }
 
+/* 서비스1-7의 경우 iframe 배경도 흰색 */
+.test-expanded-box.service-box.service-main-no-scale .service-main-iframe {
+    background-color: #ffffff;
+}
+
 .service-slide-iframe {
     border-radius: 12px;
     pointer-events: none; /* 클릭 이벤트가 슬라이드 아이템으로 전달되도록 */
+    background-color: #ffffff; /* 작은 박스 iframe 흰색 배경 */
 }
 
 /* 메인박스에 서비스 콘텐츠가 로드된 경우 */
@@ -3492,6 +3526,47 @@ body {
     width: 100%;
     height: 100%;
     transform: scale(1);
+    box-sizing: border-box;
+}
+
+/* 서비스1-7 큰 박스: 프레젠테이션 쇼처럼 여백을 고려한 스케일링 */
+.test-expanded-box.service-box.service-main-no-scale {
+    overflow: visible;
+    background-color: #ffffff; /* 흰색 배경 */
+}
+
+.test-expanded-box.service-box.service-main-no-scale .service-slide-content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: visible;
+    background-color: #ffffff; /* 흰색 배경 */
+}
+
+.test-expanded-box.service-box.service-main-no-scale .service-slide-content .slide-container {
+    /* JavaScript에서 동적으로 스케일 계산 */
+    box-sizing: border-box;
+    box-shadow: none !important; /* 윤곽선 제거 */
+    border: none !important; /* 테두리 제거 */
+    outline: none !important; /* 아웃라인 제거 */
+}
+
+/* 서비스1-2부터 서비스1-9까지 큰 박스: 주변 여백에 흰색 배경 */
+.test-expanded-box.service-box.service-main-white-bg {
+    overflow: visible;
+    background-color: #ffffff; /* 흰색 배경 */
+}
+
+.test-expanded-box.service-box.service-main-white-bg .service-slide-content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: visible;
+    background-color: #ffffff; /* 흰색 배경 */
+}
+
+.test-expanded-box.service-box.service-main-white-bg .service-main-iframe {
+    background-color: #ffffff; /* 흰색 배경 */
 }
 
 .test-expanded-box.service-box .accent-bar {
@@ -3682,6 +3757,8 @@ body {
     position: relative;
     cursor: pointer;
     transition: all 0.3s ease;
+    padding: 8px;
+    box-sizing: border-box;
 }
 
 .test-slide-item:hover {
@@ -3714,12 +3791,13 @@ body {
 
 .test-slide-item.service-slide-item .service-slide-content {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 8px;
+    left: 8px;
+    width: calc(100% - 16px);
+    height: calc(100% - 16px);
     overflow: hidden;
     pointer-events: none;
+    border-radius: 8px;
 }
 
 .test-slide-item.service-slide-item .service-slide-content .slide-container {
@@ -3730,8 +3808,16 @@ body {
     overflow: hidden;
     display: flex;
     font-family: 'Noto Sans KR', sans-serif;
-    transform: scale(0.3);
-    transform-origin: top left;
+    /* JavaScript에서 동적으로 스케일 계산하여 적용 */
+    transform-origin: center center;
+}
+
+/* 서비스1-7: 스케일링 없이 문서 내용 그대로 삽입 */
+.test-slide-item.service-slide-item.service-slide-no-scale .service-slide-content .slide-container {
+    transform: none;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
 }
 
 /* 썸네일용 서비스 슬라이드 스타일 - 사이드바가 있는 경우 (2.md, 3.md, 4.md, 5.md) */
@@ -4088,6 +4174,22 @@ body {
 
     .test-thumbnail-box.strategy2-box .main-headline p {
         margin: clamp(2px, 0.5vw, 3px) 0;
+    }
+
+    .test-thumbnail-box.strategy2-box .sub-title-section {
+        margin-top: clamp(6px, 1.5vw, 10px);
+        margin-bottom: clamp(4px, 1vw, 6px);
+    }
+
+    .test-thumbnail-box.strategy2-box .sub-title {
+        font-size: clamp(7px, 1.8vw, 9px);
+        line-height: 1.4;
+        word-break: keep-all;
+    }
+
+    .test-thumbnail-box.strategy2-box .sub-title strong {
+        font-size: clamp(6px, 1.5vw, 8px);
+        margin-bottom: clamp(2px, 0.5vw, 3px);
     }
 
     .test-thumbnail-box.strategy2-box .portfolio-label {
