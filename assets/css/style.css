@@ -2735,17 +2735,29 @@ body {
     margin: 4px 0;
 }
 
+.test-thumbnail-box.service-box .sub-title-section {
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
 .test-thumbnail-box.service-box .sub-title {
-    /* 원본: 24px → 썸네일: clamp(5px, 1.5vw, 12px) */
-    font-size: clamp(5px, 1.5vw, 12px);
+    font-size: 11px;
     font-weight: 400;
     color: #4b5563;
     line-height: 1.5;
-    /* 원본: 50px → 썸네일: clamp(10px, 2.5vw, 18px) */
-    margin-bottom: clamp(10px, 2.5vw, 18px);
-    margin-top: clamp(5px, 1.2vw, 8px);
     text-align: center;
-    max-width: 90%;
+    max-width: 95%;
+    word-break: keep-all;
+}
+
+.test-thumbnail-box.service-box .sub-title strong {
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
 }
 
 .test-thumbnail-box.service-box .project-period {
@@ -3083,6 +3095,8 @@ body {
     display: flex;
     flex-direction: column;
     font-family: 'Noto Sans KR', sans-serif;
+    justify-content: center;
+    align-items: center;
     /* 원본 비율 유지: 상하 6.25vw, 좌우 7.81vw */
     padding: clamp(25px, 6.25vw, 50px) clamp(31px, 7.81vw, 62px);
 }
@@ -3110,14 +3124,13 @@ body {
 }
 
 .test-thumbnail-box.strategy1-box .content-wrapper {
-    flex: 1;
+    z-index: 10;
+    text-align: center;
+    max-width: 95%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    text-align: center;
-    z-index: 10;
-    position: relative;
+    gap: 16px;
 }
 
 .test-thumbnail-box.strategy1-box .tag-pill {
@@ -3152,6 +3165,25 @@ body {
     text-align: center;
 }
 
+.test-thumbnail-box.strategy1-box .portfolio-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: #64748b;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    position: relative;
+}
+
+.test-thumbnail-box.strategy1-box .portfolio-label::after {
+    content: '';
+    display: block;
+    width: 25px;
+    height: 1.5px;
+    background-color: #A4C639;
+    margin: 6px auto 0;
+}
+
 .test-thumbnail-box.strategy1-box .sub-title-section {
     margin-top: 12px;
     margin-bottom: 8px;
@@ -3164,8 +3196,9 @@ body {
     color: #4b5563;
     line-height: 1.5;
     text-align: center;
-    max-width: 95%;
+    max-width: 85%;
     word-break: keep-all;
+    margin: 0 auto;
 }
 
 .test-thumbnail-box.strategy1-box .sub-title strong {
@@ -3179,8 +3212,8 @@ body {
 }
 
 .test-thumbnail-box.strategy1-box .project-period {
-    margin-top: clamp(8px, 2vw, 16px);
-    font-size: clamp(6px, 1.5vw, 14px);
+    margin-top: 12px;
+    font-size: 11px;
     color: #4b5563;
     font-weight: 300;
     display: flex;
@@ -3444,6 +3477,7 @@ body {
 .test-thumbnail-box.strategy2-box .sub-title-section {
     margin-top: 12px;
     margin-bottom: 8px;
+    padding: 0 5px;
 }
 
 .test-thumbnail-box.strategy2-box .sub-title {
@@ -3452,8 +3486,10 @@ body {
     color: #cbd5e1;
     line-height: 1.5;
     text-align: center;
-    max-width: 95%;
+    max-width: 100%;
     word-break: keep-all;
+    margin: 0 auto;
+    padding: 0;
 }
 
 .test-thumbnail-box.strategy2-box .sub-title strong {
@@ -4125,16 +4161,22 @@ body {
         margin-bottom: clamp(2px, 0.5vw, 3px);
     }
 
-    .test-thumbnail-box.strategy1-box .tag-pill {
-        font-size: clamp(6px, 1.5vw, 9px);
-        padding: clamp(2px, 0.5vw, 3px) clamp(4px, 1vw, 6px);
+    .test-thumbnail-box.strategy1-box .portfolio-label {
+        font-size: clamp(7px, 1.5vw, 9px);
         margin-bottom: clamp(4px, 1vw, 6px);
     }
 
+    .test-thumbnail-box.strategy1-box .portfolio-label::after {
+        width: clamp(15px, 3vw, 20px);
+        height: clamp(1px, 0.2vw, 1.5px);
+        margin-top: clamp(4px, 1vw, 6px);
+    }
+
     .test-thumbnail-box.strategy1-box .project-period {
-        font-size: clamp(8px, 1.8vw, 11px);
-        padding: clamp(3px, 0.8vw, 6px) clamp(8px, 1.8vw, 14px);
+        font-size: clamp(8px, 1.8vw, 10px);
+        padding: clamp(4px, 1vw, 5px) clamp(5px, 1.2vw, 10px);
         gap: clamp(3px, 0.8vw, 5px);
+        margin-top: clamp(8px, 2vw, 10px);
     }
 
     .test-thumbnail-box.strategy1-box .info-grid {
@@ -4266,6 +4308,22 @@ body {
 
     .test-thumbnail-box.service-box .portfolio-label {
         font-size: clamp(7px, 1.5vw, 9px);
+    }
+
+    .test-thumbnail-box.service-box .sub-title-section {
+        margin-top: clamp(6px, 1.5vw, 10px);
+        margin-bottom: clamp(4px, 1vw, 6px);
+    }
+
+    .test-thumbnail-box.service-box .sub-title {
+        font-size: clamp(7px, 1.8vw, 9px);
+        line-height: 1.4;
+        word-break: keep-all;
+    }
+
+    .test-thumbnail-box.service-box .sub-title strong {
+        font-size: clamp(6px, 1.5vw, 8px);
+        margin-bottom: clamp(2px, 0.5vw, 3px);
     }
 
     .test-thumbnail-box.service-box .project-period {
