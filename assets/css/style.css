@@ -3152,16 +3152,30 @@ body {
     text-align: center;
 }
 
+.test-thumbnail-box.strategy1-box .sub-title-section {
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
 .test-thumbnail-box.strategy1-box .sub-title {
     /* 원본: 24px → 썸네일: clamp(5px, 1.5vw, 12px) */
-    font-size: clamp(5px, 1.5vw, 12px);
+    font-size: 11px;
     font-weight: 400;
     color: #4b5563;
     line-height: 1.5;
-    /* 원본: 50px → 썸네일: clamp(10px, 2.5vw, 18px) */
-    margin-bottom: clamp(10px, 2.5vw, 18px);
     text-align: center;
-    max-width: 90%;
+    max-width: 95%;
+    word-break: keep-all;
+}
+
+.test-thumbnail-box.strategy1-box .sub-title strong {
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
 }
 
 .test-thumbnail-box.strategy1-box .project-period {
@@ -4095,9 +4109,20 @@ body {
         margin-bottom: clamp(4px, 1vw, 6px);
     }
 
+    .test-thumbnail-box.strategy1-box .sub-title-section {
+        margin-top: clamp(6px, 1.5vw, 10px);
+        margin-bottom: clamp(4px, 1vw, 6px);
+    }
+
     .test-thumbnail-box.strategy1-box .sub-title {
-        font-size: clamp(8px, 2vw, 11px);
-        margin-bottom: clamp(8px, 2vw, 12px);
+        font-size: clamp(7px, 1.8vw, 9px);
+        line-height: 1.4;
+        word-break: keep-all;
+    }
+
+    .test-thumbnail-box.strategy1-box .sub-title strong {
+        font-size: clamp(6px, 1.5vw, 8px);
+        margin-bottom: clamp(2px, 0.5vw, 3px);
     }
 
     .test-thumbnail-box.strategy1-box .tag-pill {
