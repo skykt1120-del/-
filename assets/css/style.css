@@ -3275,7 +3275,7 @@ body {
     display: block;
     width: 25px;
     height: 1.5px;
-    background-color: #A4C639;
+    background-color: #000000;
     margin: 6px auto 0;
 }
 
@@ -4366,6 +4366,7 @@ body {
         width: clamp(15px, 3vw, 20px);
         height: clamp(1px, 0.2vw, 1.5px);
         margin-top: clamp(4px, 1vw, 6px);
+        background-color: #000000;
     }
 
     .test-thumbnail-box.strategy1-box .project-period {
