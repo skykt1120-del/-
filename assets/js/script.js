@@ -194,6 +194,16 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (boxNumber === "2") {
             console.log('서비스 박스 처리');
             loadService1ContentToMainBox(expandedBox, 1);
+        } else if (boxNumber === "3") {
+            // 3번 박스는 별도 처리 (미러링 방지)
+            console.log('서비스 박스 3번 처리 - 빈 상태로 표시');
+            expandedBox.innerHTML = '';
+            expandedBox.setAttribute("data-box", boxNumber);
+            expandedBox.classList.add("service-box");
+        } else if (boxNumber === "4") {
+            // 넥스트1 박스인 경우 넥스트1-1 내용을 메인박스에 표시
+            console.log('넥스트1 박스 처리');
+            loadNext1ContentToMainBox(expandedBox, 1);
         } else if (boxNumber === "5") {
             // 전략2 박스인 경우 전략2-1 내용을 메인박스에 표시
             console.log('전략2 박스 처리, strategy2Contents 존재 여부:', typeof strategy2Contents !== 'undefined');
@@ -219,36 +229,56 @@ document.addEventListener("DOMContentLoaded", () => {
         // 현재 박스 번호와 슬라이드 번호 저장
         currentBoxNumber = boxNumber;
         currentSlideNumber = 1;
-        maxSlideCount = boxNumber === "1" ? 8 : (boxNumber === "5" ? 10 : (boxNumber === "2" ? 8 : 5)); // 전략1은 8개, 전략2는 10개, 서비스는 8개, 나머지는 5개
+        maxSlideCount = boxNumber === "1" ? 8 : (boxNumber === "5" ? 10 : (boxNumber === "2" ? 8 : (boxNumber === "3" ? 0 : (boxNumber === "4" ? 6 : 5)))); // 전략1은 8개, 전략2는 10개, 서비스는 8개, 3번은 0개(빈 상태), 넥스트1은 6개, 나머지는 5개
         
         // 화살표 버튼 상태 업데이트
         updateNavButtons();
         
         // 슬라이드 리스트 생성 - 박스 번호에 따라 개수 다름
         slideList.innerHTML = "";
-        for (let i = 1; i <= maxSlideCount; i++) {
-            const slideItem = document.createElement("div");
-            slideItem.className = "test-slide-item service-slide-item";
-            // 네이밍: 서비스 박스는 "서비스1-1", "서비스1-2" 형식, 나머지는 "1-1", "1-2" 형식
-            const slideName = boxNumber === "2" ? `서비스1-${i}` : `${boxNumber}-${i}`;
-            slideItem.setAttribute("data-slide", slideName);
-            slideItem.setAttribute("data-parent-box", boxNumber);
-            slideItem.setAttribute("data-slide-number", i);
-            
-            // 박스 번호에 따라 다른 파일 내용 로드
-            if (boxNumber === "1") {
-                // 전략1 박스의 경우 전략1 파일 내용 로드
-                loadStrategy1Content(slideItem, i);
-            } else if (boxNumber === "2") {
-                // 2번 박스의 경우 서비스 파일 내용 로드
-                loadService1Content(slideItem, i);
-            } else if (boxNumber === "5") {
-                // 전략2 박스의 경우 전략2 파일 내용 로드
-                loadStrategy2Content(slideItem, i);
+        // 3번 박스는 슬라이드 리스트를 생성하지 않음
+        if (boxNumber === "3") {
+            return;
+        }
+        
+        // 넥스트1 박스는 특별한 레이아웃 처리 (넥스트1-1~넥스트1-5를 먼저 생성하고, 넥스트1-1 아래에 넥스트1-6 추가)
+        if (boxNumber === "4") {
+            // 넥스트1-1부터 넥스트1-5까지 생성
+            for (let i = 1; i <= 5; i++) {
+                const slideItem = createNext1SlideItem(i, boxNumber);
+                slideList.appendChild(slideItem);
             }
-            
-            // 모든 슬라이드 아이템에 클릭 이벤트 추가: 메인박스에 해당 내용 표시
-            slideItem.addEventListener("click", (e) => {
+            // 넥스트1-6을 넥스트1-1 아래에 추가하기 위해 특별한 처리
+            const slideItem6 = createNext1SlideItem(6, boxNumber);
+            // 넥스트1-6을 첫 번째 행, 두 번째 열에 배치 (넥스트1-1 아래)
+            slideItem6.style.gridRow = '2';
+            slideItem6.style.gridColumn = '1';
+            slideList.appendChild(slideItem6);
+        } else {
+            // 다른 박스들은 기존 방식대로 생성
+            for (let i = 1; i <= maxSlideCount; i++) {
+                const slideItem = document.createElement("div");
+                slideItem.className = "test-slide-item service-slide-item";
+                // 네이밍: 서비스 박스는 "서비스1-1", "서비스1-2" 형식, 나머지는 "1-1", "1-2" 형식
+                const slideName = boxNumber === "2" ? `서비스1-${i}` : `${boxNumber}-${i}`;
+                slideItem.setAttribute("data-slide", slideName);
+                slideItem.setAttribute("data-parent-box", boxNumber);
+                slideItem.setAttribute("data-slide-number", i);
+                
+                // 박스 번호에 따라 다른 파일 내용 로드
+                if (boxNumber === "1") {
+                    // 전략1 박스의 경우 전략1 파일 내용 로드
+                    loadStrategy1Content(slideItem, i);
+                } else if (boxNumber === "2") {
+                    // 2번 박스의 경우 서비스 파일 내용 로드
+                    loadService1Content(slideItem, i);
+                } else if (boxNumber === "5") {
+                    // 전략2 박스의 경우 전략2 파일 내용 로드
+                    loadStrategy2Content(slideItem, i);
+                }
+                
+                // 모든 슬라이드 아이템에 클릭 이벤트 추가: 메인박스에 해당 내용 표시
+                slideItem.addEventListener("click", (e) => {
                 e.stopPropagation();
                 e.preventDefault();
                 
@@ -271,6 +301,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     // 2번 박스인 경우 서비스 파일 내용 로드
                     console.log('서비스1 콘텐츠 로드 시작:', slideNum);
                     loadService1ContentToMainBox(expandedBox, slideNum);
+                } else if (boxNumber === "3") {
+                    // 3번 박스는 처리하지 않음
+                    console.log('3번 박스는 슬라이드가 없습니다.');
+                    return;
+                } else if (boxNumber === "4") {
+                    // 넥스트1 박스인 경우 넥스트1 파일 내용 로드
+                    console.log('넥스트1 콘텐츠 로드 시작:', slideNum);
+                    loadNext1ContentToMainBox(expandedBox, slideNum);
                 } else if (boxNumber === "5") {
                     // 전략2 박스인 경우 전략2 파일 내용 로드
                     console.log('전략2 콘텐츠 로드 시작:', slideNum);
@@ -279,10 +317,46 @@ document.addEventListener("DOMContentLoaded", () => {
                     // 나머지 박스는 추후 동일한 방식으로 구현 예정
                     console.log(`슬라이드 아이템 클릭: ${slideName}`);
                 }
-            });
-            
-            slideList.appendChild(slideItem);
+                });
+                
+                slideList.appendChild(slideItem);
+            }
         }
+    }
+    
+    // 넥스트1 슬라이드 아이템 생성 함수
+    function createNext1SlideItem(slideNumber, boxNumber) {
+        const slideItem = document.createElement("div");
+        slideItem.className = "test-slide-item service-slide-item";
+        const slideName = `넥스트1-${slideNumber}`;
+        slideItem.setAttribute("data-slide", slideName);
+        slideItem.setAttribute("data-parent-box", boxNumber);
+        slideItem.setAttribute("data-slide-number", slideNumber);
+        
+        // 넥스트1 파일 내용 로드
+        loadNext1Content(slideItem, slideNumber);
+        
+        // 클릭 이벤트 추가
+        slideItem.addEventListener("click", (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            
+            const slideNum = parseInt(slideItem.getAttribute("data-slide-number"));
+            console.log('넥스트1 작은 박스 클릭됨:', { boxNumber, slideNum, expandedBox: !!expandedBox });
+            
+            currentSlideNumber = slideNum;
+            updateNavButtons();
+            
+            if (!expandedBox) {
+                console.error('expandedBox가 없습니다!');
+                return;
+            }
+            
+            console.log('넥스트1 콘텐츠 로드 시작:', slideNum);
+            loadNext1ContentToMainBox(expandedBox, slideNum);
+        });
+        
+        return slideItem;
     }
     
     // 화살표 버튼 상태 업데이트 함수
@@ -307,6 +381,11 @@ document.addEventListener("DOMContentLoaded", () => {
             loadStrategy1ContentToMainBox(expandedBox, currentSlideNumber);
         } else if (currentBoxNumber === "2") {
             loadService1ContentToMainBox(expandedBox, currentSlideNumber);
+        } else if (currentBoxNumber === "3") {
+            // 3번 박스는 처리하지 않음
+            return;
+        } else if (currentBoxNumber === "4") {
+            loadNext1ContentToMainBox(expandedBox, currentSlideNumber);
         } else if (currentBoxNumber === "5") {
             loadStrategy2ContentToMainBox(expandedBox, currentSlideNumber);
         }
@@ -325,6 +404,11 @@ document.addEventListener("DOMContentLoaded", () => {
             loadStrategy1ContentToMainBox(expandedBox, currentSlideNumber);
         } else if (currentBoxNumber === "2") {
             loadService1ContentToMainBox(expandedBox, currentSlideNumber);
+        } else if (currentBoxNumber === "3") {
+            // 3번 박스는 처리하지 않음
+            return;
+        } else if (currentBoxNumber === "4") {
+            loadNext1ContentToMainBox(expandedBox, currentSlideNumber);
         } else if (currentBoxNumber === "5") {
             loadStrategy2ContentToMainBox(expandedBox, currentSlideNumber);
         }
@@ -5263,6 +5347,923 @@ document.addEventListener("DOMContentLoaded", () => {
 </html></html></html>`
     };
 
+    // 넥스트1 파일 내용을 객체로 저장
+    const next1Contents = {
+        1: `<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI 환경에 최적화된 기획자로의 전환</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8fafc; /* Slate 50 */
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #ffffff;
+        }
+        .decorative-circle {
+            position: absolute;
+            border-radius: 50%;
+            z-index: 0;
+        }
+        .grid-pattern {
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container relative overflow-hidden">
+<!-- 배경 장식 요소 -->
+<div class="absolute top-0 right-0 w-1/3 h-full bg-blue-50 z-0"></div>
+<div class="absolute top-20 right-20 w-32 h-32 border-4 border-blue-200 rounded-full opacity-50 z-0"></div>
+<div class="absolute bottom-[-50px] left-[-50px] w-64 h-64 bg-blue-100 rounded-full opacity-30 z-0"></div>
+<!-- 미세한 그리드 패턴 (우측 상단 영역) -->
+<div class="absolute top-0 right-0 w-1/3 h-full grid-pattern z-0"></div>
+<!-- 메인 콘텐츠 영역 -->
+<div class="flex-1 flex flex-col justify-center items-center z-10 px-20">
+<!-- 상단 라벨 -->
+<div class="mb-8 transform -translate-x-1/2 left-1/2 relative">
+<p class="text-blue-600 font-bold tracking-[0.3em] text-sm uppercase bg-blue-50 px-4 py-1 rounded-full border border-blue-100">
+                    PORTFOLIO 2026
+                </p>
+</div>
+<!-- 메인 타이틀 -->
+<div class="text-center mb-6">
+<p class="text-3xl md:text-4xl font-medium text-gray-500 mb-2">
+                    AI 환경에 최적화된
+                </p>
+<p class="text-5xl md:text-6xl font-black text-slate-900 leading-tight tracking-tight">
+<span class="text-blue-600">기획자</span>로의 전환
+                </p>
+</div>
+<!-- 구분선 -->
+<div class="w-24 h-1 bg-slate-800 my-8"></div>
+<!-- 서브 문구 -->
+<div class="text-center max-w-2xl">
+<p class="text-xl text-slate-600 font-medium leading-relaxed">
+<span class="font-bold text-slate-800">Next Step-Up</span> : <br/>
+                    AI 환경에서 가능성을 직접 실행하는 기획자
+                </p>
+</div>
+</div>
+<!-- 우측 상단 아이콘 장식 -->
+<div class="absolute top-12 right-12 text-blue-200 text-6xl opacity-20 transform rotate-12 z-0">
+<i class="fas fa-rocket"></i>
+</div>
+</div>
+</body>
+</html>`,
+        2: `<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>기획자 역할 재정의</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #ffffff;
+        }
+        .quote-mark {
+            font-family: serif;
+            font-size: 120px;
+            line-height: 1;
+            color: #e2e8f0;
+            position: absolute;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container relative overflow-hidden flex flex-col justify-between p-16">
+<!-- 배경 장식 -->
+<div class="quote-mark top-10 left-10">"</div>
+<div class="quote-mark bottom-40 right-10 rotate-180">"</div>
+<!-- 상단: 타이틀 -->
+<div class="mb-8">
+<div class="flex items-center space-x-2 mb-2">
+<span class="w-2 h-8 bg-blue-600 rounded-sm"></span>
+<h2 class="text-3xl font-bold text-slate-800">관점의 전환과 새로운 역할 정의</h2>
+</div>
+</div>
+<!-- 중앙: 메인 선언 문구 -->
+<div class="flex-1 flex flex-col justify-center items-center text-center z-10">
+<p class="text-xl text-slate-500 mb-6 font-light leading-relaxed">
+                AI 환경에서 기획자는 더 이상<br/>
+<span class="border-b border-slate-300 pb-1">개발을 요청하기 위해 기획서를 만드는 사람</span>이 아니라,
+            </p>
+<div class="space-y-4">
+<p class="text-4xl md:text-5xl font-black text-slate-800 leading-tight">
+<span class="text-blue-600">가능성을 직접 실행</span>해
+                </p>
+<p class="text-4xl md:text-5xl font-black text-slate-800 leading-tight">
+<span class="bg-blue-50 px-2">작동 여부를 확인</span>하는 역할
+                </p>
+</div>
+<p class="text-2xl text-slate-400 mt-6 font-medium">
+                이라고 판단했습니다.
+            </p>
+</div>
+<!-- 하단: 보조 텍스트 (3열 구조) -->
+<div class="grid grid-cols-3 gap-8 mt-8 z-10 border-t border-slate-100 pt-8">
+<!-- Item 1 -->
+<div class="relative pl-6 border-l-4 border-slate-200">
+<h3 class="text-slate-800 font-bold mb-2 flex items-center" style="font-size: 21px;">
+<i class="fas fa-eye text-blue-500 mr-2"></i> 가시성 있는 결과물
+                </h3>
+<p class="text-slate-600 leading-relaxed" style="font-size: 17px;">
+                    기획자의 사고 과정과 기획의 의도를<br/>
+                    정적인 문서가 아닌<br/>
+<strong>가시성 있는 결과물</strong>로 보여주고자 판단.
+                </p>
+</div>
+<!-- Item 2 -->
+<div class="relative pl-6 border-l-4 border-slate-200">
+<h3 class="text-slate-800 font-bold mb-2 flex items-center" style="font-size: 21px;">
+<i class="fas fa-ban text-red-400 mr-2"></i> 기존 방식의 한계 극복
+                </h3>
+<p class="text-slate-600 leading-relaxed" style="font-size: 17px;">
+                    과거에는 기획은 있으나 개발 이해 부족으로<br/>
+                    직접 구현까지 이어지지 못한<br/>
+<strong>수동적 방식</strong>에서 탈피하고자 함.
+                </p>
+</div>
+<!-- Item 3 -->
+<div class="relative pl-6 border-l-4 border-blue-500 bg-blue-50 bg-opacity-30 rounded-r-lg py-2 -my-2">
+<h3 class="text-blue-800 font-bold mb-2 flex items-center" style="font-size: 21px;">
+<i class="fas fa-check-circle text-blue-600 mr-2"></i> 사전 검증의 당위성
+                </h3>
+<p class="text-slate-700 leading-relaxed" style="font-size: 17px;">
+                    AI 환경에서는 기획자가<br/>
+                    직접 구현 가능성을 <strong>사전에 검증하지 못할<br/>
+                    이유가 없다</strong>고 판단.
+                </p>
+</div>
+</div>
+</div>
+</body>
+</html>`,
+        3: `<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>그래서 지금 하고 있는 것</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #ffffff;
+            padding: 40px 60px;
+        }
+        .step-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        .connector-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #e2e8f0;
+            z-index: 0;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- 상단: 타이틀 -->
+<div class="mb-8">
+<div class="flex items-center space-x-2 mb-2">
+<span class="w-2 h-8 bg-blue-600 rounded-sm"></span>
+<p class="text-3xl font-bold text-slate-800">그래서 지금 하고 있는 것</p>
+</div>
+<p class="text-slate-500 ml-4">기획자의 영역을 실행과 검증까지 확장하는 구체적 방법론</p>
+</div>
+<!-- 섹션 1: 프로세스 플로우 -->
+<div class="bg-blue-50 rounded-2xl p-8 mb-6 relative">
+<div class="flex justify-between items-center relative px-10">
+<!-- 연결선 -->
+<div class="connector-line mx-10"></div>
+<!-- 단계 1: 아이디어 -->
+<div class="flex flex-col items-center relative z-10 group">
+<div class="step-circle bg-white text-blue-600 text-2xl shadow-md border-2 border-blue-100 group-hover:border-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+<i class="far fa-lightbulb"></i>
+</div>
+<p class="mt-3 font-bold text-slate-700 text-sm">아이디어</p>
+</div>
+<!-- 화살표 -->
+<div class="z-10 bg-blue-50 px-2 text-slate-300"><i class="fas fa-chevron-right"></i></div>
+<!-- 단계 2: 기획 -->
+<div class="flex flex-col items-center relative z-10 group">
+<div class="step-circle bg-white text-blue-600 text-2xl shadow-md border-2 border-blue-100 group-hover:border-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+<i class="fas fa-pen-ruler"></i>
+</div>
+<p class="mt-3 font-bold text-slate-700 text-sm">기획</p>
+</div>
+<!-- 화살표 -->
+<div class="z-10 bg-blue-50 px-2 text-slate-300"><i class="fas fa-chevron-right"></i></div>
+<!-- 단계 3: 구조 설계 -->
+<div class="flex flex-col items-center relative z-10 group">
+<div class="step-circle bg-white text-blue-600 text-2xl shadow-md border-2 border-blue-100 group-hover:border-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+<i class="fas fa-sitemap"></i>
+</div>
+<p class="mt-3 font-bold text-slate-700 text-sm">구조 설계</p>
+</div>
+<!-- 화살표 & 바이브코딩 뱃지 -->
+<div class="z-10 bg-blue-50 px-2 text-slate-300 relative flex flex-col items-center">
+<div class="absolute -top-8 bg-indigo-600 text-white text-xs px-2 py-1 rounded-full font-bold animate-pulse shadow-md">
+                        With AI
+                    </div>
+<i class="fas fa-chevron-right"></i>
+</div>
+<!-- 단계 4: 개발 (강조) -->
+<div class="flex flex-col items-center relative z-10 group">
+<div class="step-circle bg-indigo-600 text-white text-2xl shadow-lg ring-4 ring-indigo-100">
+<i class="fas fa-code"></i>
+</div>
+<p class="mt-3 font-bold text-indigo-700 text-sm">개발 (구현)</p>
+</div>
+<!-- 화살표 -->
+<div class="z-10 bg-blue-50 px-2 text-slate-300"><i class="fas fa-chevron-right"></i></div>
+<!-- 단계 5: 배포 -->
+<div class="flex flex-col items-center relative z-10 group">
+<div class="step-circle bg-white text-blue-600 text-2xl shadow-md border-2 border-blue-100 group-hover:border-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+<i class="fas fa-rocket"></i>
+</div>
+<p class="mt-3 font-bold text-slate-700 text-sm">배포</p>
+</div>
+</div>
+<!-- 프로세스 설명 -->
+<div class="mt-6 text-center border-t border-blue-100 pt-4">
+<p class="text-slate-600 text-sm">
+<span class="font-bold text-indigo-600">바이브코딩 등 AI 툴</span>을 활용해 아이디어를 빠르게 실험하고 직접 검증합니다.
+                </p>
+</div>
+</div>
+<!-- 섹션 2: 실행 방식 카드 (4개) -->
+<div class="grid grid-cols-4 gap-6 mb-6">
+<!-- Card 1 -->
+<div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-4">
+<i class="fas fa-tools"></i>
+</div>
+<h3 class="font-bold text-slate-800 mb-2 text-sm">실무 스킬화</h3>
+<p class="text-xs text-slate-500 leading-relaxed">
+                    AI 툴을 단순 보조 수단이 아닌<br/>핵심 실무 스킬로 적극 활용
+                </p>
+</div>
+<!-- Card 2 -->
+<div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-4">
+<i class="fas fa-flask"></i>
+</div>
+<h3 class="font-bold text-slate-800 mb-2 text-sm">빠른 실험</h3>
+<p class="text-xs text-slate-500 leading-relaxed">
+                    아이디어를 묵히지 않고<br/>코딩 툴을 통해 즉시 실험
+                </p>
+</div>
+<!-- Card 3 -->
+<div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-4">
+<i class="fas fa-user-cog"></i>
+</div>
+<h3 class="font-bold text-slate-800 mb-2 text-sm">직접 수행</h3>
+<p class="text-xs text-slate-500 leading-relaxed">
+                    기획부터 배포까지의 전 과정을<br/>주도적으로 직접 수행
+                </p>
+</div>
+<!-- Card 4 -->
+<div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-4">
+<i class="fas fa-check-double"></i>
+</div>
+<h3 class="font-bold text-slate-800 mb-2 text-sm">역할 확장</h3>
+<p class="text-xs text-slate-500 leading-relaxed">
+                    개발자가 아니더라도<br/>가능성 검증은 기획자의 몫
+                </p>
+</div>
+</div>
+<!-- 섹션 3: 선제 답변 (하단 강조 박스) -->
+<div class="flex-1 bg-slate-800 rounded-xl p-6 flex items-center justify-between text-white relative overflow-hidden">
+<!-- 배경 데코 -->
+<div class="absolute -right-10 -bottom-10 w-40 h-40 bg-slate-700 rounded-full opacity-50"></div>
+<div class="w-1/4 border-r border-slate-600 pr-6">
+<p class="text-blue-400 font-bold mb-1 uppercase tracking-wider" style="font-size: 15px;">Clarification</p>
+<p class="font-bold leading-tight text-black" style="font-size: 23px;">개발자가 되려는<br/>것이 아닙니다.</p>
+</div>
+<div class="w-3/4 pl-8 z-10 flex justify-between items-center">
+<div class="space-y-3">
+<div class="flex items-start">
+<i class="fas fa-check text-blue-400 mt-1 mr-3"></i>
+<p class="text-black" style="font-size: 17px;">개발을 요청하기 전에 <span class="font-bold">기획 단계에서 구현 가능성을 미리 검증</span>하려는 기획자입니다.</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-check text-blue-400 mt-1 mr-3"></i>
+<p class="text-black" style="font-size: 17px;">AI 환경에서 기획자가 직접 구현 가능성을 <span class="font-bold">사전에 검증하지 못할 이유는 없다</span>고 판단합니다.</p>
+</div>
+</div>
+<div class="text-5xl text-slate-700 opacity-50">
+<i class="fas fa-quote-right"></i>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>`,
+        4: `<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>미니 케이스 스터디</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #ffffff;
+            padding: 40px 60px;
+        }
+        .flow-card {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .arrow-right::after {
+            content: '';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 8px solid #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- 상단 헤더 -->
+<div class="mb-8 flex justify-between items-end border-b border-slate-200 pb-4">
+<div>
+<div class="flex items-center space-x-2 mb-1">
+<span class="w-2 h-8 bg-blue-600 rounded-sm"></span>
+<h1 class="text-3xl font-bold text-slate-800">미니 케이스 스터디</h1>
+</div>
+<p class="text-slate-500 ml-4">내가 가고자 하는 방향이 맞는지 직접 실험해본 웹사이트 프로젝트</p>
+</div>
+<div class="text-right">
+<span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Case Study</span>
+</div>
+</div>
+<!-- 메인 콘텐츠 영역 (2열 분할) -->
+<div class="flex-1 flex space-x-8 mb-6 h-full">
+<!-- 좌측: 문제 및 접근 (60%) - 1x3 배열 -->
+<div class="w-3/5 flex flex-col space-y-6 h-full">
+<!-- 문제 섹션 -->
+<div class="bg-slate-50 rounded-xl p-6 shadow-sm flex-1 flex flex-col">
+<div class="flex items-center mb-3">
+<div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-500 mr-3">
+<i class="fas fa-exclamation"></i>
+</div>
+<h2 class="text-lg font-bold text-slate-800">문제 (Problem)</h2>
+</div>
+<p class="text-slate-600 text-sm leading-relaxed pl-11 flex-1">
+                        기획자의 사고 과정과 기획의 의도를 정적인 문서가 아닌, <span class="font-bold text-slate-800">가시성 있고 작동 가능한 결과물</span>로 전달할 필요성을 느낌.
+                    </p>
+</div>
+<!-- 접근 섹션 1 -->
+<div class="bg-slate-50 rounded-xl p-6 shadow-sm flex-1 flex flex-col">
+<div class="flex items-center mb-4">
+<div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3">
+<i class="fas fa-bullseye"></i>
+</div>
+<h2 class="text-lg font-bold text-slate-800">접근 (Approach)</h2>
+</div>
+<div class="pl-11 space-y-3 flex-1">
+<div class="flex items-start">
+<i class="fas fa-check text-blue-400 mt-1 mr-2 text-xs"></i>
+<p class="text-slate-600 text-sm">기획은 있으나 직접 구현까지 이어지지 못했던 <span class="font-bold">기존 방식 탈피</span>.</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-check text-blue-400 mt-1 mr-2 text-xs"></i>
+<p class="text-slate-600 text-sm"><span class="bg-blue-100 px-1 text-blue-800 font-bold text-xs rounded">바이브코딩</span>을 활용해 기획 → 구조 설계 → 개발 → 배포까지 하나의 실험으로 진행.</p>
+</div>
+</div>
+</div>
+<!-- 접근 섹션 2 (새로운 박스) -->
+<div class="bg-slate-50 rounded-xl p-6 shadow-sm flex-1 flex flex-col">
+<div class="flex items-center mb-4">
+<div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3">
+<i class="fas fa-check-circle"></i>
+</div>
+<h2 class="text-lg font-bold text-slate-800">검증 (Verification)</h2>
+</div>
+<div class="pl-11 space-y-3 flex-1">
+<div class="flex items-start">
+<i class="fas fa-check text-green-400 mt-1 mr-2 text-xs"></i>
+<p class="text-slate-600 text-sm">1차 검증 산출물: 개발자/디자이너 도움 없이 만든 <span class="font-bold">현재의 포트폴리오 웹사이트</span>.</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-check text-green-400 mt-1 mr-2 text-xs"></i>
+<p class="text-slate-600 text-sm">KT 협업: <span class="font-bold">AI 비대면 수술동의서 서비스</span> 기획을 통해 AI 산업 적용 시도.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 우측: 의미 (40%) -->
+<div class="w-2/5 flex flex-col">
+<div class="bg-slate-800 text-white rounded-xl p-8 h-full relative overflow-hidden flex flex-col justify-center shadow-lg">
+<!-- 장식 요소 -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-blue-600 rounded-bl-full opacity-20"></div>
+<div class="absolute bottom-0 left-0 w-24 h-24 bg-blue-400 rounded-tr-full opacity-10"></div>
+<div class="relative z-10">
+<div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center text-white text-xl mb-6 shadow-lg">
+<i class="fas fa-lightbulb"></i>
+</div>
+<h2 class="text-2xl font-bold mb-4 text-black">의미 (Meaning)</h2>
+<div class="space-y-4">
+<p class="text-black text-sm leading-relaxed border-l-2 border-blue-500 pl-4">
+                                이 웹사이트는 단순한 포트폴리오가 아닙니다.
+                            </p>
+<p class="text-black text-base font-medium leading-relaxed">
+                                AI 환경에서 <span class="text-black font-bold">기획자가 어떻게 움직일 수 있는지</span>를 보여주는 결과물입니다.
+                            </p>
+<p class="text-black text-sm leading-relaxed pt-2 border-t border-slate-700">
+                                AI를 단순 보조 수단이 아닌, 산업에 적용 가능한 서비스로 확장하는 시도까지 포함하고 있습니다.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 하단: 간단 흐름 도식 -->
+<div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm mt-2">
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Process Flow</h3>
+<div class="flex justify-between items-center relative">
+<!-- 연결선 -->
+<div class="absolute top-1/2 left-10 right-10 h-1 bg-slate-100 -z-10 transform -translate-y-1/2"></div>
+<!-- Step 1 -->
+<div class="flex-1 flex flex-col items-center">
+<div class="w-32 bg-white border border-slate-300 rounded-lg py-2 px-3 text-center shadow-sm z-10">
+<p class="text-xs font-bold text-slate-700">문제 인식</p>
+</div>
+</div>
+<!-- Arrow -->
+<div class="text-slate-300"><i class="fas fa-chevron-right"></i></div>
+<!-- Step 2 -->
+<div class="flex-1 flex flex-col items-center">
+<div class="w-32 bg-blue-50 border border-blue-200 rounded-lg py-2 px-3 text-center shadow-sm z-10">
+<p class="text-xs font-bold text-blue-700">바이브코딩 실험</p>
+</div>
+</div>
+<!-- Arrow -->
+<div class="text-slate-300"><i class="fas fa-chevron-right"></i></div>
+<!-- Step 3 -->
+<div class="flex-1 flex flex-col items-center">
+<div class="w-40 bg-white border border-slate-300 rounded-lg py-2 px-3 text-center shadow-sm z-10">
+<p class="text-xs font-bold text-slate-700">포트폴리오 웹 제작</p>
+</div>
+</div>
+<!-- Arrow -->
+<div class="text-slate-300"><i class="fas fa-chevron-right"></i></div>
+<!-- Step 4 -->
+<div class="flex-1 flex flex-col items-center">
+<div class="w-48 bg-slate-800 border border-slate-700 rounded-lg py-2 px-3 text-center shadow-sm z-10">
+<p class="text-xs font-bold text-white" style="color: #000000 !important;">산업 적용: AI 수술동의서</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>`,
+        5: `<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI 환경에서 기획 역할을 재정의하는 영역</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #ffffff;
+            padding: 40px 60px;
+        }
+        .list-item {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            transition: all 0.2s ease;
+        }
+        .list-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #cbd5e1;
+            transition: background-color 0.2s ease;
+        }
+        .group:hover .list-item::before {
+            background-color: currentColor;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- 배경 장식 요소 -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-bl-full z-0 opacity-50"></div>
+<div class="absolute bottom-0 left-0 w-40 h-40 bg-blue-50 rounded-tr-full z-0 opacity-50"></div>
+<!-- 상단 헤더 -->
+<div class="mb-8 z-10">
+<div class="flex items-center space-x-2 mb-2">
+<span class="w-2 h-8 bg-blue-600 rounded-sm"></span>
+<h1 class="text-3xl font-bold text-slate-800">AI 환경에서 기획 역할을 재정의하는 영역</h1>
+</div>
+<p class="text-slate-500 ml-4 max-w-3xl">현재는 아래 영역들을 기준으로 AI 환경에서 각 역할을 어떻게 더 효율화할 수 있을지 고민하는 단계입니다.</p>
+</div>
+<!-- 메인 콘텐츠: 허브 앤 스포크 모델 다이어그램 -->
+<style>
+.card-shadow {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+.hub-shadow {
+  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.15), 0 4px 6px -2px rgba(59, 130, 246, 0.1);
+}
+.text-xs-custom {
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+</style>
+<div class="flex-1 z-10 h-full overflow-auto relative">
+<!-- SVG Connection Lines -->
+<svg class="absolute inset-0 w-full h-full z-0 pointer-events-none" viewBox="0 0 1280 720" preserveAspectRatio="none">
+<!-- Center coordinate - 중앙 허브의 정중앙 (50%, 50%) -->
+<!-- Line to Top Left Card - 박스 우측 중앙에 연결 -->
+<line stroke="#CBD5E1" stroke-width="2" x1="50%" x2="330" y1="50%" y2="200"></line>
+<!-- Line to Top Right Card - 박스 좌측 중앙에 연결 -->
+<line stroke="#CBD5E1" stroke-width="2" x1="50%" x2="950" y1="50%" y2="200"></line>
+<!-- Line to Bottom Left Card - 박스 우측 중앙에 연결 -->
+<line stroke="#CBD5E1" stroke-width="2" x1="50%" x2="330" y1="50%" y2="520"></line>
+<!-- Line to Bottom Right Card - 박스 좌측 중앙에 연결 -->
+<line stroke="#CBD5E1" stroke-width="2" x1="50%" x2="950" y1="50%" y2="520"></line>
+</svg>
+<!-- Main Content Grid -->
+<div class="relative w-full h-full z-10 p-12 flex flex-col justify-center items-center">
+<!-- Top Row Cards -->
+<div class="w-full flex justify-between items-start mb-16 px-10">
+<!-- Top Left: 신사업 전략 수립 (I) -->
+<div class="w-[420px] bg-white card-shadow border border-slate-100 rounded-lg p-6 relative" style="position: absolute; top: 80px; left: calc(40px + 5%); transform: translateY(-50%);">
+<!-- Connector Dot -->
+<div class="absolute -right-1 top-1/2 transform -translate-y-1/2 translate-x-full w-2 h-2 bg-blue-200 rounded-full"></div>
+<h2 class="text-lg font-bold text-slate-800 mb-3 border-b border-slate-100 pb-2 flex items-center">
+<span class="w-1.5 h-4 bg-blue-600 mr-2 rounded-sm"></span>
+                        신사업 전략 수립 (Ⅰ)
+                    </h2>
+<div class="grid grid-cols-2 gap-x-4 gap-y-1">
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>시장 분석</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>사업 정의</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>시장 / 고객 분석</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>시장 환경 분석</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>타겟 고객 선정</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>경쟁 분석</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>핵심 자원 분석</p>
+</div>
+</div>
+<!-- Top Right: 신사업 전략 수립 (II) -->
+<div class="w-[420px] bg-white card-shadow border border-slate-100 rounded-lg p-6 relative" style="position: absolute; top: 120px; right: 40px;">
+<!-- Connector Dot -->
+<div class="absolute -left-1 top-1/2 transform -translate-y-1/2 -translate-x-full w-2 h-2 bg-indigo-200 rounded-full"></div>
+<h2 class="text-lg font-bold text-slate-800 mb-3 border-b border-slate-100 pb-2 flex items-center">
+<span class="w-1.5 h-4 bg-indigo-500 mr-2 rounded-sm"></span>
+                        신사업 전략 수립 (Ⅱ)
+                    </h2>
+<div class="grid grid-cols-2 gap-x-4 gap-y-1">
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>사업 모델</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>아이디어 믹스</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>차별화 전략</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>수익 모델 설계</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>데이터 기반 의사결정</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>파트너십 전략</p>
+</div>
+</div>
+</div>
+<!-- Spacer for Center Hub -->
+<div class="h-2"></div>
+<!-- Bottom Row Cards -->
+<div class="w-full flex justify-between items-end mt-16 px-10">
+<!-- Bottom Left: 상품기획 및 관리 (I) -->
+<div class="w-[420px] bg-white card-shadow border border-slate-100 rounded-lg p-6 relative" style="position: absolute; bottom: 200px; left: calc(40px + 5%); transform: translateY(50%);">
+<!-- Connector Dot -->
+<div class="absolute -right-1 top-1/2 transform -translate-y-1/2 translate-x-full w-2 h-2 bg-teal-200 rounded-full"></div>
+<h2 class="text-lg font-bold text-slate-800 mb-3 border-b border-slate-100 pb-2 flex items-center">
+<span class="w-1.5 h-4 bg-teal-500 mr-2 rounded-sm"></span>
+                        상품기획 및 관리 (Ⅰ)
+                    </h2>
+<div class="grid grid-cols-2 gap-x-4 gap-y-1">
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>사업성 분석</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>BM 설정</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>경쟁 분석</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>포지셔닝</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>사업성 검증</p>
+</div>
+</div>
+<!-- Bottom Right: 상품기획 및 관리 (II) -->
+<div class="w-[420px] bg-white card-shadow border border-slate-100 rounded-lg p-6 relative" style="position: absolute; bottom: 120px; right: 40px;">
+<!-- Connector Dot -->
+<div class="absolute -left-1 top-1/2 transform -translate-y-1/2 -translate-x-full w-2 h-2 bg-purple-200 rounded-full"></div>
+<h2 class="text-lg font-bold text-slate-800 mb-3 border-b border-slate-100 pb-2 flex items-center">
+<span class="w-1.5 h-4 bg-purple-500 mr-2 rounded-sm"></span>
+                        상품기획 및 관리 (Ⅱ)
+                    </h2>
+<div class="grid grid-cols-2 gap-x-4 gap-y-1">
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>실행 전략</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>MVP 정의</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>PMF 검증</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>KPI 설정</p>
+<p class="text-xs-custom text-slate-600 flex items-center"><span class="w-1 h-1 bg-slate-300 rounded-full mr-2"></span>서비스 딜리버리 방안</p>
+</div>
+</div>
+</div>
+<!-- Center Hub (Absolute Positioned on top of everything) -->
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 z-20 flex items-center justify-center">
+<!-- Outer glow ring -->
+<div class="absolute w-full h-full bg-blue-50 rounded-full opacity-50 animate-pulse"></div>
+<!-- Main Circle -->
+<div class="w-52 h-52 bg-white rounded-full hub-shadow border-4 border-blue-50 flex flex-col items-center justify-center text-center relative z-10">
+<div class="w-12 h-1 bg-blue-600 rounded-full mb-4"></div>
+<h1 class="text-2xl font-black text-slate-800 leading-tight">
+                        AI 활용<br/>
+<span class="text-blue-600">최적화</span>
+</h1>
+<p class="text-xs text-slate-400 mt-2 font-medium tracking-wide">Optimization</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 하단 메시지 (Optional) -->
+<div class="absolute bottom-6 right-10 text-right z-10">
+<p class="text-xs text-slate-400 italic">
+                * 각 영역에 대한 AI 최적화 실험 진행 중
+            </p>
+</div>
+</div>
+</body>
+</html>`,
+        6: `<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hybrid Planner의 완성형을 향해</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            position: relative;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+        .decorative-shape {
+            position: absolute;
+            border-radius: 50%;
+            z-index: 0;
+        }
+        .arrow-box {
+            position: relative;
+        }
+        .arrow-box::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 15px solid #cbd5e1;
+        }
+        /* Gradient fallback with solid colors/opacity since gradients are discouraged */
+        .bg-accent-light {
+            background-color: #eff6ff; /* blue-50 */
+        }
+        .bg-accent-dark {
+            background-color: #1e293b; /* slate-800 */
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- 배경 장식 -->
+<div class="decorative-shape bg-blue-50 w-96 h-96 top-[-100px] left-[-100px] opacity-50"></div>
+<div class="decorative-shape bg-slate-50 w-[800px] h-[800px] bottom-[-400px] right-[-200px] opacity-50"></div>
+<!-- 좌측: 타이틀 영역 (40%) -->
+<div class="w-2/5 h-full flex flex-col justify-center pl-20 pr-10 z-10 relative">
+<div class="mb-6">
+<span class="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wider uppercase mb-4">Vision &amp; Goal</span>
+<h1 class="text-4xl font-black text-slate-800 leading-tight mb-2">
+<span class="text-blue-600">Hybrid Planner</span>의<br/>
+                    완성형을 향해
+                </h1>
+<div class="w-20 h-2 bg-blue-600 mt-6 mb-6"></div>
+</div>
+<p class="text-slate-500 text-lg font-light leading-relaxed">
+                AI 환경에 최적화된 기획자로서,<br/>
+                가능성을 검증하고 실행하는<br/>
+                여정을 멈추지 않겠습니다.
+            </p>
+<!-- 연락처 정보 (하단 고정) -->
+<div class="absolute bottom-16 left-20">
+<p class="text-xs text-slate-400 font-bold uppercase mb-2">Contact</p>
+<div class="flex items-center space-x-6 text-slate-600">
+<div class="flex items-center">
+<i class="fas fa-envelope text-blue-500 mr-2"></i>
+<span class="font-medium">email@portfolio.com</span>
+</div>
+<div class="flex items-center">
+<i class="fas fa-link text-blue-500 mr-2"></i>
+<span class="font-medium">portfolio.site</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 우측: 콘텐츠 영역 (60%) -->
+<div class="w-3/5 h-full flex flex-col justify-center pr-20 pl-10 z-10">
+<!-- 메시지 1: 과정과 성장 -->
+<div class="flex items-stretch mb-8 relative">
+<!-- Step 1 -->
+<div class="flex-1 bg-white border border-slate-200 rounded-xl p-6 shadow-sm relative z-10">
+<div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-500 mb-4">
+<i class="fas fa-tasks"></i>
+</div>
+<h3 class="text-sm font-bold text-slate-800 mb-2">영역별 고민 &amp; 검증</h3>
+<p class="text-xs text-slate-500 leading-relaxed">
+                        앞서 언급한 기획 영역들에 대한<br/>
+                        치열한 고민과 실현 가능성 검증 수행
+                    </p>
+</div>
+<!-- Arrow Connector -->
+<div class="w-12 flex items-center justify-center text-slate-300 z-0">
+<i class="fas fa-arrow-right text-xl"></i>
+</div>
+<!-- Step 2 -->
+<div class="flex-1 bg-white border-2 border-blue-100 rounded-xl p-6 shadow-md relative z-10">
+<div class="absolute -top-3 -right-3 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white border-2 border-white shadow-sm">
+<i class="fas fa-check"></i>
+</div>
+<div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 mb-4">
+<i class="fas fa-user-astronaut"></i>
+</div>
+<h3 class="text-sm font-bold text-slate-800 mb-2">하이브리드 기획자 완성</h3>
+<p class="text-xs text-slate-500 leading-relaxed">
+                        Profile에서 지향하는<br/>
+                        완성형 기획자 모델에 근접
+                    </p>
+</div>
+</div>
+<!-- 메시지 2: 최종 목표 (Next Goal) - 강조 박스 -->
+<div class="bg-slate-800 rounded-2xl p-8 relative overflow-hidden shadow-xl" style="background-color: #ffffff !important;">
+<!-- 장식용 배경 아이콘 -->
+<div class="absolute right-[-20px] bottom-[-20px] text-slate-700 text-[150px] opacity-20 transform rotate-12">
+<i class="fas fa-flag-checkered"></i>
+</div>
+<h2 class="text-blue-400 font-bold text-sm tracking-widest uppercase mb-4">Next Goal</h2>
+<div class="flex items-start space-x-6 relative z-10">
+<div class="flex-1">
+<div class="flex items-center mb-3">
+<div class="w-8 h-8 rounded bg-slate-700 flex items-center justify-center text-blue-400 mr-3">
+<i class="fas fa-building"></i>
+</div>
+<h3 class="text-lg font-bold text-black">조직 적용</h3>
+</div>
+<p class="text-black text-sm font-light leading-relaxed pl-11 border-l border-slate-600">
+                            내가 속한 기업과 조직에<br/>
+                            AI 환경에 최적화된 방식을 이식
+                        </p>
+</div>
+<div class="h-20 w-px bg-slate-600 mx-4"></div>
+<div class="flex-1">
+<div class="flex items-center mb-3">
+<div class="w-8 h-8 rounded bg-slate-700 flex items-center justify-center text-blue-400 mr-3">
+<i class="fas fa-chart-line"></i>
+</div>
+<h3 class="text-lg font-bold text-black">성과 연결</h3>
+</div>
+<p class="text-black text-sm font-light leading-relaxed pl-11 border-l border-slate-600">
+                            단순 도입을 넘어<br/>
+                            실질적인 비즈니스 성과로 증명
+                        </p>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-slate-700 text-center">
+<p class="text-lg font-medium text-black">
+                        "상상을 현실로 만드는 실행력으로 증명하겠습니다."
+                    </p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>`
+    };
+
     // iframe 스케일 정보 저장을 위한 전역 배열
 
 
@@ -5274,7 +6275,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>모바일 로보어드바이저 전환 프로젝트</title>
+<title>매출 구조 전환과 사업 구조 개편 전략 실행</title>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
@@ -5446,8 +6447,8 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="content-wrapper">
 <p class="top-label">Strategic Planning Portfolio</p>
 <h1 class="main-title">
-                모바일 로보어드바이저<br/>
-                전환 프로젝트
+                매출 구조 전환과<br/>
+                사업 구조 개편 전략 실행
             </h1>
 <div class="summary-container">
 <span class="summary-label">Executive Summary</span>
@@ -9394,9 +10395,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const parentBox = container.getAttribute('data-parent-box') || container.getAttribute('data-box');
         const isServiceBoxType = parentBox === '2'; // 서비스 박스만
         const isStrategy2BoxType = parentBox === '5'; // 전략2 박스
+        const isNext1BoxType = parentBox === '4'; // 넥스트1 박스
         
         // 서비스1-2부터 서비스1-8까지 큰 박스와 작은 박스 모두에서 95% 비율로 표시
         const isServiceBox = isServiceBoxType && slideNumber && ['2', '3', '4', '5', '6', '7', '8'].includes(slideNumber);
+        
+        // 넥스트1-1부터 넥스트1-6까지 큰 박스와 작은 박스 모두에서 95% 비율로 표시
+        const isNext1Box = isNext1BoxType && slideNumber && ['1', '2', '3', '4', '5', '6'].includes(slideNumber);
         
         // 전략2-10은 큰 박스에서 작은 박스와 동일한 padding 비율 적용
         const isStrategy2_10 = isStrategy2BoxType && slideNumber === '10' && !isSmallBox;
@@ -9405,6 +10410,12 @@ document.addEventListener("DOMContentLoaded", () => {
         let scale;
         if (isServiceBox) {
             // 서비스1-2부터 서비스1-8까지 큰 박스와 작은 박스 모두 95% 정도를 차지하도록 설정
+            const contentPercent = 0.95; // 95%
+            const targetWidth = containerWidth * contentPercent;
+            const targetHeight = containerHeight * contentPercent;
+            scale = Math.min(targetWidth / slideWidth, targetHeight / slideHeight);
+        } else if (isNext1Box) {
+            // 넥스트1-1부터 넥스트1-6까지 큰 박스와 작은 박스 모두 95% 정도를 차지하도록 설정
             const contentPercent = 0.95; // 95%
             const targetWidth = containerWidth * contentPercent;
             const targetHeight = containerHeight * contentPercent;
@@ -9604,8 +10615,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error('HTML 콘텐츠가 문자열 형식이 아닙니다.');
             }
             
+            // 넥스트1 박스인지 확인 (초기화 전에 확인)
+            const isNext1Box = container.getAttribute('data-box') === '4' || container.getAttribute('data-parent-box') === '4';
+            
             // 컨테이너 초기화
             container.innerHTML = '';
+            
+            // 넥스트1 박스인 경우 컨테이너 배경색 설정 (큰 박스와 작은 박스 모두)
+            if (isNext1Box) {
+                container.style.setProperty('background', '#ffffff', 'important');
+                container.style.setProperty('background-color', '#ffffff', 'important');
+                if (isMainBox) {
+                    container.style.setProperty('border', 'none', 'important');
+                    container.style.setProperty('box-shadow', 'none', 'important');
+                }
+            }
             
             // HTML 문자열에서 width와 height 추출 (최적화)
             let slideWidth = 1280;
@@ -9622,11 +10646,23 @@ document.addEventListener("DOMContentLoaded", () => {
             iframe.frameBorder = '0';
             iframe.className = isMainBox ? 'service-main-iframe' : 'service-slide-iframe';
             // iframe을 absolute로 설정하여 컨테이너 전체를 채우도록 함
-            iframe.style.cssText = 'width: 100%; height: 100%; border: none; overflow: hidden; position: absolute; top: 0; left: 0; display: block;';
-            if (isMainBox) {
-                iframe.style.borderRadius = '16px';
+            // 넥스트1 박스는 z-index를 높여서 배경 위에 표시되도록 함
+            if (isNext1Box) {
+                if (isMainBox) {
+                    iframe.style.cssText = 'width: 100%; height: 100%; border: none; overflow: hidden; position: absolute; top: 0; left: 0; display: block; z-index: 20; background-color: #ffffff;';
+                    iframe.style.borderRadius = '0';
+                } else {
+                    // 작은 박스도 흰색 배경 적용
+                    iframe.style.cssText = 'width: 100%; height: 100%; border: none; overflow: hidden; position: absolute; top: 0; left: 0; display: block; z-index: 10; background-color: #ffffff;';
+                    iframe.style.borderRadius = '12px';
+                }
             } else {
-                iframe.style.borderRadius = '12px';
+                iframe.style.cssText = 'width: 100%; height: 100%; border: none; overflow: hidden; position: absolute; top: 0; left: 0; display: block; z-index: 10;';
+                if (isMainBox) {
+                    iframe.style.borderRadius = '16px';
+                } else {
+                    iframe.style.borderRadius = '12px';
+                }
             }
             
             // 컨테이너에 iframe 먼저 삽입 (브라우저가 렌더링 시작)
@@ -9652,6 +10688,59 @@ document.addEventListener("DOMContentLoaded", () => {
             // HTML에 base 태그 추가하여 상대 경로가 올바르게 해석되도록 함
             let processedHtml = html;
             const baseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+            
+            // 넥스트1 박스인 경우 body 배경색을 흰색으로 강제 변경 (큰 박스와 작은 박스 모두)
+            if (isNext1Box) {
+                // body 배경색을 #ffffff로 변경
+                processedHtml = processedHtml.replace(
+                    /background-color:\s*#f8fafc/g,
+                    'background-color: #ffffff'
+                );
+                processedHtml = processedHtml.replace(
+                    /background-color:\s*#f8fafc\s*;/g,
+                    'background-color: #ffffff;'
+                );
+                processedHtml = processedHtml.replace(
+                    /background:\s*#f8fafc/g,
+                    'background: #ffffff'
+                );
+                
+                // body와 html 태그에 직접 스타일 추가
+                if (processedHtml.includes('<body')) {
+                    processedHtml = processedHtml.replace(
+                        /<body([^>]*)>/i,
+                        '<body$1 style="background-color: #ffffff !important; background: #ffffff !important;">'
+                    );
+                } else {
+                    // body 태그가 없으면 추가
+                    processedHtml = processedHtml.replace(
+                        /<\/head>/i,
+                        '</head><body style="background-color: #ffffff !important; background: #ffffff !important;">'
+                    );
+                }
+                
+                // html 태그에도 배경색 추가
+                if (processedHtml.includes('<html')) {
+                    processedHtml = processedHtml.replace(
+                        /<html([^>]*)>/i,
+                        '<html$1 style="background-color: #ffffff !important; background: #ffffff !important;">'
+                    );
+                }
+                
+                // 스타일 태그에 body 배경색 강제 설정 추가
+                const backgroundStyle = '<style>body, html { background-color: #ffffff !important; background: #ffffff !important; }</style>';
+                if (processedHtml.includes('</head>')) {
+                    processedHtml = processedHtml.replace(
+                        /<\/head>/i,
+                        backgroundStyle + '</head>'
+                    );
+                } else if (processedHtml.includes('<head>')) {
+                    processedHtml = processedHtml.replace(
+                        /<head>/i,
+                        '<head>' + backgroundStyle
+                    );
+                }
+            }
             
             // Chart.js와 chartjs-plugin-datalabels를 동적으로 로드하여 소스맵 요청 차단
             // Chart.js가 완전히 로드된 후에 플러그인을 로드하도록 순차 로드
@@ -9801,6 +10890,33 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!tryScale()) {
                 // 로드 완료 대기
                 iframe.addEventListener('load', () => {
+                    // 넥스트1 박스인 경우 배경색 재설정 (큰 박스와 작은 박스 모두)
+                    if (isNext1Box) {
+                        container.style.setProperty('background', '#ffffff', 'important');
+                        container.style.setProperty('background-color', '#ffffff', 'important');
+                        if (isMainBox) {
+                            container.style.setProperty('border', 'none', 'important');
+                            container.style.setProperty('box-shadow', 'none', 'important');
+                        }
+                        
+                        // iframe 내부의 body와 html 배경색도 흰색으로 설정
+                        try {
+                            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                            if (iframeDoc) {
+                                if (iframeDoc.body) {
+                                    iframeDoc.body.style.setProperty('background-color', '#ffffff', 'important');
+                                    iframeDoc.body.style.setProperty('background', '#ffffff', 'important');
+                                }
+                                if (iframeDoc.documentElement) {
+                                    iframeDoc.documentElement.style.setProperty('background-color', '#ffffff', 'important');
+                                    iframeDoc.documentElement.style.setProperty('background', '#ffffff', 'important');
+                                }
+                            }
+                        } catch (e) {
+                            // 크로스 오리진 제한으로 접근 불가능한 경우 무시
+                        }
+                    }
+                    
                     // 소스맵 요청 차단 (404 에러 방지)
                     try {
                         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
@@ -9922,6 +11038,141 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (error) {
             console.error(`Failed to load service ${slideNumber}:`, error);
             mainBox.innerHTML = '<div class="service-slide-content">콘텐츠를 불러올 수 없습니다.</div>';
+        }
+    }
+
+    // 넥스트1 파일 내용을 메인박스에 로드하는 함수
+    function loadNext1ContentToMainBox(mainBox, slideNumber) {
+        console.log('loadNext1ContentToMainBox 호출:', { mainBox: !!mainBox, slideNumber, hasContent: !!next1Contents[slideNumber] });
+        try {
+            if (!mainBox) {
+                throw new Error('mainBox가 없습니다.');
+            }
+            
+            // 이전 iframe 정보 제거
+            const index = iframeScaleInfo.findIndex(info => info.container === mainBox);
+            if (index !== -1) {
+                iframeScaleInfo.splice(index, 1);
+            }
+            
+            const html = next1Contents[slideNumber];
+            if (!html) {
+                throw new Error(`넥스트1 파일 ${slideNumber}를 찾을 수 없습니다.`);
+            }
+            
+            console.log('넥스트1 콘텐츠 로드 중:', slideNumber);
+            mainBox.setAttribute("data-slide-number", slideNumber);
+            // data-box 속성을 먼저 설정 (loadContentToIframe에서 확인하기 위해)
+            mainBox.setAttribute("data-box", "4");
+            mainBox.classList.add("service-box");
+            mainBox.classList.add("next1-box");
+            
+            // 넥스트1 박스 스타일 설정: 배경 흰색, 윤곽선/그림자 제거
+            // 먼저 ::before 요소 제거를 위한 스타일 추가 (iframe 로드 전에)
+            if (!document.getElementById('next1-box-style')) {
+                const style = document.createElement('style');
+                style.id = 'next1-box-style';
+                style.textContent = `
+                    .test-expanded-box.service-box.next1-box::before,
+                    .test-expanded-box.next1-box::before {
+                        display: none !important;
+                        content: none !important;
+                        background: none !important;
+                    }
+                    .test-expanded-box.service-box.next1-box {
+                        background: #ffffff !important;
+                        background-color: #ffffff !important;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // 배경색 강제 설정
+            mainBox.style.setProperty('background', '#ffffff', 'important');
+            mainBox.style.setProperty('background-color', '#ffffff', 'important');
+            mainBox.style.setProperty('border', 'none', 'important');
+            mainBox.style.setProperty('box-shadow', 'none', 'important');
+            
+            // iframe으로 로드
+            loadContentToIframe(mainBox, html, true);
+            
+            // iframe 로드 후에도 배경색 재확인 및 ::before 제거 (여러 번 시도)
+            const applyBackground = () => {
+                mainBox.style.setProperty('background', '#ffffff', 'important');
+                mainBox.style.setProperty('background-color', '#ffffff', 'important');
+                mainBox.style.setProperty('border', 'none', 'important');
+                mainBox.style.setProperty('box-shadow', 'none', 'important');
+                
+                // ::before 요소 강제 제거
+                const styleTag = document.getElementById('next1-box-style');
+                if (styleTag) {
+                    styleTag.textContent = `
+                        .test-expanded-box.service-box.next1-box::before,
+                        .test-expanded-box.next1-box::before {
+                            display: none !important;
+                            content: none !important;
+                            background: transparent !important;
+                        }
+                        .test-expanded-box.service-box.next1-box {
+                            background: #ffffff !important;
+                            background-color: #ffffff !important;
+                        }
+                    `;
+                }
+            };
+            
+            // 즉시 적용
+            applyBackground();
+            
+            // 짧은 간격으로 여러 번 재적용
+            setTimeout(applyBackground, 50);
+            setTimeout(applyBackground, 100);
+            setTimeout(applyBackground, 200);
+            setTimeout(applyBackground, 500);
+            
+            // 스케일 재계산 최적화
+            const scheduleRecalculate = () => {
+                const iframeInfo = getIframeInfo(mainBox);
+                if (iframeInfo) {
+                    if (!recalculateIframeScale(iframeInfo)) {
+                        setTimeout(() => {
+                            recalculateIframeScale(iframeInfo);
+                        }, 50);
+                    }
+                }
+            };
+            
+            requestAnimationFrame(scheduleRecalculate);
+        } catch (error) {
+            console.error(`Failed to load next1 ${slideNumber}:`, error);
+            mainBox.innerHTML = '<div class="service-slide-content">콘텐츠를 불러올 수 없습니다.</div>';
+        }
+    }
+
+    // 넥스트1 파일 내용 로드 함수 (슬라이드용)
+    function loadNext1Content(slideItem, slideNumber) {
+        try {
+            const html = next1Contents[slideNumber];
+            if (!html) {
+                throw new Error(`넥스트1 파일 ${slideNumber}를 찾을 수 없습니다.`);
+            }
+            
+            slideItem.setAttribute("data-slide-number", slideNumber);
+            
+            // 넥스트1 작은 박스 배경색 설정
+            slideItem.style.setProperty('background', '#ffffff', 'important');
+            slideItem.style.setProperty('background-color', '#ffffff', 'important');
+            
+            loadContentToIframe(slideItem, html, false);
+            
+            // iframe 로드 후에도 배경색 재확인
+            setTimeout(() => {
+                slideItem.style.setProperty('background', '#ffffff', 'important');
+                slideItem.style.setProperty('background-color', '#ffffff', 'important');
+            }, 100);
+        } catch (error) {
+            console.error(`Failed to load next1 content ${slideNumber}:`, error);
+            slideItem.innerHTML = '<div class="service-slide-content">콘텐츠를 불러올 수 없습니다.</div>';
         }
     }
 
