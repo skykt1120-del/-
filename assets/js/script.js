@@ -333,6 +333,11 @@ document.addEventListener("DOMContentLoaded", () => {
         slideItem.setAttribute("data-parent-box", boxNumber);
         slideItem.setAttribute("data-slide-number", slideNumber);
         
+        // 명시적으로 표시 설정
+        slideItem.style.display = 'block';
+        slideItem.style.visibility = 'visible';
+        slideItem.style.opacity = '1';
+        
         // 넥스트1 파일 내용 로드
         loadNext1Content(slideItem, slideNumber);
         

@@ -2781,7 +2781,7 @@ body {
 
 /* Next1 Thumbnail Box Content Styling */
 .test-thumbnail-box.next1-thumbnail-box {
-    overflow: visible;
+    overflow: visible !important;
 }
 
 .test-thumbnail-box.next1-thumbnail-box .next1-content {
@@ -2790,7 +2790,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    overflow: visible;
     pointer-events: none;
 }
 
@@ -2799,7 +2799,7 @@ body {
     height: 100%;
     background-color: #ffffff;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     display: flex;
     flex-direction: column;
     font-family: 'Noto Sans KR', sans-serif;
@@ -3664,6 +3664,10 @@ body {
 .test-slide-item[data-parent-box="4"] {
     background-color: #ffffff !important;
     background: #ffffff !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 10 !important;
 }
 
 .test-slide-item[data-parent-box="4"]::before {
@@ -3674,10 +3678,16 @@ body {
 
 .test-slide-item[data-parent-box="4"] .service-slide-iframe {
     background-color: #ffffff !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .test-slide-item[data-parent-box="4"] .service-slide-content {
     background-color: #ffffff !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 /* 메인박스에 서비스 콘텐츠가 로드된 경우 */
