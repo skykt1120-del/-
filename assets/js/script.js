@@ -44,16 +44,41 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
         // portfolio.html 페이지에서 뒤로 가기 시 확대 뷰만 닫기
         if (currentPage === 'portfolio.html' || currentPage === 'portfolio') {
-            const expandedView = document.getElementById("expandedView");
-            const thumbnailGrid = document.getElementById("thumbnailGrid");
-            if (expandedView && thumbnailGrid && !expandedView.classList.contains("hidden")) {
-                expandedView.classList.add("hidden");
-                thumbnailGrid.classList.remove("hidden");
-                // 모든 박스 다시 표시
-                const thumbnailBoxes = document.querySelectorAll('.test-thumbnail-box');
-                thumbnailBoxes.forEach(box => {
-                    box.classList.remove("hidden");
-                });
+            const urlParams = new URLSearchParams(window.location.search);
+            const boxParam = urlParams.get('box');
+            
+            if (!boxParam) {
+                // URL에 box 파라미터가 없으면 확대 뷰 닫기
+                closeExpandedView();
+            } else {
+                // URL에 box 파라미터가 있으면 해당 상태로 복원
+                const slideParam = urlParams.get('slide');
+                const slideNumber = slideParam ? parseInt(slideParam) : 1;
+                
+                // expandBox 호출하여 상태 복원
+                expandBox(boxParam);
+                
+                // 슬라이드 번호가 1보다 크면 해당 슬라이드로 이동
+                if (slideNumber > 1) {
+                    setTimeout(() => {
+                        const expandedBox = document.getElementById("expandedBox");
+                        if (expandedBox) {
+                            currentSlideNumber = slideNumber;
+                            updateNavButtons();
+                            if (boxParam === "1") {
+                                loadStrategy1ContentToMainBox(expandedBox, slideNumber);
+                            } else if (boxParam === "2") {
+                                loadService1ContentToMainBox(expandedBox, slideNumber);
+                            } else if (boxParam === "3") {
+                                loadService2ContentToMainBox(expandedBox, slideNumber);
+                            } else if (boxParam === "4") {
+                                loadNext1ContentToMainBox(expandedBox, slideNumber);
+                            } else if (boxParam === "5") {
+                                loadStrategy2ContentToMainBox(expandedBox, slideNumber);
+                            }
+                        }
+                    }, 200);
+                }
             }
         }
     });
@@ -106,6 +131,28 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentSlideNumber = 1;
     let maxSlideCount = 0;
 
+    // URL 업데이트 함수
+    function updateURL(boxNumber, slideNumber) {
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        if (currentPage === 'portfolio.html' || currentPage === 'portfolio') {
+            const url = new URL(window.location);
+            url.searchParams.set('box', boxNumber);
+            url.searchParams.set('slide', slideNumber);
+            window.history.replaceState({ expanded: true, boxNumber: boxNumber, slideNumber: slideNumber }, '', url);
+        }
+    }
+
+    // URL에서 파라미터 제거 함수
+    function clearURL() {
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        if (currentPage === 'portfolio.html' || currentPage === 'portfolio') {
+            const url = new URL(window.location);
+            url.searchParams.delete('box');
+            url.searchParams.delete('slide');
+            window.history.replaceState(null, '', url);
+        }
+    }
+
     // 확대 뷰 닫기 함수
     function closeExpandedView() {
         if (expandedView && thumbnailGrid) {
@@ -117,10 +164,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 box.classList.remove("hidden");
             });
         }
-        // history에서 확대 뷰 상태가 있으면 제거
-        if (window.history.state && window.history.state.expanded) {
-            window.history.back();
-        }
+        // URL에서 파라미터 제거
+        clearURL();
+        // 상태 초기화
+        currentBoxNumber = null;
+        currentSlideNumber = 1;
     }
 
     // 박스 확대 함수
@@ -142,12 +190,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // 확대 뷰 표시
         expandedView.classList.remove("hidden");
         
-        // 현재 페이지가 portfolio.html인 경우에만 history 상태 추가
-        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        if (currentPage === 'portfolio.html' || currentPage === 'portfolio') {
-            // 확대 뷰 상태를 history에 추가
-            window.history.pushState({ expanded: true, boxNumber: boxNumber }, '', window.location.href);
-        }
+        // URL 업데이트
+        updateURL(boxNumber, 1);
         
         // 화살표 버튼 위치 조정 (test-expanded-box의 중앙에 맞춤)
         const updateButtonPosition = () => {
@@ -191,15 +235,52 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.log('strategy1Contents 키:', Object.keys(strategy1Contents));
             }
             loadStrategy1ContentToMainBox(expandedBox, 1);
+            // 초기 로딩 시 스케일 재계산 강제 실행
+            setTimeout(() => {
+                const iframeInfo = getIframeInfo(expandedBox);
+                if (iframeInfo) {
+                    recalculateIframeScale(iframeInfo);
+                }
+            }, 100);
+            setTimeout(() => {
+                const iframeInfo = getIframeInfo(expandedBox);
+                if (iframeInfo) {
+                    recalculateIframeScale(iframeInfo);
+                }
+            }, 300);
         } else if (boxNumber === "2") {
             console.log('서비스 박스 처리');
             loadService1ContentToMainBox(expandedBox, 1);
+            // 초기 로딩 시 스케일 재계산 강제 실행
+            setTimeout(() => {
+                const iframeInfo = getIframeInfo(expandedBox);
+                if (iframeInfo) {
+                    recalculateIframeScale(iframeInfo);
+                }
+            }, 100);
+            setTimeout(() => {
+                const iframeInfo = getIframeInfo(expandedBox);
+                if (iframeInfo) {
+                    recalculateIframeScale(iframeInfo);
+                }
+            }, 300);
         } else if (boxNumber === "3") {
-            // 3번 박스는 별도 처리 (미러링 방지)
-            console.log('서비스 박스 3번 처리 - 빈 상태로 표시');
-            expandedBox.innerHTML = '';
-            expandedBox.setAttribute("data-box", boxNumber);
-            expandedBox.classList.add("service-box");
+            // 서비스2 박스 처리
+            console.log('서비스2 박스 처리');
+            loadService2ContentToMainBox(expandedBox, 1);
+            // 초기 로딩 시 스케일 재계산 강제 실행
+            setTimeout(() => {
+                const iframeInfo = getIframeInfo(expandedBox);
+                if (iframeInfo) {
+                    recalculateIframeScale(iframeInfo);
+                }
+            }, 100);
+            setTimeout(() => {
+                const iframeInfo = getIframeInfo(expandedBox);
+                if (iframeInfo) {
+                    recalculateIframeScale(iframeInfo);
+                }
+            }, 300);
         } else if (boxNumber === "4") {
             // 넥스트1 박스인 경우 넥스트1-1 내용을 메인박스에 표시
             console.log('넥스트1 박스 처리');
@@ -211,35 +292,35 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.log('strategy2Contents 키:', Object.keys(strategy2Contents));
             }
             loadStrategy2ContentToMainBox(expandedBox, 1);
-        } else {
-            // 다른 박스는 기존대로 클릭된 박스의 내용을 복사
-            const clickedBox = document.querySelector(`.test-thumbnail-box[data-box="${boxNumber}"]`);
-            if (clickedBox) {
-                expandedBox.innerHTML = clickedBox.innerHTML;
-                expandedBox.setAttribute("data-box", boxNumber);
-                // 서비스 박스 클래스도 복사
-                if (clickedBox.classList.contains("service-box")) {
-                    expandedBox.classList.add("service-box");
-                } else {
-                    expandedBox.classList.remove("service-box");
+            // 초기 로딩 시 스케일 재계산 강제 실행
+            setTimeout(() => {
+                const iframeInfo = getIframeInfo(expandedBox);
+                if (iframeInfo) {
+                    recalculateIframeScale(iframeInfo);
                 }
-            }
+            }, 100);
+            setTimeout(() => {
+                const iframeInfo = getIframeInfo(expandedBox);
+                if (iframeInfo) {
+                    recalculateIframeScale(iframeInfo);
+                }
+            }, 300);
+        } else {
+            // 알 수 없는 박스 번호인 경우 빈 상태로 표시
+            expandedBox.innerHTML = '';
+            expandedBox.setAttribute("data-box", boxNumber);
         }
 
         // 현재 박스 번호와 슬라이드 번호 저장
         currentBoxNumber = boxNumber;
         currentSlideNumber = 1;
-        maxSlideCount = boxNumber === "1" ? 8 : (boxNumber === "5" ? 10 : (boxNumber === "2" ? 8 : (boxNumber === "3" ? 0 : (boxNumber === "4" ? 6 : 5)))); // 전략1은 8개, 전략2는 10개, 서비스는 8개, 3번은 0개(빈 상태), 넥스트1은 6개, 나머지는 5개
+        maxSlideCount = boxNumber === "1" ? 8 : (boxNumber === "5" ? 10 : (boxNumber === "2" ? 8 : (boxNumber === "3" ? 1 : (boxNumber === "4" ? 6 : 5)))); // 전략1은 8개, 전략2는 10개, 서비스1은 8개, 서비스2는 1개, 넥스트1은 6개, 나머지는 5개
         
         // 화살표 버튼 상태 업데이트
         updateNavButtons();
         
         // 슬라이드 리스트 생성 - 박스 번호에 따라 개수 다름
         slideList.innerHTML = "";
-        // 3번 박스는 슬라이드 리스트를 생성하지 않음
-        if (boxNumber === "3") {
-            return;
-        }
         
         // 넥스트1 박스는 특별한 레이아웃 처리 (넥스트1-1~넥스트1-5를 먼저 생성하고, 넥스트1-1 아래에 넥스트1-6 추가)
         if (boxNumber === "4") {
@@ -259,8 +340,8 @@ document.addEventListener("DOMContentLoaded", () => {
             for (let i = 1; i <= maxSlideCount; i++) {
                 const slideItem = document.createElement("div");
                 slideItem.className = "test-slide-item service-slide-item";
-                // 네이밍: 서비스 박스는 "서비스1-1", "서비스1-2" 형식, 나머지는 "1-1", "1-2" 형식
-                const slideName = boxNumber === "2" ? `서비스1-${i}` : `${boxNumber}-${i}`;
+                // 네이밍: 서비스1 박스는 "서비스1-1", "서비스1-2" 형식, 서비스2 박스는 "서비스2-1" 형식, 나머지는 "1-1", "1-2" 형식
+                const slideName = boxNumber === "2" ? `서비스1-${i}` : (boxNumber === "3" ? `서비스2-${i}` : `${boxNumber}-${i}`);
                 slideItem.setAttribute("data-slide", slideName);
                 slideItem.setAttribute("data-parent-box", boxNumber);
                 slideItem.setAttribute("data-slide-number", i);
@@ -270,8 +351,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     // 전략1 박스의 경우 전략1 파일 내용 로드
                     loadStrategy1Content(slideItem, i);
                 } else if (boxNumber === "2") {
-                    // 2번 박스의 경우 서비스 파일 내용 로드
+                    // 2번 박스의 경우 서비스1 파일 내용 로드
                     loadService1Content(slideItem, i);
+                } else if (boxNumber === "3") {
+                    // 3번 박스의 경우 서비스2 파일 내용 로드
+                    loadService2Content(slideItem, i);
                 } else if (boxNumber === "5") {
                     // 전략2 박스의 경우 전략2 파일 내용 로드
                     loadStrategy2Content(slideItem, i);
@@ -287,6 +371,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 currentSlideNumber = slideNum;
                 updateNavButtons();
+                updateURL(boxNumber, slideNum);
                 
                 if (!expandedBox) {
                     console.error('expandedBox가 없습니다!');
@@ -298,13 +383,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log('전략1 콘텐츠 로드 시작:', slideNum);
                     loadStrategy1ContentToMainBox(expandedBox, slideNum);
                 } else if (boxNumber === "2") {
-                    // 2번 박스인 경우 서비스 파일 내용 로드
+                    // 2번 박스인 경우 서비스1 파일 내용 로드
                     console.log('서비스1 콘텐츠 로드 시작:', slideNum);
                     loadService1ContentToMainBox(expandedBox, slideNum);
                 } else if (boxNumber === "3") {
-                    // 3번 박스는 처리하지 않음
-                    console.log('3번 박스는 슬라이드가 없습니다.');
-                    return;
+                    // 3번 박스인 경우 서비스2 파일 내용 로드
+                    console.log('서비스2 콘텐츠 로드 시작:', slideNum);
+                    loadService2ContentToMainBox(expandedBox, slideNum);
                 } else if (boxNumber === "4") {
                     // 넥스트1 박스인 경우 넥스트1 파일 내용 로드
                     console.log('넥스트1 콘텐츠 로드 시작:', slideNum);
@@ -351,6 +436,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             currentSlideNumber = slideNum;
             updateNavButtons();
+            updateURL(boxNumber, slideNum);
             
             if (!expandedBox) {
                 console.error('expandedBox가 없습니다!');
@@ -381,14 +467,14 @@ document.addEventListener("DOMContentLoaded", () => {
         
         currentSlideNumber++;
         updateNavButtons();
+        updateURL(currentBoxNumber, currentSlideNumber);
         
         if (currentBoxNumber === "1") {
             loadStrategy1ContentToMainBox(expandedBox, currentSlideNumber);
         } else if (currentBoxNumber === "2") {
             loadService1ContentToMainBox(expandedBox, currentSlideNumber);
         } else if (currentBoxNumber === "3") {
-            // 3번 박스는 처리하지 않음
-            return;
+            loadService2ContentToMainBox(expandedBox, currentSlideNumber);
         } else if (currentBoxNumber === "4") {
             loadNext1ContentToMainBox(expandedBox, currentSlideNumber);
         } else if (currentBoxNumber === "5") {
@@ -404,14 +490,14 @@ document.addEventListener("DOMContentLoaded", () => {
         
         currentSlideNumber--;
         updateNavButtons();
+        updateURL(currentBoxNumber, currentSlideNumber);
         
         if (currentBoxNumber === "1") {
             loadStrategy1ContentToMainBox(expandedBox, currentSlideNumber);
         } else if (currentBoxNumber === "2") {
             loadService1ContentToMainBox(expandedBox, currentSlideNumber);
         } else if (currentBoxNumber === "3") {
-            // 3번 박스는 처리하지 않음
-            return;
+            loadService2ContentToMainBox(expandedBox, currentSlideNumber);
         } else if (currentBoxNumber === "4") {
             loadNext1ContentToMainBox(expandedBox, currentSlideNumber);
         } else if (currentBoxNumber === "5") {
@@ -441,25 +527,22 @@ document.addEventListener("DOMContentLoaded", () => {
     // 서비스1 파일 내용을 객체로 저장
     const service1Contents = {
         1: `<!DOCTYPE html>
-
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>프로젝트 개요</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>서비스1-1</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
+            background-color: #f3f4f6;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
+            padding: 0;
         }
         .slide-container {
             width: 1280px;
@@ -468,94 +551,22 @@ document.addEventListener("DOMContentLoaded", () => {
             position: relative;
             overflow: hidden;
             display: flex;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            justify-content: center;
+            align-items: center;
+            padding: 0;
         }
-        .text-point {
-            color: #A4C639;
-        }
-        .bg-point {
-            background-color: #A4C639;
-        }
-        .border-point {
-            border-color: #A4C639;
-        }
-        /* Custom Blur Effect for Top Right Area */
-        .blur-overlay {
-            backdrop-filter: blur(10px);
-            background: rgba(255,255,255,0.7); /* Fallback for no-gradient requirement */
+        .slide-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
         }
     </style>
 </head>
 <body>
-<div class="slide-container">
-<!-- Left Content Area (50%) -->
-<div class="w-1/2 h-full flex flex-col justify-center px-16 z-20 bg-white">
-<!-- Project Duration & Label -->
-<div class="flex items-center mb-6">
-<span class="bg-gray-800 text-white text-xs font-bold px-3 py-1 rounded-sm tracking-wider">PROJECT</span>
-<span class="ml-3 text-gray-500 font-medium tracking-wide text-sm">2022 – 2025</span>
-</div>
-<!-- Project Title -->
-<div class="mb-8">
-<h1 class="text-5xl font-black text-gray-900 leading-tight tracking-tight mb-2">
-                    모바일 로보어드바이저<br/>
-<span class="text-point">서비스 전환 기획</span>
-</h1>
-<div class="w-16 h-1.5 bg-point mt-6"></div>
-</div>
-<!-- One Line Summary -->
-<div class="mb-10 bg-gray-50 p-6 border-l-4 border-point rounded-r-lg">
-<p class="text-gray-700 text-lg font-medium leading-relaxed">
-                    PC 설치형 로보어드바이저를<br/>
-<span class="font-bold text-gray-900">모바일 기반 비대면 투자일임 서비스</span>로 전환
-                </p>
-</div>
-<!-- Roles -->
-<div>
-<h3 class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-4">MY ROLE</h3>
-<ul class="space-y-3">
-<li class="flex items-center text-gray-700 text-lg">
-<i class="fas fa-check text-point mr-3 text-sm"></i>
-<span>서비스 기획</span>
-</li>
-<li class="flex items-center text-gray-700 text-lg">
-<i class="fas fa-check text-point mr-3 text-sm"></i>
-<span>유저 플로우 설계</span>
-</li>
-<li class="flex items-center text-gray-700 text-lg">
-<i class="fas fa-check text-point mr-3 text-sm"></i>
-<span>투자일임사 제휴 프로세스 기획</span>
-</li>
-</ul>
-</div>
-</div>
-<!-- Right Image Area (50%) -->
-<div class="w-1/2 h-full relative bg-gray-100 overflow-hidden flex items-center justify-center">
-<!-- Background Abstract Elements -->
-<div class="absolute top-0 right-0 w-full h-full bg-gray-100">
-<div class="absolute -right-20 -top-20 w-96 h-96 bg-gray-200 rounded-full opacity-50"></div>
-<div class="absolute left-10 bottom-10 w-64 h-64 bg-gray-200 rounded-full opacity-50"></div>
-</div>
-<!-- Mockup Image Representation -->
-<div class="relative z-10 w-3/5 shadow-2xl rounded-3xl overflow-hidden transform rotate-[-5deg] border-8 border-white bg-white" style="height: 80%;">
-<img alt="Mobile App Interface" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-all duration-500" src="https://page.gensparksite.com/slides_images/84b421ca933a98517acb4beff844afe3.webp"/>
-<!-- Mockup Overlay to simulate app UI depth -->
-<div class="absolute inset-0 bg-black bg-opacity-5 pointer-events-none"></div>
-</div>
-<!-- Top Blur Area for Logo masking effect -->
-<div class="absolute top-0 left-0 w-full h-32 blur-overlay z-20 flex items-start justify-end p-8">
-<!-- Optional: Abstract shapes or subtle text here if needed, kept clean as requested -->
-</div>
-<!-- Decorative Elements -->
-<div class="absolute bottom-12 right-12 z-20">
-<div class="flex space-x-2">
-<div class="w-2 h-2 rounded-full bg-gray-300"></div>
-<div class="w-2 h-2 rounded-full bg-gray-300"></div>
-<div class="w-2 h-2 rounded-full bg-point"></div>
-</div>
-</div>
-</div>
-</div>
+    <div class="slide-container">
+        <img src="assets/images/서비스1-1썸네일(수정).png" alt="서비스1-1" class="slide-image" />
+    </div>
 </body>
 </html>`,
         2: `<!DOCTYPE html>
@@ -2120,18 +2131,20 @@ document.addEventListener("DOMContentLoaded", () => {
         1: `<!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>전략기획자 커리어 스토리 - 표지</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>전략1-1</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
             padding: 0;
-            background-color: #e5e5e5;
         }
         .slide-container {
             width: 1280px;
@@ -2140,232 +2153,22 @@ document.addEventListener("DOMContentLoaded", () => {
             position: relative;
             overflow: hidden;
             display: flex;
-            flex-direction: column;
-            padding: 80px 100px;
-        }
-        .top-deco-line {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 12px;
-            background-color: #1f2937;
-        }
-        .content-wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
             justify-content: center;
-            z-index: 10;
-        }
-        .tag-pill {
-            display: inline-block;
-            padding: 6px 14px;
-            background-color: #f3f4f6;
-            color: #374151;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 30px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            width: fit-content;
-            border-left: none;
-        }
-        .title-section {
-            margin-bottom: 50px;
-        }
-        .title-content {
-            flex: 1;
-        }
-        .main-title {
-            font-size: 50px;
-            font-weight: 900;
-            line-height: 1.25;
-            color: #111827;
-            margin-bottom: 24px;
-            letter-spacing: -0.025em;
-            word-break: keep-all;
-        }
-        .sub-title-section {
-            display: flex;
-            align-items: flex-start;
-            gap: 60px;
-        }
-        .sub-title {
-            font-size: 22px;
-            font-weight: 400;
-            color: #4b5563;
-            line-height: 1.5;
-            margin-bottom: 0;
-            padding-left: 20px;
-            border-left: none;
-            flex: 1;
-        }
-        .info-section {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            min-width: 200px;
-        }
-        .right-section {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            min-width: 200px;
-        }
-        .info-item {
-            display: flex;
-            flex-direction: column;
-        }
-        .info-label {
-            font-size: 11px;
-            color: #9ca3af;
-            font-weight: 700;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-        }
-        .info-value {
-            font-size: 16px;
-            color: #1f2937;
-            font-weight: 600;
-        }
-        .info-grid {
-            display: flex;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        /* Graph Section */
-        .graph-section {
-            width: 100%;
-            background-color: #fafafa;
-            padding: 20px 24px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-direction: column;
-        }
-        .graph-title {
-            font-size: 12px;
-            font-weight: 700;
-            color: #374151;
-            margin-bottom: 16px;
-            display: block;
-            border-bottom: 2px solid #1f2937;
-            padding-bottom: 8px;
-            width: fit-content;
-        }
-        .progress-row {
-            display: flex;
             align-items: center;
-            margin-bottom: 12px;
-            gap: 12px;
+            padding: 0;
         }
-        .progress-row:last-child {
-            margin-bottom: 0;
-        }
-        .progress-label {
-            font-size: 9px;
-            font-weight: 600;
-            color: #4b5563;
-            text-align: left;
-            flex-shrink: 0;
-            min-width: 100px;
-            line-height: 1.3;
-        }
-        .progress-bar-bg {
-            flex: 1;
-            height: 8px;
-            background-color: #e5e7eb;
-            border-radius: 4px;
-            overflow: hidden;
-            min-width: 80px;
-        }
-        .progress-bar-fill {
+        .slide-image {
+            width: 100%;
             height: 100%;
-            background-color: #4b5563;
-            border-radius: 4px;
-        }
-        
-        /* Background Decoration */
-        .bg-pattern {
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 40%;
-            height: 100%;
-            background-color: #f9fafb;
-            z-index: 0;
-            clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+            object-fit: contain;
+            display: block;
         }
     </style>
 </head>
 <body>
-<div class="slide-container">
-<div class="top-deco-line"></div>
-<div class="bg-pattern"></div>
-<div class="content-wrapper">
-<div class="tag-pill">
-                Project Overview
-            </div>
-<div class="title-section">
-    <div class="title-content">
-        <h1 class="main-title">
-            위기 한복판에서 성장의 궤도를 만든<br/>
-            초기 스타트업에서 전략적 전환
-        </h1>
-        <div class="sub-title-section">
-            <p class="sub-title">
-                생존을 목표로 외부 위기를 극복하고,<br/>
-                법인 설립 자본금 100만 원에서 9억 원으로 성장시킨 전략적 판단
-            </p>
-            <div class="right-section">
-                <div class="info-section">
-                    <div class="info-item">
-                        <span class="info-label">Period</span>
-                        <span class="info-value">2020.06 ~</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Stage</span>
-                        <span class="info-value">설립 1년차 / 구성원 4명</span>
-                    </div>
-                </div>
-                <!-- 담당 업무 그래프 영역 -->
-                <div class="graph-section">
-<span class="graph-title">담당 업무 및 비중</span>
-<div class="progress-row">
-<span class="progress-label">전략 분석 &amp; 의사결정</span>
-<div class="progress-bar-bg">
-<div class="progress-bar-fill" style="width: 80%;"></div>
-</div>
-</div>
-<div class="progress-row">
-<span class="progress-label">중·장기 로드맵 설계</span>
-<div class="progress-bar-bg">
-<div class="progress-bar-fill" style="width: 80%;"></div>
-</div>
-</div>
-<div class="progress-row">
-<span class="progress-label">자금 운용</span>
-<div class="progress-bar-bg">
-<div class="progress-bar-fill" style="width: 90%;"></div>
-</div>
-</div>
-<div class="progress-row">
-<span class="progress-label">투자 유치 &amp; IR</span>
-<div class="progress-bar-bg">
-<div class="progress-bar-fill" style="width: 70%;"></div>
-</div>
-</div>
-</div>
-            </div>
-        </div>
+    <div class="slide-container">
+        <img src="assets/images/전략1-1썸네일(수정).png" alt="전략1-1" class="slide-image" />
     </div>
-</div>
-</div>
-</div>
 </body>
 </html>`,
         2: `<!DOCTYPE html>
@@ -2430,13 +2233,13 @@ document.addEventListener("DOMContentLoaded", () => {
             color: #60a5fa;
         }
         .nav-number {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 700;
             margin-right: 12px;
             width: 20px;
         }
         .nav-text {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 500;
         }
         
@@ -2632,7 +2435,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 <div class="nav-item">
 <span class="nav-number">02</span>
-<span class="nav-text">Strategic Response</span>
+<span class="nav-text">Strategic Choice</span>
 </div>
 <div class="nav-item">
 <span class="nav-number">03</span>
@@ -2791,13 +2594,13 @@ document.addEventListener("DOMContentLoaded", () => {
             color: #60a5fa;
         }
         .nav-number {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 700;
             margin-right: 12px;
             width: 20px;
         }
         .nav-text {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 500;
         }
         
@@ -3032,7 +2835,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 <div class="nav-item">
 <span class="nav-number">02</span>
-<span class="nav-text">Strategic Response</span>
+<span class="nav-text">Strategic Choice</span>
 </div>
 <div class="nav-item">
 <span class="nav-number">03</span>
@@ -3432,7 +3235,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 <div class="nav-item">
 <span class="nav-number">02</span>
-<span class="nav-text">Strategic Response</span>
+<span class="nav-text">Strategic Choice</span>
 </div>
 <div class="nav-item">
 <span class="nav-number">03</span>
@@ -4084,13 +3887,13 @@ document.addEventListener("DOMContentLoaded", () => {
             color: #60a5fa;
         }
         .nav-number {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 700;
             margin-right: 12px;
             width: 20px;
         }
         .nav-text {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 500;
         }
         
@@ -4621,13 +4424,13 @@ document.addEventListener("DOMContentLoaded", () => {
             color: #60a5fa;
         }
         .nav-number {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 700;
             margin-right: 12px;
             width: 20px;
         }
         .nav-text {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 500;
         }
         
@@ -4865,15 +4668,15 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 <div class="nav-item">
 <span class="nav-number">02</span>
-<span class="nav-text">Strategic Response</span>
+<span class="nav-text">Strategic Choice</span>
 </div>
 <div class="nav-item active">
 <span class="nav-number">03</span>
-<span class="nav-text">Execution &amp; Results</span>
+<span class="nav-text">Fundraising Execution</span>
 </div>
 <div class="nav-item">
 <span class="nav-number">04</span>
-<span class="nav-text">Reflection</span>
+<span class="nav-text">Results &amp; Impact</span>
 </div>
 </div>
 </aside>
@@ -5063,13 +4866,13 @@ document.addEventListener("DOMContentLoaded", () => {
             color: #60a5fa;
         }
         .nav-number {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 700;
             margin-right: 12px;
             width: 20px;
         }
         .nav-text {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 500;
         }
         
@@ -5272,15 +5075,15 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 <div class="nav-item">
 <span class="nav-number">02</span>
-<span class="nav-text">Strategic Response</span>
+<span class="nav-text">Strategic Choice</span>
 </div>
 <div class="nav-item">
 <span class="nav-number">03</span>
-<span class="nav-text">Execution &amp; Results</span>
+<span class="nav-text">Fundraising Execution</span>
 </div>
 <div class="nav-item active">
 <span class="nav-number">04</span>
-<span class="nav-text">Reflection</span>
+<span class="nav-text">Results &amp; Impact</span>
 </div>
 </div>
 </aside>
@@ -5496,9 +5299,6 @@ document.addEventListener("DOMContentLoaded", () => {
 <span class="bg-blue-50 px-2">작동 여부를 확인</span>하는 역할
                 </p>
 </div>
-<p class="text-2xl text-slate-400 mt-6 font-medium">
-                이라고 판단했습니다.
-            </p>
 </div>
 <!-- 하단: 보조 텍스트 (3열 구조) -->
 <div class="grid grid-cols-3 gap-8 mt-8 z-10 border-t border-slate-100 pt-8">
@@ -5707,17 +5507,17 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-slate-700 rounded-full opacity-50"></div>
 <div class="w-1/4 border-r border-slate-600 pr-6">
 <p class="text-blue-400 font-bold mb-1 uppercase tracking-wider" style="font-size: 15px;">Clarification</p>
-<p class="font-bold leading-tight text-black" style="font-size: 23px;">개발자가 되려는<br/>것이 아닙니다.</p>
+<p class="font-bold leading-tight text-black" style="font-size: 23px;">개발자가 되려는<br/>것이 아닌</p>
 </div>
 <div class="w-3/4 pl-8 z-10 flex justify-between items-center">
 <div class="space-y-3">
 <div class="flex items-start">
 <i class="fas fa-check text-blue-400 mt-1 mr-3"></i>
-<p class="text-black" style="font-size: 17px;">개발을 요청하기 전에 <span class="font-bold">기획 단계에서 구현 가능성을 미리 검증</span>하려는 기획자입니다.</p>
+<p class="text-black" style="font-size: 17px;">개발을 요청하기 전에 <span class="font-bold">기획 단계에서 구현 가능성을 미리 검증</span></p>
 </div>
 <div class="flex items-start">
 <i class="fas fa-check text-blue-400 mt-1 mr-3"></i>
-<p class="text-black" style="font-size: 17px;">AI 환경에서 기획자가 직접 구현 가능성을 <span class="font-bold">사전에 검증하지 못할 이유는 없다</span>고 판단합니다.</p>
+<p class="text-black" style="font-size: 17px;">AI 환경에서 기획자가 직접 구현 가능성을 <span class="font-bold">사전에 검증하기 위해 현재의 AI 인프라 적극 활용</span></p>
 </div>
 </div>
 <div class="text-5xl text-slate-700 opacity-50">
@@ -6174,20 +5974,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 가능성을 검증하고 실행하는<br/>
                 여정을 멈추지 않겠습니다.
             </p>
-<!-- 연락처 정보 (하단 고정) -->
-<div class="absolute bottom-16 left-20">
-<p class="text-xs text-slate-400 font-bold uppercase mb-2">Contact</p>
-<div class="flex items-center space-x-6 text-slate-600">
-<div class="flex items-center">
-<i class="fas fa-envelope text-blue-500 mr-2"></i>
-<span class="font-medium">email@portfolio.com</span>
-</div>
-<div class="flex items-center">
-<i class="fas fa-link text-blue-500 mr-2"></i>
-<span class="font-medium">portfolio.site</span>
-</div>
-</div>
-</div>
 </div>
 <!-- 우측: 콘텐츠 영역 (60%) -->
 <div class="w-3/5 h-full flex flex-col justify-center pr-20 pl-10 z-10">
@@ -6275,25 +6061,22 @@ document.addEventListener("DOMContentLoaded", () => {
         // 전략2 파일 내용을 객체로 저장
     const strategy2Contents = {
         1: `<!DOCTYPE html>
-
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>매출 구조 전환과 사업 구조 개편 전략 실행</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>전략2-1</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            margin: 0;
-            padding: 0;
             background-color: #f3f4f6;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
+            padding: 0;
         }
         .slide-container {
             width: 1280px;
@@ -6302,187 +6085,22 @@ document.addEventListener("DOMContentLoaded", () => {
             position: relative;
             overflow: hidden;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 0;
         }
-        
-        /* Background Pattern */
-        .bg-pattern {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-            background-size: 40px 40px;
-            opacity: 0.3;
-            z-index: 0;
-        }
-
-        .content-wrapper {
-            z-index: 10;
-            width: 80%;
-            max-width: 900px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .top-label {
-            font-size: 14px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: #64748b; /* Slate-500 */
-            margin-bottom: 24px;
-            font-weight: 700;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 8px;
-            display: inline-block;
-        }
-
-        .main-title {
-            font-size: 64px;
-            font-weight: 900;
-            color: #1e293b; /* Slate-800 */
-            line-height: 1.2;
-            margin-bottom: 40px;
-            letter-spacing: -0.02em;
-        }
-
-        .summary-container {
-            position: relative;
-            padding: 30px 40px;
-            margin-bottom: 60px;
-            background-color: #f8fafc; /* Slate-50 */
-            border-radius: 4px;
-            border-left: 4px solid #475569; /* Slate-600 (Point Color) */
-            text-align: left;
+        .slide-image {
             width: 100%;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        .summary-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: #475569;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 12px;
+            height: 100%;
+            object-fit: contain;
             display: block;
         }
-
-        .summary-text {
-            font-size: 20px;
-            font-weight: 400;
-            color: #334155; /* Slate-700 */
-            line-height: 1.6;
-            word-break: keep-all;
-        }
-
-        .meta-info-grid {
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            width: 100%;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 30px;
-        }
-
-        .meta-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .meta-label {
-            font-size: 13px;
-            color: #94a3b8; /* Slate-400 */
-            margin-bottom: 8px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .meta-value {
-            font-size: 18px;
-            color: #1e293b; /* Slate-800 */
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-        }
-        
-        .meta-value i {
-            margin-right: 8px;
-            font-size: 16px;
-            color: #64748b;
-        }
-
-        /* Decorative Elements */
-        .corner-accent {
-            position: absolute;
-            width: 120px;
-            height: 120px;
-            border-top: 2px solid #cbd5e1;
-            border-left: 2px solid #cbd5e1;
-            top: 40px;
-            left: 40px;
-        }
-        .corner-accent-bottom {
-            position: absolute;
-            width: 120px;
-            height: 120px;
-            border-bottom: 2px solid #cbd5e1;
-            border-right: 2px solid #cbd5e1;
-            bottom: 40px;
-            right: 40px;
-        }
-
     </style>
 </head>
 <body>
-<div class="slide-container">
-<!-- Background -->
-<div class="bg-pattern"></div>
-<div class="corner-accent"></div>
-<div class="corner-accent-bottom"></div>
-<!-- Main Content -->
-<div class="content-wrapper">
-<p class="top-label">Strategic Planning Portfolio</p>
-<h1 class="main-title">
-                매출 구조 전환과<br/>
-                사업 구조 개편 전략 실행
-            </h1>
-<div class="summary-container">
-<span class="summary-label">Executive Summary</span>
-<p class="summary-text">
-                    "규제 환경 변화 속에서 모바일 전환과 제도권 금융사 제휴를 하나의 전략 패키지로 설계하고, 로보어드바이저 사업 구조를 B2C에서 공급형 모델로 전환한 기획 사례"
-                </p>
-</div>
-<div class="meta-info-grid">
-<div class="meta-item">
-<span class="meta-label">Role</span>
-<span class="meta-value">
-<i class="fas fa-user-pen"></i> 전략기획 / 서비스기획
-                    </span>
-</div>
-<div class="meta-item">
-<span class="meta-label">Project Type</span>
-<span class="meta-value">
-<i class="fas fa-layer-group"></i> 모바일 전환 &amp; 사업구조 개편
-                    </span>
-</div>
-<div class="meta-item">
-<span class="meta-label">Period</span>
-<span class="meta-value">
-<i class="far fa-calendar-alt"></i> 2020.03 - 2020.09
-                    </span>
-</div>
-</div>
-</div>
-</div>
+    <div class="slide-container">
+        <img src="assets/images/전략2-1썸네일(수정).png" alt="전략2-1" class="slide-image" />
+    </div>
 </body>
 </html>`,
         2: `<!DOCTYPE html>
@@ -6545,7 +6163,7 @@ document.addEventListener("DOMContentLoaded", () => {
             display: flex;
             align-items: center;
             color: #64748b; /* Slate-500 */
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             transition: all 0.3s ease;
         }
@@ -6553,6 +6171,10 @@ document.addEventListener("DOMContentLoaded", () => {
         .nav-item.active {
             color: #ffffff;
             font-weight: 700;
+        }
+        
+        .nav-item.active span {
+            color: #ffffff !important;
         }
         
         .nav-item.active .nav-icon {
@@ -6740,23 +6362,19 @@ document.addEventListener("DOMContentLoaded", () => {
 <nav class="nav-list">
 <div class="nav-item active">
 <div class="nav-icon"><i class="fas fa-search"></i></div>
-<span>01. Problem Definition</span>
+<span>01. Context &amp; Diagnosis</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-chess-knight"></i></div>
-<span>02. Strategic Decision</span>
-</div>
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-mobile-screen"></i></div>
-<span>03. Execution: Mobile</span>
+<span>02. Strategic Choice</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-handshake"></i></div>
-<span>04. Execution: Alliance</span>
+<span>03. Fundraising Execution</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
-<span>05. Result &amp; Retro</span>
+<span>04. Results &amp; Impact</span>
 </div>
 </nav>
 </aside>
@@ -6889,7 +6507,7 @@ document.addEventListener("DOMContentLoaded", () => {
             display: flex;
             align-items: center;
             color: #64748b; /* Slate-500 */
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             transition: all 0.3s ease;
         }
@@ -6897,6 +6515,10 @@ document.addEventListener("DOMContentLoaded", () => {
         .nav-item.active {
             color: #ffffff;
             font-weight: 700;
+        }
+        
+        .nav-item.active span {
+            color: #ffffff !important;
         }
         
         .nav-item.active .nav-icon {
@@ -7084,23 +6706,19 @@ document.addEventListener("DOMContentLoaded", () => {
 <nav class="nav-list">
 <div class="nav-item active">
 <div class="nav-icon"><i class="fas fa-search"></i></div>
-<span>01. Problem Definition</span>
+<span>01. Context &amp; Diagnosis</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-chess-knight"></i></div>
-<span>02. Strategic Decision</span>
-</div>
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-mobile-screen"></i></div>
-<span>03. Execution: Mobile</span>
+<span>02. Strategic Choice</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-handshake"></i></div>
-<span>04. Execution: Alliance</span>
+<span>03. Fundraising Execution</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
-<span>05. Result &amp; Retro</span>
+<span>04. Results &amp; Impact</span>
 </div>
 </nav>
 </aside>
@@ -7233,7 +6851,7 @@ document.addEventListener("DOMContentLoaded", () => {
             display: flex;
             align-items: center;
             color: #64748b; /* Slate-500 */
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             transition: all 0.3s ease;
         }
@@ -7241,6 +6859,10 @@ document.addEventListener("DOMContentLoaded", () => {
         .nav-item.active {
             color: #ffffff;
             font-weight: 700;
+        }
+        
+        .nav-item.active span {
+            color: #ffffff !important;
         }
         
         .nav-item.active .nav-icon {
@@ -7491,23 +7113,19 @@ document.addEventListener("DOMContentLoaded", () => {
 <nav class="nav-list">
 <div class="nav-item active">
 <div class="nav-icon"><i class="fas fa-search"></i></div>
-<span>01. Problem Definition</span>
+<span>01. Context &amp; Diagnosis</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-chess-knight"></i></div>
-<span>02. Strategic Decision</span>
-</div>
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-mobile-screen"></i></div>
-<span>03. Execution: Mobile</span>
+<span>02. Strategic Choice</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-handshake"></i></div>
-<span>04. Execution: Alliance</span>
+<span>03. Fundraising Execution</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
-<span>05. Result &amp; Retro</span>
+<span>04. Results &amp; Impact</span>
 </div>
 </nav>
 </aside>
@@ -7677,7 +7295,7 @@ document.addEventListener("DOMContentLoaded", () => {
             display: flex;
             align-items: center;
             color: #64748b; /* Slate-500 */
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             transition: all 0.3s ease;
         }
@@ -7685,6 +7303,10 @@ document.addEventListener("DOMContentLoaded", () => {
         .nav-item.active {
             color: #ffffff;
             font-weight: 700;
+        }
+        
+        .nav-item.active span {
+            color: #ffffff !important;
         }
         
         .nav-item.active .nav-icon {
@@ -7869,7 +7491,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         .decision-main {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             color: #ffffff;
             display: flex;
@@ -7910,23 +7532,19 @@ document.addEventListener("DOMContentLoaded", () => {
 <nav class="nav-list">
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-search"></i></div>
-<span>01. Problem Definition</span>
+<span>01. Context &amp; Diagnosis</span>
 </div>
 <div class="nav-item active">
 <div class="nav-icon"><i class="fas fa-chess-knight"></i></div>
-<span>02. Strategic Decision</span>
-</div>
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-mobile-screen"></i></div>
-<span>03. Execution: Mobile</span>
+<span>02. Strategic Choice</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-handshake"></i></div>
-<span>04. Execution: Alliance</span>
+<span>03. Fundraising Execution</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
-<span>05. Result &amp; Retro</span>
+<span>04. Results &amp; Impact</span>
 </div>
 </nav>
 </aside>
@@ -8001,7 +7619,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 <div style="text-align: right;">
 <p style="font-size: 14px; color: #cbd5e1; margin-bottom: 4px;">Business Pivot</p>
-<p style="font-size: 18px; font-weight: 700;">B2C 직접 영업 <i class="fas fa-arrow-right" style="font-size: 14px; margin: 0 8px;"></i> 공급형 모델</p>
+<p style="font-size: 16px; font-weight: 700;">B2C 직접 영업 <i class="fas fa-arrow-right" style="font-size: 14px; margin: 0 8px;"></i> 공급형 모델</p>
 </div>
 </div>
 </div>
@@ -8070,7 +7688,7 @@ document.addEventListener("DOMContentLoaded", () => {
             display: flex;
             align-items: center;
             color: #64748b; /* Slate-500 */
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             transition: all 0.3s ease;
         }
@@ -8078,6 +7696,10 @@ document.addEventListener("DOMContentLoaded", () => {
         .nav-item.active {
             color: #ffffff;
             font-weight: 700;
+        }
+        
+        .nav-item.active span {
+            color: #ffffff !important;
         }
         
         .nav-item.active .nav-icon {
@@ -8226,6 +7848,8 @@ document.addEventListener("DOMContentLoaded", () => {
             text-align: center;
             transition: all 0.3s;
             border: 1px solid #e2e8f0;
+            min-width: 0;
+            width: 100%;
         }
 
         .package-card.mobile {
@@ -8346,23 +7970,19 @@ document.addEventListener("DOMContentLoaded", () => {
 <nav class="nav-list">
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-search"></i></div>
-<span>01. Problem Definition</span>
+<span>01. Context &amp; Diagnosis</span>
 </div>
 <div class="nav-item active">
 <div class="nav-icon"><i class="fas fa-chess-knight"></i></div>
-<span>02. Strategic Decision</span>
-</div>
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-mobile-screen"></i></div>
-<span>03. Execution: Mobile</span>
+<span>02. Strategic Choice</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-handshake"></i></div>
-<span>04. Execution: Alliance</span>
+<span>03. Fundraising Execution</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
-<span>05. Result &amp; Retro</span>
+<span>04. Results &amp; Impact</span>
 </div>
 </nav>
 </aside>
@@ -8395,7 +8015,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="card-icon">
 <i class="fas fa-mobile-screen-button"></i>
 </div>
-<p class="card-title">Mobile Transformation</p>
+            <p class="card-title">Mobile</p>
 <p class="card-desc">언제 어디서나 접근 가능한<br/>앱 기반 서비스로 전환</p>
 </div>
 <!-- Plus -->
@@ -8501,7 +8121,7 @@ document.addEventListener("DOMContentLoaded", () => {
             display: flex;
             align-items: center;
             color: #64748b; /* Slate-500 */
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             transition: all 0.3s ease;
         }
@@ -8509,6 +8129,10 @@ document.addEventListener("DOMContentLoaded", () => {
         .nav-item.active {
             color: #ffffff;
             font-weight: 700;
+        }
+        
+        .nav-item.active span {
+            color: #ffffff !important;
         }
         
         .nav-item.active .nav-icon {
@@ -8690,6 +8314,8 @@ document.addEventListener("DOMContentLoaded", () => {
             padding: 2px 8px;
             border-radius: 10px;
             white-space: nowrap;
+            min-width: 80px;
+            text-align: center;
         }
 
         /* Section 2: Timeline (Lower) */
@@ -8770,23 +8396,19 @@ document.addEventListener("DOMContentLoaded", () => {
 <nav class="nav-list">
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-search"></i></div>
-<span>01. Problem Definition</span>
+<span>01. Context &amp; Diagnosis</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-chess-knight"></i></div>
-<span>02. Strategic Decision</span>
+<span>02. Strategic Choice</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-mobile-screen"></i></div>
-<span>03. Execution: Mobile</span>
-</div>
-<div class="nav-item active">
-<div class="nav-icon"><i class="fas fa-handshake"></i></div>
-<span>04. Execution: Alliance</span>
+<span>03. Fundraising Execution</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
-<span>05. Result &amp; Retro</span>
+<span>04. Results &amp; Impact</span>
 </div>
 </nav>
 </aside>
@@ -8794,7 +8416,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <main class="main-content">
 <!-- Header -->
 <header class="header-area">
-<p class="chapter-title">Chapter 04. 실행: 금융사 제휴</p>
+<p class="chapter-title">Chapter 03. 실행: 금융사 제휴</p>
 <h1 class="page-title">최적 파트너 선정 기준 및 제휴 추진 프로세스</h1>
 </header>
 <!-- Content Container -->
@@ -8813,23 +8435,23 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 <!-- Connector -->
 <div class="branch-connector active">
-<span class="filter-badge">Filter 01. 라이선스</span>
+<span class="filter-badge">Filter 01</span>
 </div>
 <!-- Node 2: License -->
 <div class="branch-node active">
 <div class="node-icon"><i class="fas fa-certificate"></i></div>
 <p class="node-title">투자일임업 보유</p>
-<p class="node-desc">로보어드바이저 서비스<br/>필수 자격 보유사</p>
+<p class="node-desc">자격 보유 및 자본금 요건 충족</p>
 </div>
 <!-- Connector -->
 <div class="branch-connector active">
-<span class="filter-badge">Filter 02. 비즈니스 니즈</span>
+<span class="filter-badge">Filter 02</span>
 </div>
 <!-- Node 3: Needs -->
 <div class="branch-node active">
-<div class="node-icon"><i class="fas fa-chart-line-down"></i></div>
+<div class="node-icon"><i class="fas fa-exclamation-triangle"></i></div>
 <p class="node-title">성과 부진/고민</p>
-<p class="node-desc">기존 로보어드바이저<br/>수익률 정체로 고민 중</p>
+<p class="node-desc">금감원 실적보고자료 참고</p>
 </div>
 <!-- Connector -->
 <div class="branch-connector active">
@@ -8839,7 +8461,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="branch-node final">
 <div class="node-icon"><i class="fas fa-bullseye"></i></div>
 <p class="node-title">Target A 그룹</p>
-<p class="node-desc">디지털 돌파구가 필요한<br/>전통 자산운용사</p>
+<p class="node-desc">필터링을 통한 전략적 접근</p>
 </div>
 </div>
 </div>
@@ -8893,8 +8515,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </main>
 </div>
 </body>
-</html>\`,
-        8: \`</html>`,
+</html>`,
         8: `<!DOCTYPE html>
 
 <html lang="ko">
@@ -8955,14 +8576,22 @@ document.addEventListener("DOMContentLoaded", () => {
             display: flex;
             align-items: center;
             color: #64748b; /* Slate-500 */
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             transition: all 0.3s ease;
         }
 
         .nav-item.active {
-            color: #ffffff;
+            color: #ffffff !important;
             font-weight: 700;
+        }
+        
+        .nav-item.active span {
+            color: #ffffff !important;
+        }
+        
+        .nav-item.active > span {
+            color: #ffffff !important;
         }
         
         .nav-item.active .nav-icon {
@@ -9169,23 +8798,19 @@ document.addEventListener("DOMContentLoaded", () => {
 <nav class="nav-list">
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-search"></i></div>
-<span>01. Problem Definition</span>
+<span>01. Context &amp; Diagnosis</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-chess-knight"></i></div>
-<span>02. Strategic Decision</span>
-</div>
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-mobile-screen"></i></div>
-<span>03. Execution: Mobile</span>
+<span>02. Strategic Choice</span>
 </div>
 <div class="nav-item active">
 <div class="nav-icon"><i class="fas fa-handshake"></i></div>
-<span>04. Execution: Alliance</span>
+<span style="color: #ffffff !important;">03. Fundraising Execution</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
-<span>05. Result &amp; Retro</span>
+<span>04. Results &amp; Impact</span>
 </div>
 </nav>
 </aside>
@@ -9342,7 +8967,7 @@ document.addEventListener("DOMContentLoaded", () => {
             display: flex;
             align-items: center;
             color: #64748b; /* Slate-500 */
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             transition: all 0.3s ease;
         }
@@ -9350,6 +8975,10 @@ document.addEventListener("DOMContentLoaded", () => {
         .nav-item.active {
             color: #ffffff;
             font-weight: 700;
+        }
+        
+        .nav-item.active span {
+            color: #ffffff !important;
         }
         
         .nav-item.active .nav-icon {
@@ -9517,7 +9146,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .right .role-item i { color: #94a3b8; }
 
         .role-text {
-            font-size: 15px;
+            font-size: 12px;
             color: #334155;
             line-height: 1.5;
         }
@@ -9644,31 +9273,27 @@ document.addEventListener("DOMContentLoaded", () => {
 <nav class="nav-list">
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-search"></i></div>
-<span>01. Problem Definition</span>
+<span>01. Context &amp; Diagnosis</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-chess-knight"></i></div>
-<span>02. Strategic Decision</span>
+<span>02. Strategic Choice</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-mobile-screen"></i></div>
-<span>03. Execution: Mobile</span>
-</div>
-<div class="nav-item active">
-<div class="nav-icon"><i class="fas fa-handshake"></i></div>
-<span>04. Execution: Alliance</span>
-</div>
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-chart-line"></i></div>
-<span>05. Result &amp; Retro</span>
-</div>
+            <span style="color: #ffffff;">03. Fundraising Execution</span>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
+            <span>04. Results &amp; Impact</span>
+        </div>
 </nav>
 </aside>
 <!-- Main Content -->
 <main class="main-content">
 <!-- Header -->
 <header class="header-area">
-<p class="chapter-title">Chapter 04. 실행: 역할 분담 및 조율</p>
+            <p class="chapter-title">Chapter 03. 실행: 역할 분담 및 조율</p>
 <h1 class="page-title">성공적 런칭을 위한 R&amp;R 구조 및 조율 전략</h1>
 </header>
 <!-- Comparison Wrapper -->
@@ -9681,7 +9306,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="col-icon">
 <i class="fas fa-laptop-code"></i>
 </div>
-<h2 class="col-title">우리 회사</h2>
+            <h2 class="col-title">회사</h2>
 <p class="col-subtitle">Tech &amp; Product</p>
 </div>
 <ul class="role-list">
@@ -9705,16 +9330,15 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="arrow-circle arrow-left"><i class="fas fa-exchange-alt"></i></div>
 <div class="arrow-circle arrow-right"><i class="fas fa-exchange-alt"></i></div>
 <div class="hub-header">
-<h2 class="hub-title"><i class="fas fa-network-wired"></i> Internal Coordination</h2>
-<p class="hub-subtitle">Communication Hub</p>
+            <h2 class="hub-title"><i class="fas fa-network-wired"></i> HUB 역할 담당</h2>
 </div>
 <div class="hub-body">
 <div class="hub-list">
 <div class="hub-item">
-<p><strong>Communication</strong>투자일임사 - 개발조직 간 기술/비즈니스 언어 통역 및 조율</p>
+                <p><strong>Communication</strong>회사-투자일임사 간 기술/비즈니스 조율</p>
 </div>
 <div class="hub-item">
-<p><strong>Decision Making</strong>기술적 제약과 기획 의도 사이 최적의 대안 제시 (Trade-off 조율)</p>
+                <p><strong>Decision Making</strong>기술적 제약과 기획 의도 사이 최적의 대안 제시</p>
 </div>
 <div class="hub-item">
 <p><strong>Priority Management</strong>서비스 안정성과 런칭 일정 준수를 위한 기능 개발 우선순위 조정</p>
@@ -9812,7 +9436,7 @@ document.addEventListener("DOMContentLoaded", () => {
             display: flex;
             align-items: center;
             color: #64748b; /* Slate-500 */
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             transition: all 0.3s ease;
         }
@@ -9820,6 +9444,10 @@ document.addEventListener("DOMContentLoaded", () => {
         .nav-item.active {
             color: #ffffff;
             font-weight: 700;
+        }
+        
+        .nav-item.active span {
+            color: #ffffff !important;
         }
         
         .nav-item.active .nav-icon {
@@ -9878,6 +9506,8 @@ document.addEventListener("DOMContentLoaded", () => {
             display: flex;
             flex-direction: column;
             gap: 20px;
+            min-height: 0;
+            overflow: hidden;
         }
 
         /* Top Row: Metrics */
@@ -9885,6 +9515,7 @@ document.addEventListener("DOMContentLoaded", () => {
             display: flex;
             gap: 20px;
             height: 240px;
+            flex-shrink: 0;
         }
 
         /* Main KPI Card */
@@ -9975,14 +9606,14 @@ document.addEventListener("DOMContentLoaded", () => {
             flex: 1;
             position: relative;
             width: 100%;
-            max-height: 200px;
             min-height: 0;
+            max-height: 100%;
             overflow: hidden;
         }
+        
         .chart-container canvas {
+            max-width: 100%;
             max-height: 100%;
-            width: 100% !important;
-            height: auto !important;
         }
 
         /* Bottom Row: Retro */
@@ -9990,12 +9621,16 @@ document.addEventListener("DOMContentLoaded", () => {
             flex: 1;
             display: flex;
             gap: 20px;
+            min-height: 0;
+            overflow: hidden;
         }
 
         .retro-col {
             display: flex;
             flex-direction: column;
             gap: 16px;
+            min-height: 0;
+            overflow: hidden;
         }
 
         .retro-col.left { flex: 1.2; }
@@ -10072,9 +9707,11 @@ document.addEventListener("DOMContentLoaded", () => {
             flex-direction: column;
             justify-content: center;
             height: 100%;
+            max-height: 100%;
             position: relative;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+            min-height: 0;
         }
 
         .growth-box::after {
@@ -10129,31 +9766,27 @@ document.addEventListener("DOMContentLoaded", () => {
 <nav class="nav-list">
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-search"></i></div>
-<span>01. Problem Definition</span>
+<span>01. Context &amp; Diagnosis</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-chess-knight"></i></div>
-<span>02. Strategic Decision</span>
+<span>02. Strategic Choice</span>
 </div>
 <div class="nav-item">
 <div class="nav-icon"><i class="fas fa-mobile-screen"></i></div>
-<span>03. Execution: Mobile</span>
-</div>
-<div class="nav-item">
-<div class="nav-icon"><i class="fas fa-handshake"></i></div>
-<span>04. Execution: Alliance</span>
-</div>
-<div class="nav-item active">
-<div class="nav-icon"><i class="fas fa-chart-line"></i></div>
-<span>05. Result &amp; Retro</span>
-</div>
+            <span>03. Fundraising Execution</span>
+        </div>
+        <div class="nav-item active">
+            <div class="nav-icon"><i class="fas fa-chart-line"></i></div>
+            <span>04. Results &amp; Impact</span>
+        </div>
 </nav>
 </aside>
 <!-- Main Content -->
 <main class="main-content">
 <!-- Header -->
 <header class="header-area">
-<p class="chapter-title">Chapter 05. 성과 및 회고</p>
+            <p class="chapter-title">Chapter 04. 성과 및 회고</p>
 <h1 class="page-title">성공적 런칭과 직무 확장의 계기</h1>
 </header>
 <!-- Dashboard Grid -->
@@ -10209,10 +9842,10 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 <ul class="retro-list">
 <li class="retro-item">
-                                    기존 신사업 경험을 바탕으로 서비스 기획(PM/PO) 역할 주도적 수행
+                                    기존 신사업 경험을 바탕으로 서비스 기획(PM/PO) 역할 수행
                                 </li>
 <li class="retro-item">
-                                    서비스 컨셉, 브랜딩, 앱 UX/UI 구조를 Zero-to-One으로 설계
+                                    전략 기획과 서비스 기획을 일원화하고 회사와 투자일임사 사이에서 조율과 의사결정 신속화
                                 </li>
 </ul>
 </div>
@@ -10296,17 +9929,15 @@ document.addEventListener("DOMContentLoaded", () => {
                         },
                         ticks: {
                             color: '#94a3b8',
-                            font: { size: 10 },
-                            maxTicksLimit: 5,
-                            padding: 5
+                            font: { size: 11 },
+                            maxTicksLimit: 5
                         }
                     },
                     x: {
                         grid: { display: false },
                         ticks: {
                             color: '#64748b',
-                            font: { size: 10, weight: 'bold' },
-                            padding: 5
+                            font: { size: 11, weight: 'bold' }
                         }
                     }
                 }
@@ -10400,7 +10031,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const parentBox = container.getAttribute('data-parent-box') || container.getAttribute('data-box');
         const isServiceBoxType = parentBox === '2'; // 서비스 박스만
         const isStrategy2BoxType = parentBox === '5'; // 전략2 박스
+        const isStrategy1BoxType = parentBox === '1'; // 전략1 박스
+        const isService2BoxType = parentBox === '3'; // 서비스2 박스
         const isNext1BoxType = parentBox === '4'; // 넥스트1 박스
+        
+        // 작은 박스에 표시되는 1-1 슬라이드들 (전략1-1, 전략2-1, 서비스1-1, 서비스2-1)
+        const isStrategy1_1_SmallBox = isStrategy1BoxType && slideNumber === '1' && isSmallBox;
+        const isStrategy2_1_SmallBox = isStrategy2BoxType && slideNumber === '1' && isSmallBox;
+        const isService1_1_SmallBox = isServiceBoxType && slideNumber === '1' && isSmallBox;
+        const isService2_1_SmallBox = isService2BoxType && slideNumber === '1' && isSmallBox;
+        
+        // 작은 박스에 표시되는 1-1 슬라이드들은 작은 박스의 크기에 맞게 조절
+        const is1_1_SmallBox = isStrategy1_1_SmallBox || isStrategy2_1_SmallBox || isService1_1_SmallBox || isService2_1_SmallBox;
         
         // 서비스1-2부터 서비스1-8까지 큰 박스와 작은 박스 모두에서 95% 비율로 표시
         const isServiceBox = isServiceBoxType && slideNumber && ['2', '3', '4', '5', '6', '7', '8'].includes(slideNumber);
@@ -10413,7 +10055,10 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // 컨테이너 크기에 맞게 스케일 계산
         let scale;
-        if (isServiceBox) {
+        if (is1_1_SmallBox) {
+            // 작은 박스에 표시되는 1-1 슬라이드들 (전략1-1, 전략2-1, 서비스1-1, 서비스2-1): 작은 박스 크기에 맞게 조절
+            scale = Math.min(containerWidth / slideWidth, containerHeight / slideHeight);
+        } else if (isServiceBox) {
             // 서비스1-2부터 서비스1-8까지 큰 박스와 작은 박스 모두 95% 정도를 차지하도록 설정
             const contentPercent = 0.95; // 95%
             const targetWidth = containerWidth * contentPercent;
@@ -11025,21 +10670,27 @@ document.addEventListener("DOMContentLoaded", () => {
             mainBox.setAttribute("data-box", "2");
             mainBox.classList.add("service-box");
             
-            // 스케일 재계산 최적화 (단일 재계산)
+            // 스케일 재계산 최적화 (여러 번 재시도)
             const scheduleRecalculate = () => {
                 const iframeInfo = getIframeInfo(mainBox);
                 if (iframeInfo) {
-                    // 한 번만 시도하고, 실패하면 짧은 지연 후 재시도
-                    if (!recalculateIframeScale(iframeInfo)) {
-                        setTimeout(() => {
-                            recalculateIframeScale(iframeInfo);
-                        }, 50);
-                    }
+                    // 즉시 시도
+                    recalculateIframeScale(iframeInfo);
+                    // 짧은 지연 후 재시도 (레이아웃 완료 대기)
+                    setTimeout(() => {
+                        recalculateIframeScale(iframeInfo);
+                    }, 50);
+                    // 더 긴 지연 후 재시도 (완전한 레이아웃 완료 대기)
+                    setTimeout(() => {
+                        recalculateIframeScale(iframeInfo);
+                    }, 200);
                 }
             };
             
-            // requestAnimationFrame으로 한 번만 실행
+            // requestAnimationFrame으로 실행
             requestAnimationFrame(scheduleRecalculate);
+            // 추가로 약간의 지연 후에도 실행
+            setTimeout(scheduleRecalculate, 100);
         } catch (error) {
             console.error(`Failed to load service ${slideNumber}:`, error);
             mainBox.innerHTML = '<div class="service-slide-content">콘텐츠를 불러올 수 없습니다.</div>';
@@ -11224,6 +10875,144 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // 서비스2 파일 내용을 객체로 저장
+    const service2Contents = {
+        1: `<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>서비스2-1</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+        }
+        .slide-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <img src="assets/images/서비스2-1썸네일(수정).png" alt="서비스2-1" class="slide-image" />
+    </div>
+</body>
+</html>`
+    };
+
+    // 서비스2 파일 내용을 메인박스에 로드하는 함수
+    function loadService2ContentToMainBox(mainBox, slideNumber) {
+        console.log('loadService2ContentToMainBox 호출:', { mainBox: !!mainBox, slideNumber, hasContent: !!service2Contents[slideNumber] });
+        try {
+            if (!mainBox) {
+                throw new Error('mainBox가 없습니다.');
+            }
+            
+            // 이전 iframe 정보 제거
+            const index = iframeScaleInfo.findIndex(info => info.container === mainBox);
+            if (index !== -1) {
+                iframeScaleInfo.splice(index, 1);
+            }
+            
+            const html = service2Contents[slideNumber];
+            if (!html) {
+                throw new Error(`서비스2 파일 ${slideNumber}를 찾을 수 없습니다.`);
+            }
+            
+            // 모든 서비스2 슬라이드는 일반 스케일링 적용
+            mainBox.classList.remove('service-main-no-scale');
+            mainBox.classList.remove('service-main-white-bg');
+            
+            console.log('서비스2 콘텐츠 로드 중:', slideNumber);
+            // slideNumber를 data 속성으로 저장
+            mainBox.setAttribute("data-slide-number", slideNumber);
+            // iframe으로 로드
+            loadContentToIframe(mainBox, html, true);
+            mainBox.setAttribute("data-box", "3");
+            mainBox.classList.add("service-box");
+            
+            // 스케일 재계산 최적화 (여러 번 재시도)
+            const scheduleRecalculate = () => {
+                const iframeInfo = getIframeInfo(mainBox);
+                if (iframeInfo) {
+                    // 즉시 시도
+                    recalculateIframeScale(iframeInfo);
+                    // 짧은 지연 후 재시도 (레이아웃 완료 대기)
+                    setTimeout(() => {
+                        recalculateIframeScale(iframeInfo);
+                    }, 50);
+                    // 더 긴 지연 후 재시도 (완전한 레이아웃 완료 대기)
+                    setTimeout(() => {
+                        recalculateIframeScale(iframeInfo);
+                    }, 200);
+                }
+            };
+            
+            // requestAnimationFrame으로 실행
+            requestAnimationFrame(scheduleRecalculate);
+            // 추가로 약간의 지연 후에도 실행
+            setTimeout(scheduleRecalculate, 100);
+        } catch (error) {
+            console.error(`Failed to load service2 ${slideNumber}:`, error);
+            mainBox.innerHTML = '<div class="service-slide-content">콘텐츠를 불러올 수 없습니다.</div>';
+        }
+    }
+
+    // 서비스2 파일 내용 로드 함수 (슬라이드용)
+    function loadService2Content(slideItem, slideNumber) {
+        try {
+            const html = service2Contents[slideNumber];
+            if (!html) {
+                throw new Error(`서비스2 파일 ${slideNumber}를 찾을 수 없습니다.`);
+            }
+            
+            // slideNumber를 data 속성으로 저장
+            slideItem.setAttribute("data-slide-number", slideNumber);
+            
+            // iframe으로 로드
+            loadContentToIframe(slideItem, html, false);
+            
+            // 스케일 재계산
+            const scheduleRecalculate = () => {
+                const iframeInfo = getIframeInfo(slideItem);
+                if (iframeInfo) {
+                    if (!recalculateIframeScale(iframeInfo)) {
+                        setTimeout(() => {
+                            recalculateIframeScale(iframeInfo);
+                        }, 50);
+                    }
+                }
+            };
+            
+            requestAnimationFrame(scheduleRecalculate);
+        } catch (error) {
+            console.error(`Failed to load service2 ${slideNumber}:`, error);
+            slideItem.innerHTML = '<div class="service-slide-content">콘텐츠를 불러올 수 없습니다.</div>';
+        }
+    }
+
     // 전략2 파일 내용을 메인박스에 로드하는 함수
     function loadStrategy2ContentToMainBox(mainBox, slideNumber) {
         // slideNumber를 문자열로 변환하여 키 접근
@@ -11252,21 +11041,27 @@ document.addEventListener("DOMContentLoaded", () => {
             mainBox.setAttribute("data-box", "5");
             mainBox.classList.remove("service-box");
             
-            // 스케일 재계산 최적화 (단일 재계산)
+            // 스케일 재계산 최적화 (여러 번 재시도)
             const scheduleRecalculate = () => {
                 const iframeInfo = getIframeInfo(mainBox);
                 if (iframeInfo) {
-                    // 한 번만 시도하고, 실패하면 짧은 지연 후 재시도
-                    if (!recalculateIframeScale(iframeInfo)) {
-                        setTimeout(() => {
-                            recalculateIframeScale(iframeInfo);
-                        }, 50);
-                    }
+                    // 즉시 시도
+                    recalculateIframeScale(iframeInfo);
+                    // 짧은 지연 후 재시도 (레이아웃 완료 대기)
+                    setTimeout(() => {
+                        recalculateIframeScale(iframeInfo);
+                    }, 50);
+                    // 더 긴 지연 후 재시도 (완전한 레이아웃 완료 대기)
+                    setTimeout(() => {
+                        recalculateIframeScale(iframeInfo);
+                    }, 200);
                 }
             };
             
-            // requestAnimationFrame으로 한 번만 실행
+            // requestAnimationFrame으로 실행
             requestAnimationFrame(scheduleRecalculate);
+            // 추가로 약간의 지연 후에도 실행
+            setTimeout(scheduleRecalculate, 100);
         } catch (error) {
             console.error(`Failed to load strategy2 ${slideNumber}:`, error);
             mainBox.innerHTML = '<div class="service-slide-content">콘텐츠를 불러올 수 없습니다.</div>';
@@ -11317,21 +11112,27 @@ document.addEventListener("DOMContentLoaded", () => {
             mainBox.setAttribute("data-box", "1");
             mainBox.classList.remove("service-box");
             
-            // 스케일 재계산 최적화 (단일 재계산)
+            // 스케일 재계산 최적화 (여러 번 재시도)
             const scheduleRecalculate = () => {
                 const iframeInfo = getIframeInfo(mainBox);
                 if (iframeInfo) {
-                    // 한 번만 시도하고, 실패하면 짧은 지연 후 재시도
-                    if (!recalculateIframeScale(iframeInfo)) {
-                        setTimeout(() => {
-                            recalculateIframeScale(iframeInfo);
-                        }, 50);
-                    }
+                    // 즉시 시도
+                    recalculateIframeScale(iframeInfo);
+                    // 짧은 지연 후 재시도 (레이아웃 완료 대기)
+                    setTimeout(() => {
+                        recalculateIframeScale(iframeInfo);
+                    }, 50);
+                    // 더 긴 지연 후 재시도 (완전한 레이아웃 완료 대기)
+                    setTimeout(() => {
+                        recalculateIframeScale(iframeInfo);
+                    }, 200);
                 }
             };
             
-            // requestAnimationFrame으로 한 번만 실행
+            // requestAnimationFrame으로 실행
             requestAnimationFrame(scheduleRecalculate);
+            // 추가로 약간의 지연 후에도 실행
+            setTimeout(scheduleRecalculate, 100);
         } catch (error) {
             console.error(`Failed to load strategy1 ${slideNumber}:`, error);
             mainBox.innerHTML = '<div class="service-slide-content">콘텐츠를 불러올 수 없습니다.</div>';
@@ -11354,9 +11155,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // 서비스1 박스 썸네일 로드 (HTML에 이미 있으면 스킵)
+    // 전략1 박스 썸네일 로드 (전략1-1 이미지)
+    const strategy1ThumbnailBox = document.querySelector('.test-thumbnail-box[data-box="1"]');
+    if (strategy1ThumbnailBox && typeof strategy1Contents !== 'undefined') {
+        const html = strategy1Contents[1];
+        if (html) {
+            strategy1ThumbnailBox.innerHTML = '';
+            loadContentToIframe(strategy1ThumbnailBox, html, false);
+        }
+    }
+
+    // 서비스1 박스 썸네일 로드 (서비스1-1 이미지)
     const service1ThumbnailBox = document.querySelector('.test-thumbnail-box[data-box="2"]');
-    if (service1ThumbnailBox && service1ThumbnailBox.innerHTML.trim() === '' && typeof service1Contents !== 'undefined') {
+    if (service1ThumbnailBox && typeof service1Contents !== 'undefined') {
         const html = service1Contents[1];
         if (html) {
             service1ThumbnailBox.innerHTML = '';
@@ -11364,13 +11175,59 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // 전략1 박스 썸네일 로드 (HTML에 이미 있으면 스킵)
-    const strategy1ThumbnailBox = document.querySelector('.test-thumbnail-box[data-box="1"]');
-    if (strategy1ThumbnailBox && strategy1ThumbnailBox.innerHTML.trim() === '' && typeof strategy1Contents !== 'undefined') {
-        const html = strategy1Contents[1];
+    // 서비스2 박스 썸네일 로드 (서비스2-1 이미지)
+    const service2ThumbnailBox = document.querySelector('.test-thumbnail-box[data-box="3"]');
+    if (service2ThumbnailBox && typeof service2Contents !== 'undefined') {
+        const html = service2Contents[1];
         if (html) {
-            strategy1ThumbnailBox.innerHTML = '';
-            loadContentToIframe(strategy1ThumbnailBox, html, false);
+            service2ThumbnailBox.innerHTML = '';
+            loadContentToIframe(service2ThumbnailBox, html, false);
+        }
+    }
+
+    // 전략2 박스 썸네일 로드 (전략2-1 이미지)
+    const strategy2ThumbnailBox = document.querySelector('.test-thumbnail-box[data-box="5"]');
+    if (strategy2ThumbnailBox && typeof strategy2Contents !== 'undefined') {
+        const html = strategy2Contents[1];
+        if (html) {
+            strategy2ThumbnailBox.innerHTML = '';
+            loadContentToIframe(strategy2ThumbnailBox, html, false);
+        }
+    }
+
+    // 페이지 로드 시 URL 파라미터 확인하여 상태 복원
+    const portfolioPage = window.location.pathname.split('/').pop() || 'index.html';
+    if (portfolioPage === 'portfolio.html' || portfolioPage === 'portfolio') {
+        const urlParams = new URLSearchParams(window.location.search);
+        const boxParam = urlParams.get('box');
+        const slideParam = urlParams.get('slide');
+        
+        if (boxParam && (boxParam === "1" || boxParam === "2" || boxParam === "3" || boxParam === "4" || boxParam === "5")) {
+            const slideNumber = slideParam ? parseInt(slideParam) : 1;
+            // 약간의 지연을 두어 DOM이 완전히 로드된 후 실행
+            setTimeout(() => {
+                expandBox(boxParam);
+                if (slideNumber > 1) {
+                    // 슬라이드 번호가 1보다 크면 해당 슬라이드로 이동
+                    setTimeout(() => {
+                        currentSlideNumber = slideNumber;
+                        updateNavButtons();
+                        updateURL(boxParam, slideNumber);
+                        
+                        if (boxParam === "1") {
+                            loadStrategy1ContentToMainBox(expandedBox, slideNumber);
+                        } else if (boxParam === "2") {
+                            loadService1ContentToMainBox(expandedBox, slideNumber);
+                        } else if (boxParam === "3") {
+                            loadService2ContentToMainBox(expandedBox, slideNumber);
+                        } else if (boxParam === "4") {
+                            loadNext1ContentToMainBox(expandedBox, slideNumber);
+                        } else if (boxParam === "5") {
+                            loadStrategy2ContentToMainBox(expandedBox, slideNumber);
+                        }
+                    }, 100);
+                }
+            }, 100);
         }
     }
 

@@ -2627,7 +2627,8 @@ body {
     overflow: visible;
 }
 
-.test-thumbnail-box.service-box .service1-content {
+.test-thumbnail-box.service-box .service1-content,
+.test-thumbnail-box.service-box .service2-content {
     position: absolute;
     top: 0;
     left: 0;
