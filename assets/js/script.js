@@ -5158,19 +5158,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // 넥스트1 파일 내용을 객체로 저장
     const next1Contents = {
         1: `<!DOCTYPE html>
-
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>AI 환경에 최적화된 기획자로의 전환</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>넥스트1-1</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background-color: #f8fafc; /* Slate 50 */
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
             padding: 0;
             overflow: hidden;
@@ -5178,63 +5179,26 @@ document.addEventListener("DOMContentLoaded", () => {
         .slide-container {
             width: 1280px;
             height: 720px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
             background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
         }
-        .decorative-circle {
-            position: absolute;
-            border-radius: 50%;
-            z-index: 0;
-        }
-        .grid-pattern {
-            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-            background-size: 20px 20px;
-            opacity: 0.3;
+        .slide-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
         }
     </style>
 </head>
 <body>
-<div class="slide-container relative overflow-hidden">
-<!-- 배경 장식 요소 -->
-<div class="absolute top-0 right-0 w-1/3 h-full bg-blue-50 z-0"></div>
-<div class="absolute top-20 right-20 w-32 h-32 border-4 border-blue-200 rounded-full opacity-50 z-0"></div>
-<div class="absolute bottom-[-50px] left-[-50px] w-64 h-64 bg-blue-100 rounded-full opacity-30 z-0"></div>
-<!-- 미세한 그리드 패턴 (우측 상단 영역) -->
-<div class="absolute top-0 right-0 w-1/3 h-full grid-pattern z-0"></div>
-<!-- 메인 콘텐츠 영역 -->
-<div class="flex-1 flex flex-col justify-center items-center z-10 px-20">
-<!-- 상단 라벨 -->
-<div class="mb-8 transform -translate-x-1/2 left-1/2 relative">
-<p class="text-blue-600 font-bold tracking-[0.3em] text-sm uppercase bg-blue-50 px-4 py-1 rounded-full border border-blue-100">
-                    PORTFOLIO 2026
-                </p>
-</div>
-<!-- 메인 타이틀 -->
-<div class="text-center mb-6">
-<p class="text-3xl md:text-4xl font-medium text-gray-500 mb-2">
-                    AI 환경에 최적화된
-                </p>
-<p class="text-5xl md:text-6xl font-black text-slate-900 leading-tight tracking-tight">
-<span class="text-blue-600">기획자</span>로의 전환
-                </p>
-</div>
-<!-- 구분선 -->
-<div class="w-24 h-1 bg-slate-800 my-8"></div>
-<!-- 서브 문구 -->
-<div class="text-center max-w-2xl">
-<p class="text-xl text-slate-600 font-medium leading-relaxed">
-<span class="font-bold text-slate-800">Next Step-Up</span> : <br/>
-                    AI 환경에서 가능성을 직접 실행하는 기획자
-                </p>
-</div>
-</div>
-<!-- 우측 상단 아이콘 장식 -->
-<div class="absolute top-12 right-12 text-blue-200 text-6xl opacity-20 transform rotate-12 z-0">
-<i class="fas fa-rocket"></i>
-</div>
-</div>
+    <div class="slide-container">
+        <img src="assets/images/넥스트1(수정).png" alt="넥스트1-1" class="slide-image" />
+    </div>
 </body>
 </html>`,
         2: `<!DOCTYPE html>
@@ -5281,7 +5245,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- 상단: 타이틀 -->
 <div class="mb-8">
 <div class="flex items-center space-x-2 mb-2">
-<span class="w-2 h-8 bg-blue-600 rounded-sm"></span>
+<span class="w-2 h-8 rounded-sm" style="background-color: #53afc8;"></span>
 <h2 class="text-3xl font-bold text-slate-800">관점의 전환과 새로운 역할 정의</h2>
 </div>
 </div>
@@ -5293,10 +5257,10 @@ document.addEventListener("DOMContentLoaded", () => {
             </p>
 <div class="space-y-4">
 <p class="text-4xl md:text-5xl font-black text-slate-800 leading-tight">
-<span class="text-blue-600">가능성을 직접 실행</span>해
+<span style="color: #53afc8;">가능성을 직접 실행</span>해
                 </p>
 <p class="text-4xl md:text-5xl font-black text-slate-800 leading-tight">
-<span class="bg-blue-50 px-2">작동 여부를 확인</span>하는 역할
+<span class="px-2" style="background-color: #e0f7f5;">작동 여부를 확인</span>하는 역할
                 </p>
 </div>
 </div>
@@ -5305,7 +5269,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- Item 1 -->
 <div class="relative pl-6 border-l-4 border-slate-200">
 <h3 class="text-slate-800 font-bold mb-2 flex items-center" style="font-size: 21px;">
-<i class="fas fa-eye text-blue-500 mr-2"></i> 가시성 있는 결과물
+<i class="fas fa-eye mr-2" style="color: #53afc8;"></i> 가시성 있는 결과물
                 </h3>
 <p class="text-slate-600 leading-relaxed" style="font-size: 17px;">
                     기획자의 사고 과정과 기획의 의도를<br/>
@@ -5325,9 +5289,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 </p>
 </div>
 <!-- Item 3 -->
-<div class="relative pl-6 border-l-4 border-blue-500 bg-blue-50 bg-opacity-30 rounded-r-lg py-2 -my-2">
-<h3 class="text-blue-800 font-bold mb-2 flex items-center" style="font-size: 21px;">
-<i class="fas fa-check-circle text-blue-600 mr-2"></i> 사전 검증의 당위성
+<div class="relative pl-6 rounded-r-lg py-2 -my-2" style="border-left: 4px solid #53afc8; background-color: rgba(83, 175, 200, 0.3);">
+<h3 class="font-bold mb-2 flex items-center" style="font-size: 21px; color: #3c899e;">
+<i class="fas fa-check-circle mr-2" style="color: #53afc8;"></i> 사전 검증의 당위성
                 </h3>
 <p class="text-slate-700 leading-relaxed" style="font-size: 17px;">
                     AI 환경에서는 기획자가<br/>
@@ -5392,69 +5356,69 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- 상단: 타이틀 -->
 <div class="mb-8">
 <div class="flex items-center space-x-2 mb-2">
-<span class="w-2 h-8 bg-blue-600 rounded-sm"></span>
+<span class="w-2 h-8 rounded-sm" style="background-color: #53afc8;"></span>
 <p class="text-3xl font-bold text-slate-800">그래서 지금 하고 있는 것</p>
 </div>
 <p class="text-slate-500 ml-4">기획자의 영역을 실행과 검증까지 확장하는 구체적 방법론</p>
 </div>
 <!-- 섹션 1: 프로세스 플로우 -->
-<div class="bg-blue-50 rounded-2xl p-8 mb-6 relative">
+<div class="rounded-2xl p-8 mb-6 relative" style="background-color: #e0f7f5;">
 <div class="flex justify-between items-center relative px-10">
 <!-- 연결선 -->
 <div class="connector-line mx-10"></div>
 <!-- 단계 1: 아이디어 -->
 <div class="flex flex-col items-center relative z-10 group">
-<div class="step-circle bg-white text-blue-600 text-2xl shadow-md border-2 border-blue-100 group-hover:border-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+<div class="step-circle bg-white text-2xl shadow-md transition-all duration-300" style="color: #53afc8; border: 2px solid #e0f7f5;" onmouseover="this.style.borderColor='#53afc8'; this.style.backgroundColor='#53afc8'; this.style.color='white';" onmouseout="this.style.borderColor='#e0f7f5'; this.style.backgroundColor='white'; this.style.color='#53afc8';">
 <i class="far fa-lightbulb"></i>
 </div>
 <p class="mt-3 font-bold text-slate-700 text-sm">아이디어</p>
 </div>
 <!-- 화살표 -->
-<div class="z-10 bg-blue-50 px-2 text-slate-300"><i class="fas fa-chevron-right"></i></div>
+<div class="z-10 px-2 text-slate-300" style="background-color: #e0f7f5;"><i class="fas fa-chevron-right"></i></div>
 <!-- 단계 2: 기획 -->
 <div class="flex flex-col items-center relative z-10 group">
-<div class="step-circle bg-white text-blue-600 text-2xl shadow-md border-2 border-blue-100 group-hover:border-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+<div class="step-circle bg-white text-2xl shadow-md transition-all duration-300" style="color: #53afc8; border: 2px solid #e0f7f5;" onmouseover="this.style.borderColor='#53afc8'; this.style.backgroundColor='#53afc8'; this.style.color='white';" onmouseout="this.style.borderColor='#e0f7f5'; this.style.backgroundColor='white'; this.style.color='#53afc8';">
 <i class="fas fa-pen-ruler"></i>
 </div>
 <p class="mt-3 font-bold text-slate-700 text-sm">기획</p>
 </div>
 <!-- 화살표 -->
-<div class="z-10 bg-blue-50 px-2 text-slate-300"><i class="fas fa-chevron-right"></i></div>
+<div class="z-10 px-2 text-slate-300" style="background-color: #e0f7f5;"><i class="fas fa-chevron-right"></i></div>
 <!-- 단계 3: 구조 설계 -->
 <div class="flex flex-col items-center relative z-10 group">
-<div class="step-circle bg-white text-blue-600 text-2xl shadow-md border-2 border-blue-100 group-hover:border-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+<div class="step-circle bg-white text-2xl shadow-md transition-all duration-300" style="color: #53afc8; border: 2px solid #e0f7f5;" onmouseover="this.style.borderColor='#53afc8'; this.style.backgroundColor='#53afc8'; this.style.color='white';" onmouseout="this.style.borderColor='#e0f7f5'; this.style.backgroundColor='white'; this.style.color='#53afc8';">
 <i class="fas fa-sitemap"></i>
 </div>
 <p class="mt-3 font-bold text-slate-700 text-sm">구조 설계</p>
 </div>
 <!-- 화살표 & 바이브코딩 뱃지 -->
-<div class="z-10 bg-blue-50 px-2 text-slate-300 relative flex flex-col items-center">
-<div class="absolute -top-8 bg-indigo-600 text-white text-xs px-2 py-1 rounded-full font-bold animate-pulse shadow-md">
+<div class="z-10 px-2 text-slate-300 relative flex flex-col items-center" style="background-color: #e0f7f5;">
+<div class="absolute -top-8 text-white text-xs px-2 py-1 rounded-full font-bold animate-pulse shadow-md" style="background-color: #7dd9ce;">
                         With AI
                     </div>
 <i class="fas fa-chevron-right"></i>
 </div>
 <!-- 단계 4: 개발 (강조) -->
 <div class="flex flex-col items-center relative z-10 group">
-<div class="step-circle bg-indigo-600 text-white text-2xl shadow-lg ring-4 ring-indigo-100">
+<div class="step-circle text-white text-2xl shadow-lg" style="background-color: #7dd9ce; ring: 4px solid #e0f7f5;">
 <i class="fas fa-code"></i>
 </div>
-<p class="mt-3 font-bold text-indigo-700 text-sm">개발 (구현)</p>
+<p class="mt-3 font-bold text-sm" style="color: #3c899e;">개발 (구현)</p>
 </div>
 <!-- 화살표 -->
-<div class="z-10 bg-blue-50 px-2 text-slate-300"><i class="fas fa-chevron-right"></i></div>
+<div class="z-10 px-2 text-slate-300" style="background-color: #e0f7f5;"><i class="fas fa-chevron-right"></i></div>
 <!-- 단계 5: 배포 -->
 <div class="flex flex-col items-center relative z-10 group">
-<div class="step-circle bg-white text-blue-600 text-2xl shadow-md border-2 border-blue-100 group-hover:border-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+<div class="step-circle bg-white text-2xl shadow-md transition-all duration-300" style="color: #53afc8; border: 2px solid #e0f7f5;" onmouseover="this.style.borderColor='#53afc8'; this.style.backgroundColor='#53afc8'; this.style.color='white';" onmouseout="this.style.borderColor='#e0f7f5'; this.style.backgroundColor='white'; this.style.color='#53afc8';">
 <i class="fas fa-rocket"></i>
 </div>
 <p class="mt-3 font-bold text-slate-700 text-sm">배포</p>
 </div>
 </div>
 <!-- 프로세스 설명 -->
-<div class="mt-6 text-center border-t border-blue-100 pt-4">
+<div class="mt-6 text-center pt-4" style="border-top: 1px solid #e0f7f5;">
 <p class="text-slate-600 text-sm">
-<span class="font-bold text-indigo-600">바이브코딩 등 AI 툴</span>을 활용해 아이디어를 빠르게 실험하고 직접 검증합니다.
+<span class="font-bold" style="color: #7dd9ce;">바이브코딩 등 AI 툴</span>을 활용해 아이디어를 빠르게 실험하고 직접 검증합니다.
                 </p>
 </div>
 </div>
@@ -5462,7 +5426,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="grid grid-cols-4 gap-6 mb-6">
 <!-- Card 1 -->
 <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
-<div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-4">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background-color: #e0f7f5; color: #53afc8;">
 <i class="fas fa-tools"></i>
 </div>
 <h3 class="font-bold text-slate-800 mb-2 text-sm">실무 스킬화</h3>
@@ -5472,7 +5436,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 <!-- Card 2 -->
 <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
-<div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-4">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background-color: #e0f7f5; color: #53afc8;">
 <i class="fas fa-flask"></i>
 </div>
 <h3 class="font-bold text-slate-800 mb-2 text-sm">빠른 실험</h3>
@@ -5482,7 +5446,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 <!-- Card 3 -->
 <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
-<div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-4">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background-color: #e0f7f5; color: #53afc8;">
 <i class="fas fa-user-cog"></i>
 </div>
 <h3 class="font-bold text-slate-800 mb-2 text-sm">직접 수행</h3>
@@ -5492,7 +5456,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 <!-- Card 4 -->
 <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
-<div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-4">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background-color: #e0f7f5; color: #53afc8;">
 <i class="fas fa-check-double"></i>
 </div>
 <h3 class="font-bold text-slate-800 mb-2 text-sm">역할 확장</h3>
@@ -5506,17 +5470,17 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- 배경 데코 -->
 <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-slate-700 rounded-full opacity-50"></div>
 <div class="w-1/4 border-r border-slate-600 pr-6">
-<p class="text-blue-400 font-bold mb-1 uppercase tracking-wider" style="font-size: 15px;">Clarification</p>
+<p class="font-bold mb-1 uppercase tracking-wider" style="font-size: 15px; color: #53afc8;">Clarification</p>
 <p class="font-bold leading-tight text-black" style="font-size: 23px;">개발자가 되려는<br/>것이 아닌</p>
 </div>
 <div class="w-3/4 pl-8 z-10 flex justify-between items-center">
 <div class="space-y-3">
 <div class="flex items-start">
-<i class="fas fa-check text-blue-400 mt-1 mr-3"></i>
+<i class="fas fa-check mt-1 mr-3" style="color: #53afc8;"></i>
 <p class="text-black" style="font-size: 17px;">개발을 요청하기 전에 <span class="font-bold">기획 단계에서 구현 가능성을 미리 검증</span></p>
 </div>
 <div class="flex items-start">
-<i class="fas fa-check text-blue-400 mt-1 mr-3"></i>
+<i class="fas fa-check mt-1 mr-3" style="color: #53afc8;"></i>
 <p class="text-black" style="font-size: 17px;">AI 환경에서 기획자가 직접 구현 가능성을 <span class="font-bold">사전에 검증하기 위해 현재의 AI 인프라 적극 활용</span></p>
 </div>
 </div>
@@ -5577,13 +5541,13 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="mb-8 flex justify-between items-end border-b border-slate-200 pb-4">
 <div>
 <div class="flex items-center space-x-2 mb-1">
-<span class="w-2 h-8 bg-blue-600 rounded-sm"></span>
+<span class="w-2 h-8 rounded-sm" style="background-color: #53afc8;"></span>
 <h1 class="text-3xl font-bold text-slate-800">미니 케이스 스터디</h1>
 </div>
 <p class="text-slate-500 ml-4">내가 가고자 하는 방향이 맞는지 직접 실험해본 웹사이트 프로젝트</p>
 </div>
 <div class="text-right">
-<span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Case Study</span>
+<span class="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider" style="background-color: #e0f7f5; color: #3c899e;">Case Study</span>
 </div>
 </div>
 <!-- 메인 콘텐츠 영역 (2열 분할) -->
@@ -5605,19 +5569,19 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- 접근 섹션 1 -->
 <div class="bg-slate-50 rounded-xl p-6 shadow-sm flex-1 flex flex-col">
 <div class="flex items-center mb-4">
-<div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3">
+<div class="w-8 h-8 rounded-full flex items-center justify-center mr-3" style="background-color: #e0f7f5; color: #53afc8;">
 <i class="fas fa-bullseye"></i>
 </div>
 <h2 class="text-lg font-bold text-slate-800">접근 (Approach)</h2>
 </div>
 <div class="pl-11 space-y-3 flex-1">
 <div class="flex items-start">
-<i class="fas fa-check text-blue-400 mt-1 mr-2 text-xs"></i>
+<i class="fas fa-check mt-1 mr-2 text-xs" style="color: #53afc8;"></i>
 <p class="text-slate-600 text-sm">기획은 있으나 직접 구현까지 이어지지 못했던 <span class="font-bold">기존 방식 탈피</span>.</p>
 </div>
 <div class="flex items-start">
-<i class="fas fa-check text-blue-400 mt-1 mr-2 text-xs"></i>
-<p class="text-slate-600 text-sm"><span class="bg-blue-100 px-1 text-blue-800 font-bold text-xs rounded">바이브코딩</span>을 활용해 기획 → 구조 설계 → 개발 → 배포까지 하나의 실험으로 진행.</p>
+<i class="fas fa-check mt-1 mr-2 text-xs" style="color: #53afc8;"></i>
+<p class="text-slate-600 text-sm"><span class="px-1 font-bold text-xs rounded" style="background-color: #e0f7f5; color: #3c899e;">바이브코딩</span>을 활용해 기획 → 구조 설계 → 개발 → 배포까지 하나의 실험으로 진행.</p>
 </div>
 </div>
 </div>
@@ -5645,15 +5609,15 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="w-2/5 flex flex-col">
 <div class="bg-slate-800 text-white rounded-xl p-8 h-full relative overflow-hidden flex flex-col justify-center shadow-lg">
 <!-- 장식 요소 -->
-<div class="absolute top-0 right-0 w-32 h-32 bg-blue-600 rounded-bl-full opacity-20"></div>
-<div class="absolute bottom-0 left-0 w-24 h-24 bg-blue-400 rounded-tr-full opacity-10"></div>
+<div class="absolute top-0 right-0 w-32 h-32 rounded-bl-full opacity-20" style="background-color: #53afc8;"></div>
+<div class="absolute bottom-0 left-0 w-24 h-24 rounded-tr-full opacity-10" style="background-color: #7dd9ce;"></div>
 <div class="relative z-10">
-<div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center text-white text-xl mb-6 shadow-lg">
+<div class="w-12 h-12 rounded-lg flex items-center justify-center text-white text-xl mb-6 shadow-lg" style="background-color: #53afc8;">
 <i class="fas fa-lightbulb"></i>
 </div>
 <h2 class="text-2xl font-bold mb-4 text-black">의미 (Meaning)</h2>
 <div class="space-y-4">
-<p class="text-black text-sm leading-relaxed border-l-2 border-blue-500 pl-4">
+<p class="text-black text-sm leading-relaxed pl-4" style="border-left: 2px solid #53afc8;">
                                 이 웹사이트는 단순한 포트폴리오가 아닙니다.
                             </p>
 <p class="text-black text-base font-medium leading-relaxed">
@@ -5683,8 +5647,8 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="text-slate-300"><i class="fas fa-chevron-right"></i></div>
 <!-- Step 2 -->
 <div class="flex-1 flex flex-col items-center">
-<div class="w-32 bg-blue-50 border border-blue-200 rounded-lg py-2 px-3 text-center shadow-sm z-10">
-<p class="text-xs font-bold text-blue-700">바이브코딩 실험</p>
+<div class="w-32 rounded-lg py-2 px-3 text-center shadow-sm z-10" style="background-color: #e0f7f5; border: 1px solid #7dd9ce;">
+<p class="text-xs font-bold" style="color: #3c899e;">바이브코딩 실험</p>
 </div>
 </div>
 <!-- Arrow -->
@@ -5764,11 +5728,11 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="slide-container">
 <!-- 배경 장식 요소 -->
 <div class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-bl-full z-0 opacity-50"></div>
-<div class="absolute bottom-0 left-0 w-40 h-40 bg-blue-50 rounded-tr-full z-0 opacity-50"></div>
+<div class="absolute bottom-0 left-0 w-40 h-40 rounded-tr-full z-0 opacity-50" style="background-color: #e0f7f5;"></div>
 <!-- 상단 헤더 -->
 <div class="mb-8 z-10">
 <div class="flex items-center space-x-2 mb-2">
-<span class="w-2 h-8 bg-blue-600 rounded-sm"></span>
+<span class="w-2 h-8 rounded-sm" style="background-color: #53afc8;"></span>
 <h1 class="text-3xl font-bold text-slate-800">AI 환경에서 기획 역할을 재정의하는 영역</h1>
 </div>
 <p class="text-slate-500 ml-4 max-w-3xl">현재는 아래 영역들을 기준으로 AI 환경에서 각 역할을 어떻게 더 효율화할 수 있을지 고민하는 단계입니다.</p>
@@ -5779,7 +5743,7 @@ document.addEventListener("DOMContentLoaded", () => {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
 .hub-shadow {
-  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.15), 0 4px 6px -2px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 10px 15px -3px rgba(83, 175, 200, 0.15), 0 4px 6px -2px rgba(83, 175, 200, 0.1);
 }
 .text-xs-custom {
   font-size: 0.85rem;
@@ -5806,9 +5770,9 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- Top Left: 신사업 전략 수립 (I) -->
 <div class="w-[420px] bg-white card-shadow border border-slate-100 rounded-lg p-6 relative" style="position: absolute; top: 80px; left: calc(40px + 5%); transform: translateY(-50%);">
 <!-- Connector Dot -->
-<div class="absolute -right-1 top-1/2 transform -translate-y-1/2 translate-x-full w-2 h-2 bg-blue-200 rounded-full"></div>
+<div class="absolute -right-1 top-1/2 transform -translate-y-1/2 translate-x-full w-2 h-2 rounded-full" style="background-color: #7dd9ce;"></div>
 <h2 class="text-lg font-bold text-slate-800 mb-3 border-b border-slate-100 pb-2 flex items-center">
-<span class="w-1.5 h-4 bg-blue-600 mr-2 rounded-sm"></span>
+<span class="w-1.5 h-4 mr-2 rounded-sm" style="background-color: #53afc8;"></span>
                         신사업 전략 수립 (Ⅰ)
                     </h2>
 <div class="grid grid-cols-2 gap-x-4 gap-y-1">
@@ -5824,9 +5788,9 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- Top Right: 신사업 전략 수립 (II) -->
 <div class="w-[420px] bg-white card-shadow border border-slate-100 rounded-lg p-6 relative" style="position: absolute; top: 120px; right: 40px;">
 <!-- Connector Dot -->
-<div class="absolute -left-1 top-1/2 transform -translate-y-1/2 -translate-x-full w-2 h-2 bg-indigo-200 rounded-full"></div>
+<div class="absolute -left-1 top-1/2 transform -translate-y-1/2 -translate-x-full w-2 h-2 rounded-full" style="background-color: #7dd9ce;"></div>
 <h2 class="text-lg font-bold text-slate-800 mb-3 border-b border-slate-100 pb-2 flex items-center">
-<span class="w-1.5 h-4 bg-indigo-500 mr-2 rounded-sm"></span>
+<span class="w-1.5 h-4 mr-2 rounded-sm" style="background-color: #7dd9ce;"></span>
                         신사업 전략 수립 (Ⅱ)
                     </h2>
 <div class="grid grid-cols-2 gap-x-4 gap-y-1">
@@ -5846,9 +5810,9 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- Bottom Left: 상품기획 및 관리 (I) -->
 <div class="w-[420px] bg-white card-shadow border border-slate-100 rounded-lg p-6 relative" style="position: absolute; bottom: 200px; left: calc(40px + 5%); transform: translateY(50%);">
 <!-- Connector Dot -->
-<div class="absolute -right-1 top-1/2 transform -translate-y-1/2 translate-x-full w-2 h-2 bg-teal-200 rounded-full"></div>
+<div class="absolute -right-1 top-1/2 transform -translate-y-1/2 translate-x-full w-2 h-2 rounded-full" style="background-color: #7dd9ce;"></div>
 <h2 class="text-lg font-bold text-slate-800 mb-3 border-b border-slate-100 pb-2 flex items-center">
-<span class="w-1.5 h-4 bg-teal-500 mr-2 rounded-sm"></span>
+<span class="w-1.5 h-4 mr-2 rounded-sm" style="background-color: #7dd9ce;"></span>
                         상품기획 및 관리 (Ⅰ)
                     </h2>
 <div class="grid grid-cols-2 gap-x-4 gap-y-1">
@@ -5862,9 +5826,9 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- Bottom Right: 상품기획 및 관리 (II) -->
 <div class="w-[420px] bg-white card-shadow border border-slate-100 rounded-lg p-6 relative" style="position: absolute; bottom: 120px; right: 40px;">
 <!-- Connector Dot -->
-<div class="absolute -left-1 top-1/2 transform -translate-y-1/2 -translate-x-full w-2 h-2 bg-purple-200 rounded-full"></div>
+<div class="absolute -left-1 top-1/2 transform -translate-y-1/2 -translate-x-full w-2 h-2 rounded-full" style="background-color: #3c899e;"></div>
 <h2 class="text-lg font-bold text-slate-800 mb-3 border-b border-slate-100 pb-2 flex items-center">
-<span class="w-1.5 h-4 bg-purple-500 mr-2 rounded-sm"></span>
+<span class="w-1.5 h-4 mr-2 rounded-sm" style="background-color: #3c899e;"></span>
                         상품기획 및 관리 (Ⅱ)
                     </h2>
 <div class="grid grid-cols-2 gap-x-4 gap-y-1">
@@ -5879,13 +5843,13 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- Center Hub (Absolute Positioned on top of everything) -->
 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 z-20 flex items-center justify-center">
 <!-- Outer glow ring -->
-<div class="absolute w-full h-full bg-blue-50 rounded-full opacity-50 animate-pulse"></div>
+<div class="absolute w-full h-full rounded-full opacity-50 animate-pulse" style="background-color: #e0f7f5;"></div>
 <!-- Main Circle -->
-<div class="w-52 h-52 bg-white rounded-full hub-shadow border-4 border-blue-50 flex flex-col items-center justify-center text-center relative z-10">
-<div class="w-12 h-1 bg-blue-600 rounded-full mb-4"></div>
+<div class="w-52 h-52 bg-white rounded-full hub-shadow flex flex-col items-center justify-center text-center relative z-10" style="border: 4px solid #e0f7f5;">
+<div class="w-12 h-1 rounded-full mb-4" style="background-color: #53afc8;"></div>
 <h1 class="text-2xl font-black text-slate-800 leading-tight">
                         AI 활용<br/>
-<span class="text-blue-600">최적화</span>
+<span style="color: #53afc8;">최적화</span>
 </h1>
 <p class="text-xs text-slate-400 mt-2 font-medium tracking-wide">Optimization</p>
 </div>
@@ -5957,17 +5921,17 @@ document.addEventListener("DOMContentLoaded", () => {
 <body>
 <div class="slide-container">
 <!-- 배경 장식 -->
-<div class="decorative-shape bg-blue-50 w-96 h-96 top-[-100px] left-[-100px] opacity-50"></div>
+<div class="decorative-shape w-96 h-96 top-[-100px] left-[-100px] opacity-50" style="background-color: #e0f7f5;"></div>
 <div class="decorative-shape bg-slate-50 w-[800px] h-[800px] bottom-[-400px] right-[-200px] opacity-50"></div>
 <!-- 좌측: 타이틀 영역 (40%) -->
 <div class="w-2/5 h-full flex flex-col justify-center pl-20 pr-10 z-10 relative">
 <div class="mb-6">
-<span class="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wider uppercase mb-4">Vision &amp; Goal</span>
+<span class="inline-block py-1 px-3 rounded-full text-xs font-bold tracking-wider uppercase mb-4" style="background-color: #e0f7f5; color: #3c899e;">Vision &amp; Goal</span>
 <h1 class="text-4xl font-black text-slate-800 leading-tight mb-2">
-<span class="text-blue-600">Hybrid Planner</span>의<br/>
+<span style="color: #53afc8;">Hybrid Planner</span>의<br/>
                     완성형을 향해
                 </h1>
-<div class="w-20 h-2 bg-blue-600 mt-6 mb-6"></div>
+<div class="w-20 h-2 mt-6 mb-6" style="background-color: #53afc8;"></div>
 </div>
 <p class="text-slate-500 text-lg font-light leading-relaxed">
                 AI 환경에 최적화된 기획자로서,<br/>
@@ -5995,11 +5959,11 @@ document.addEventListener("DOMContentLoaded", () => {
 <i class="fas fa-arrow-right text-xl"></i>
 </div>
 <!-- Step 2 -->
-<div class="flex-1 bg-white border-2 border-blue-100 rounded-xl p-6 shadow-md relative z-10">
-<div class="absolute -top-3 -right-3 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white border-2 border-white shadow-sm">
+<div class="flex-1 bg-white rounded-xl p-6 shadow-md relative z-10" style="border: 2px solid #e0f7f5;">
+<div class="absolute -top-3 -right-3 w-8 h-8 rounded-full flex items-center justify-center text-white border-2 border-white shadow-sm" style="background-color: #53afc8;">
 <i class="fas fa-check"></i>
 </div>
-<div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 mb-4">
+<div class="w-10 h-10 rounded-full flex items-center justify-center mb-4" style="background-color: #e0f7f5; color: #53afc8;">
 <i class="fas fa-user-astronaut"></i>
 </div>
 <h3 class="text-sm font-bold text-slate-800 mb-2">하이브리드 기획자 완성</h3>
@@ -6015,11 +5979,11 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="absolute right-[-20px] bottom-[-20px] text-slate-700 text-[150px] opacity-20 transform rotate-12">
 <i class="fas fa-flag-checkered"></i>
 </div>
-<h2 class="text-blue-400 font-bold text-sm tracking-widest uppercase mb-4">Next Goal</h2>
+<h2 class="font-bold text-sm tracking-widest uppercase mb-4" style="color: #53afc8;">Next Goal</h2>
 <div class="flex items-start space-x-6 relative z-10">
 <div class="flex-1">
 <div class="flex items-center mb-3">
-<div class="w-8 h-8 rounded bg-slate-700 flex items-center justify-center text-blue-400 mr-3">
+<div class="w-8 h-8 rounded bg-slate-700 flex items-center justify-center mr-3" style="color: #53afc8;">
 <i class="fas fa-building"></i>
 </div>
 <h3 class="text-lg font-bold text-black">조직 적용</h3>
@@ -6032,7 +5996,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="h-20 w-px bg-slate-600 mx-4"></div>
 <div class="flex-1">
 <div class="flex items-center mb-3">
-<div class="w-8 h-8 rounded bg-slate-700 flex items-center justify-center text-blue-400 mr-3">
+<div class="w-8 h-8 rounded bg-slate-700 flex items-center justify-center mr-3" style="color: #53afc8;">
 <i class="fas fa-chart-line"></i>
 </div>
 <h3 class="text-lg font-bold text-black">성과 연결</h3>
@@ -11192,6 +11156,17 @@ document.addEventListener("DOMContentLoaded", () => {
         if (html) {
             strategy2ThumbnailBox.innerHTML = '';
             loadContentToIframe(strategy2ThumbnailBox, html, false);
+        }
+    }
+
+    // 넥스트1 박스 썸네일 로드 (넥스트1-1 이미지)
+    const next1ThumbnailBox = document.querySelector('.test-thumbnail-box[data-box="4"]');
+    if (next1ThumbnailBox && typeof next1Contents !== 'undefined') {
+        const html = next1Contents[1];
+        if (html) {
+            next1ThumbnailBox.innerHTML = '';
+            next1ThumbnailBox.setAttribute('data-slide-number', '1');
+            loadContentToIframe(next1ThumbnailBox, html, false);
         }
     }
 
