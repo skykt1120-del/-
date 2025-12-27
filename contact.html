@@ -49,7 +49,7 @@
     }
 
     .text-box p {
-      font-size: 19px;
+      font-size: clamp(12px, 1.5vw + 13px, 17px);
       line-height: 1.8;
       color: #1d1d1f;
       margin: 0 0 16px 0;
@@ -60,17 +60,24 @@
       margin-bottom: 0;
     }
 
-    /* 태블릿 반응형 (768px ~ 1024px) */
+    /* 큰 태블릿 반응형 (900px ~ 1024px) */
     @media screen and (max-width: 1024px) {
       .text-box {
-        left: 50%;
-        transform: translateX(-50%);
-        max-width: 600px;
+        left: 20px;
+        transform: none;
+        max-width: calc(100% - 40px);
         padding: 28px;
       }
 
       .text-box p {
-        font-size: 17px;
+        font-size: clamp(13px, 1.2vw + 11px, 16px);
+      }
+    }
+
+    /* 중간 태블릿 반응형 (768px ~ 900px) */
+    @media screen and (max-width: 900px) {
+      .text-box p {
+        font-size: clamp(12px, 1vw + 11px, 15px);
       }
     }
 
@@ -90,8 +97,8 @@
       .text-box {
         position: absolute;
         top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
+        left: 20px;
+        transform: none;
         max-width: calc(100% - 40px);
         width: calc(100% - 40px);
         padding: 24px;
@@ -99,9 +106,16 @@
       }
 
       .text-box p {
-        font-size: 15px;
+        font-size: clamp(11px, 0.8vw + 10px, 13px);
         line-height: 1.7;
         margin: 0 0 14px 0;
+      }
+    }
+
+    /* 작은 태블릿/큰 모바일 반응형 (600px ~ 768px) */
+    @media screen and (max-width: 600px) {
+      .text-box p {
+        font-size: clamp(10px, 0.7vw + 9px, 12px);
       }
     }
 
@@ -113,15 +127,23 @@
 
       .text-box {
         top: 15px;
+        left: 15px;
         padding: 20px;
         max-width: calc(100% - 30px);
         width: calc(100% - 30px);
       }
 
       .text-box p {
-        font-size: 14px;
+        font-size: clamp(10px, 0.6vw + 8px, 12px);
         line-height: 1.6;
         margin: 0 0 12px 0;
+      }
+    }
+
+    /* 매우 작은 모바일 반응형 (360px 이하) */
+    @media screen and (max-width: 360px) {
+      .text-box p {
+        font-size: clamp(9px, 0.5vw + 7px, 11px);
       }
     }
   </style>
