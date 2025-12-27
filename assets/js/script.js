@@ -10477,23 +10477,111 @@ document.addEventListener("DOMContentLoaded", () => {
                 })();
             </script>`;
             
-            // <head> 태그가 있는 경우 base 태그와 소스맵 차단 스크립트 추가
+            // 우클릭 방지 스크립트 (배포 환경에서만 동작)
+            const rightClickBlocker = `<script>
+                (function() {
+                    'use strict';
+                    // 부모 창의 정보를 사용하여 로컬 환경 감지
+                    let isLocal = false;
+                    try {
+                        if (window.parent && window.parent !== window) {
+                            const parentHost = window.parent.location.hostname;
+                            const parentProtocol = window.parent.location.protocol;
+                            isLocal = parentHost === 'localhost' || 
+                                     parentHost === '127.0.0.1' ||
+                                     parentProtocol === 'file:';
+                        } else {
+                            // iframe 내부에서 직접 확인
+                            isLocal = window.location.hostname === 'localhost' || 
+                                     window.location.hostname === '127.0.0.1' ||
+                                     window.location.protocol === 'file:';
+                        }
+                    } catch (e) {
+                        // cross-origin이면 배포 환경으로 간주
+                        isLocal = false;
+                    }
+                    
+                    // 로컬 환경이면 스크립트 실행 중단
+                    if (isLocal) {
+                        return;
+                    }
+                    
+                    // 1. 마우스 오른쪽 클릭 방지
+                    document.addEventListener('contextmenu', function(e) {
+                        e.preventDefault();
+                        return false;
+                    }, false);
+                    
+                    // 2. 텍스트 선택 방지
+                    document.addEventListener('selectstart', function(e) {
+                        e.preventDefault();
+                        return false;
+                    }, false);
+                    
+                    // 3. 드래그 방지
+                    document.addEventListener('dragstart', function(e) {
+                        e.preventDefault();
+                        return false;
+                    }, false);
+                    
+                    // 4. 키보드 단축키 방지
+                    document.addEventListener('keydown', function(e) {
+                        if (e.keyCode === 123) { e.preventDefault(); return false; }
+                        if (e.ctrlKey && e.shiftKey && e.keyCode === 73) { e.preventDefault(); return false; }
+                        if (e.ctrlKey && e.shiftKey && e.keyCode === 74) { e.preventDefault(); return false; }
+                        if (e.ctrlKey && e.shiftKey && e.keyCode === 67) { e.preventDefault(); return false; }
+                        if (e.ctrlKey && e.keyCode === 85) { e.preventDefault(); return false; }
+                        if (e.ctrlKey && e.keyCode === 83) { e.preventDefault(); return false; }
+                        if (e.ctrlKey && e.keyCode === 80) { e.preventDefault(); return false; }
+                    }, false);
+                    
+                    // 5. 이미지 우클릭 방지
+                    function addImageProtection() {
+                        const images = document.querySelectorAll('img');
+                        images.forEach(function(img) {
+                            if (!img.dataset.rightclickProtected) {
+                                img.addEventListener('contextmenu', function(e) {
+                                    e.preventDefault();
+                                    return false;
+                                }, false);
+                                img.dataset.rightclickProtected = 'true';
+                            }
+                        });
+                    }
+                    
+                    if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', addImageProtection);
+                    } else {
+                        addImageProtection();
+                    }
+                    
+                    const observer = new MutationObserver(function(mutations) {
+                        addImageProtection();
+                    });
+                    observer.observe(document.body, {
+                        childList: true,
+                        subtree: true
+                    });
+                })();
+            </script>`;
+            
+            // <head> 태그가 있는 경우 base 태그와 스크립트 추가
             // 소스맵 차단 스크립트를 가장 먼저 실행하도록 <head> 태그 바로 뒤에 추가
             if (processedHtml.includes('<head>')) {
                 // <head> 태그 바로 뒤에 base 태그와 스크립트 추가 (소스맵 차단을 최우선으로)
                 processedHtml = processedHtml.replace(
                     /<head>/i,
-                    `<head>${sourceMapBlocker}<base href="${baseUrl}">`
+                    `<head>${sourceMapBlocker}${rightClickBlocker}<base href="${baseUrl}">`
                 );
             } else if (processedHtml.includes('<html')) {
                 // <head> 태그가 없으면 <html> 태그 뒤에 <head>와 스크립트, base 태그 추가
                 processedHtml = processedHtml.replace(
                     /(<html[^>]*>)/i,
-                    `$1<head>${sourceMapBlocker}<base href="${baseUrl}"></head>`
+                    `$1<head>${sourceMapBlocker}${rightClickBlocker}<base href="${baseUrl}"></head>`
                 );
             } else {
                 // HTML 구조가 없는 경우 앞에 추가
-                processedHtml = `<head>${sourceMapBlocker}<base href="${baseUrl}"></head>` + processedHtml;
+                processedHtml = `<head>${sourceMapBlocker}${rightClickBlocker}<base href="${baseUrl}"></head>` + processedHtml;
             }
             
             // srcdoc 설정 (DOM에 추가한 후 설정하면 더 빠름)
