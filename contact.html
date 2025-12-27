@@ -84,6 +84,7 @@
       .contact-image {
         height: calc(100% + 200px);
         transform: translateY(-200px);
+        object-position: right top; /* 우측 상단으로 변경 */
       }
 
       .text-box {
@@ -106,6 +107,10 @@
 
     /* 작은 모바일 반응형 (480px 이하) */
     @media screen and (max-width: 480px) {
+      .contact-image {
+        object-position: right top; /* 작은 모바일에서도 우측 상단 유지 */
+      }
+
       .text-box {
         top: 15px;
         padding: 20px;
