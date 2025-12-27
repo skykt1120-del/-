@@ -5260,7 +5260,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <span style="color: #53afc8;">가능성을 직접 실행</span>해
                 </p>
 <p class="text-4xl md:text-5xl font-black text-slate-800 leading-tight">
-<span class="px-2" style="background-color: #e0f7f5;">작동 여부를 확인</span>하는 역할
+<span class="px-2" style="background-color: #e0f7f5;">검증까지</span>하는 역할
                 </p>
 </div>
 </div>
@@ -5294,9 +5294,8 @@ document.addEventListener("DOMContentLoaded", () => {
 <i class="fas fa-check-circle mr-2" style="color: #53afc8;"></i> 사전 검증의 당위성
                 </h3>
 <p class="text-slate-700 leading-relaxed" style="font-size: 17px;">
-                    AI 환경에서는 기획자가<br/>
-                    직접 구현 가능성을 <strong>사전에 검증하지 못할<br/>
-                    이유가 없다</strong>고 판단.
+                    단순히 아이디어를 문서를 만드는데 그치지 않고,<br/>
+                    <strong>검증을 통한 의사결정과 생산성 향상</strong> 목표
                 </p>
 </div>
 </div>
@@ -5342,8 +5341,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .connector-line {
             position: absolute;
             top: 50%;
-            left: 0;
-            width: 100%;
+            left: 2.5rem;
+            right: 2.5rem;
             height: 2px;
             background-color: #e2e8f0;
             z-index: 0;
@@ -5365,7 +5364,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="rounded-2xl p-8 mb-6 relative" style="background-color: #e0f7f5;">
 <div class="flex justify-between items-center relative px-10">
 <!-- 연결선 -->
-<div class="connector-line mx-10"></div>
+<div class="connector-line"></div>
 <!-- 단계 1: 아이디어 -->
 <div class="flex flex-col items-center relative z-10 group">
 <div class="step-circle bg-white text-2xl shadow-md transition-all duration-300" style="color: #53afc8; border: 2px solid #e0f7f5;" onmouseover="this.style.borderColor='#53afc8'; this.style.backgroundColor='#53afc8'; this.style.color='white';" onmouseout="this.style.borderColor='#e0f7f5'; this.style.backgroundColor='white'; this.style.color='#53afc8';">
@@ -5393,7 +5392,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 <!-- 화살표 & 바이브코딩 뱃지 -->
 <div class="z-10 px-2 text-slate-300 relative flex flex-col items-center" style="background-color: #e0f7f5;">
-<div class="absolute -top-8 text-white text-xs px-2 py-1 rounded-full font-bold animate-pulse shadow-md" style="background-color: #7dd9ce;">
+<div class="absolute -top-8 text-white text-xs px-2 py-1 rounded-full font-bold animate-pulse shadow-md text-center whitespace-nowrap" style="background-color: #7dd9ce; left: 50%; transform: translateX(-50%);">
                         With AI
                     </div>
 <i class="fas fa-chevron-right"></i>
@@ -9999,20 +9998,31 @@ document.addEventListener("DOMContentLoaded", () => {
         const isService2BoxType = parentBox === '3'; // 서비스2 박스
         const isNext1BoxType = parentBox === '4'; // 넥스트1 박스
         
-        // 작은 박스에 표시되는 1-1 슬라이드들 (전략1-1, 전략2-1, 서비스1-1, 서비스2-1)
+        // 작은 박스에 표시되는 1-1 슬라이드들 (전략1-1, 전략2-1, 서비스1-1, 서비스2-1, 넥스트1-1)
         const isStrategy1_1_SmallBox = isStrategy1BoxType && slideNumber === '1' && isSmallBox;
         const isStrategy2_1_SmallBox = isStrategy2BoxType && slideNumber === '1' && isSmallBox;
         const isService1_1_SmallBox = isServiceBoxType && slideNumber === '1' && isSmallBox;
         const isService2_1_SmallBox = isService2BoxType && slideNumber === '1' && isSmallBox;
+        const isNext1_1_SmallBox = isNext1BoxType && slideNumber === '1' && isSmallBox;
         
         // 작은 박스에 표시되는 1-1 슬라이드들은 작은 박스의 크기에 맞게 조절
-        const is1_1_SmallBox = isStrategy1_1_SmallBox || isStrategy2_1_SmallBox || isService1_1_SmallBox || isService2_1_SmallBox;
+        const is1_1_SmallBox = isStrategy1_1_SmallBox || isStrategy2_1_SmallBox || isService1_1_SmallBox || isService2_1_SmallBox || isNext1_1_SmallBox;
+        
+        // 큰 박스에 표시되는 1-1 슬라이드들 (전략1-1, 전략2-1, 서비스1-1, 서비스2-1, 넥스트1-1)
+        const isStrategy1_1_MainBox = isStrategy1BoxType && slideNumber === '1' && !isSmallBox;
+        const isStrategy2_1_MainBox = isStrategy2BoxType && slideNumber === '1' && !isSmallBox;
+        const isService1_1_MainBox = isServiceBoxType && slideNumber === '1' && !isSmallBox;
+        const isService2_1_MainBox = isService2BoxType && slideNumber === '1' && !isSmallBox;
+        const isNext1_1_MainBox = isNext1BoxType && slideNumber === '1' && !isSmallBox;
+        
+        // 큰 박스에 표시되는 1-1 슬라이드들은 큰 박스 크기에 맞게 조절 (100%)
+        const is1_1_MainBox = isStrategy1_1_MainBox || isStrategy2_1_MainBox || isService1_1_MainBox || isService2_1_MainBox || isNext1_1_MainBox;
         
         // 서비스1-2부터 서비스1-8까지 큰 박스와 작은 박스 모두에서 95% 비율로 표시
         const isServiceBox = isServiceBoxType && slideNumber && ['2', '3', '4', '5', '6', '7', '8'].includes(slideNumber);
         
-        // 넥스트1-1부터 넥스트1-6까지 큰 박스와 작은 박스 모두에서 95% 비율로 표시
-        const isNext1Box = isNext1BoxType && slideNumber && ['1', '2', '3', '4', '5', '6'].includes(slideNumber);
+        // 넥스트1-2부터 넥스트1-6까지 큰 박스와 작은 박스 모두에서 95% 비율로 표시 (넥스트1-1 제외)
+        const isNext1Box = isNext1BoxType && slideNumber && ['2', '3', '4', '5', '6'].includes(slideNumber);
         
         // 전략2-10은 큰 박스에서 작은 박스와 동일한 padding 비율 적용
         const isStrategy2_10 = isStrategy2BoxType && slideNumber === '10' && !isSmallBox;
@@ -10020,7 +10030,10 @@ document.addEventListener("DOMContentLoaded", () => {
         // 컨테이너 크기에 맞게 스케일 계산
         let scale;
         if (is1_1_SmallBox) {
-            // 작은 박스에 표시되는 1-1 슬라이드들 (전략1-1, 전략2-1, 서비스1-1, 서비스2-1): 작은 박스 크기에 맞게 조절
+            // 작은 박스에 표시되는 1-1 슬라이드들 (전략1-1, 전략2-1, 서비스1-1, 서비스2-1, 넥스트1-1): 작은 박스 크기에 맞게 조절
+            scale = Math.min(containerWidth / slideWidth, containerHeight / slideHeight);
+        } else if (is1_1_MainBox) {
+            // 큰 박스에 표시되는 1-1 슬라이드들 (전략1-1, 전략2-1, 서비스1-1, 서비스2-1, 넥스트1-1): 큰 박스 크기에 맞게 100% 조절
             scale = Math.min(containerWidth / slideWidth, containerHeight / slideHeight);
         } else if (isServiceBox) {
             // 서비스1-2부터 서비스1-8까지 큰 박스와 작은 박스 모두 95% 정도를 차지하도록 설정
@@ -10029,7 +10042,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const targetHeight = containerHeight * contentPercent;
             scale = Math.min(targetWidth / slideWidth, targetHeight / slideHeight);
         } else if (isNext1Box) {
-            // 넥스트1-1부터 넥스트1-6까지 큰 박스와 작은 박스 모두 95% 정도를 차지하도록 설정
+            // 넥스트1-2부터 넥스트1-6까지 큰 박스와 작은 박스 모두 95% 정도를 차지하도록 설정 (넥스트1-1 제외)
             const contentPercent = 0.95; // 95%
             const targetWidth = containerWidth * contentPercent;
             const targetHeight = containerHeight * contentPercent;
@@ -10684,85 +10697,101 @@ document.addEventListener("DOMContentLoaded", () => {
             mainBox.setAttribute("data-slide-number", slideNumber);
             // data-box 속성을 먼저 설정 (loadContentToIframe에서 확인하기 위해)
             mainBox.setAttribute("data-box", "4");
-            mainBox.classList.add("service-box");
-            mainBox.classList.add("next1-box");
             
-            // 넥스트1 박스 스타일 설정: 배경 흰색, 윤곽선/그림자 제거
-            // 먼저 ::before 요소 제거를 위한 스타일 추가 (iframe 로드 전에)
-            if (!document.getElementById('next1-box-style')) {
-                const style = document.createElement('style');
-                style.id = 'next1-box-style';
-                style.textContent = `
-                    .test-expanded-box.service-box.next1-box::before,
-                    .test-expanded-box.next1-box::before {
-                        display: none !important;
-                        content: none !important;
-                        background: none !important;
-                    }
-                    .test-expanded-box.service-box.next1-box {
-                        background: #ffffff !important;
-                        background-color: #ffffff !important;
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-            
-            // 배경색 강제 설정
-            mainBox.style.setProperty('background', '#ffffff', 'important');
-            mainBox.style.setProperty('background-color', '#ffffff', 'important');
-            mainBox.style.setProperty('border', 'none', 'important');
-            mainBox.style.setProperty('box-shadow', 'none', 'important');
-            
-            // iframe으로 로드
-            loadContentToIframe(mainBox, html, true);
-            
-            // iframe 로드 후에도 배경색 재확인 및 ::before 제거 (여러 번 시도)
-            const applyBackground = () => {
-                mainBox.style.setProperty('background', '#ffffff', 'important');
-                mainBox.style.setProperty('background-color', '#ffffff', 'important');
-                mainBox.style.setProperty('border', 'none', 'important');
-                mainBox.style.setProperty('box-shadow', 'none', 'important');
+            // 넥스트1-1인 경우 전략1-1과 동일하게 처리 (service-box 클래스 제거)
+            if (slideNumber === 1) {
+                mainBox.classList.remove("service-box");
+                mainBox.classList.remove("next1-box");
+            } else {
+                // 넥스트1-2부터는 기존 스타일 유지
+                mainBox.classList.add("service-box");
+                mainBox.classList.add("next1-box");
                 
-                // ::before 요소 강제 제거
-                const styleTag = document.getElementById('next1-box-style');
-                if (styleTag) {
-                    styleTag.textContent = `
+                // 넥스트1 박스 스타일 설정: 배경 흰색, 윤곽선/그림자 제거
+                // 먼저 ::before 요소 제거를 위한 스타일 추가 (iframe 로드 전에)
+                if (!document.getElementById('next1-box-style')) {
+                    const style = document.createElement('style');
+                    style.id = 'next1-box-style';
+                    style.textContent = `
                         .test-expanded-box.service-box.next1-box::before,
                         .test-expanded-box.next1-box::before {
                             display: none !important;
                             content: none !important;
-                            background: transparent !important;
+                            background: none !important;
                         }
                         .test-expanded-box.service-box.next1-box {
                             background: #ffffff !important;
                             background-color: #ffffff !important;
                         }
                     `;
+                    document.head.appendChild(style);
                 }
-            };
+                
+                // 배경색 강제 설정
+                mainBox.style.setProperty('background', '#ffffff', 'important');
+                mainBox.style.setProperty('background-color', '#ffffff', 'important');
+                mainBox.style.setProperty('border', 'none', 'important');
+                mainBox.style.setProperty('box-shadow', 'none', 'important');
+                
+                // iframe 로드 후에도 배경색 재확인 및 ::before 제거 (여러 번 시도)
+                const applyBackground = () => {
+                    mainBox.style.setProperty('background', '#ffffff', 'important');
+                    mainBox.style.setProperty('background-color', '#ffffff', 'important');
+                    mainBox.style.setProperty('border', 'none', 'important');
+                    mainBox.style.setProperty('box-shadow', 'none', 'important');
+                    
+                    // ::before 요소 강제 제거
+                    const styleTag = document.getElementById('next1-box-style');
+                    if (styleTag) {
+                        styleTag.textContent = `
+                            .test-expanded-box.service-box.next1-box::before,
+                            .test-expanded-box.next1-box::before {
+                                display: none !important;
+                                content: none !important;
+                                background: transparent !important;
+                            }
+                            .test-expanded-box.service-box.next1-box {
+                                background: #ffffff !important;
+                                background-color: #ffffff !important;
+                            }
+                        `;
+                    }
+                };
+                
+                // 즉시 적용
+                applyBackground();
+                
+                // 짧은 간격으로 여러 번 재적용
+                setTimeout(applyBackground, 50);
+                setTimeout(applyBackground, 100);
+                setTimeout(applyBackground, 200);
+                setTimeout(applyBackground, 500);
+            }
             
-            // 즉시 적용
-            applyBackground();
+            // iframe으로 로드
+            loadContentToIframe(mainBox, html, true);
             
-            // 짧은 간격으로 여러 번 재적용
-            setTimeout(applyBackground, 50);
-            setTimeout(applyBackground, 100);
-            setTimeout(applyBackground, 200);
-            setTimeout(applyBackground, 500);
-            
-            // 스케일 재계산 최적화
+            // 스케일 재계산 최적화 (여러 번 재시도) - 전략1-1과 동일하게 처리
             const scheduleRecalculate = () => {
                 const iframeInfo = getIframeInfo(mainBox);
                 if (iframeInfo) {
-                    if (!recalculateIframeScale(iframeInfo)) {
-                        setTimeout(() => {
-                            recalculateIframeScale(iframeInfo);
-                        }, 50);
-                    }
+                    // 즉시 시도
+                    recalculateIframeScale(iframeInfo);
+                    // 짧은 지연 후 재시도 (레이아웃 완료 대기)
+                    setTimeout(() => {
+                        recalculateIframeScale(iframeInfo);
+                    }, 50);
+                    // 더 긴 지연 후 재시도 (완전한 레이아웃 완료 대기)
+                    setTimeout(() => {
+                        recalculateIframeScale(iframeInfo);
+                    }, 200);
                 }
             };
             
+            // requestAnimationFrame으로 실행
             requestAnimationFrame(scheduleRecalculate);
+            // 추가로 약간의 지연 후에도 실행
+            setTimeout(scheduleRecalculate, 100);
         } catch (error) {
             console.error(`Failed to load next1 ${slideNumber}:`, error);
             mainBox.innerHTML = '<div class="service-slide-content">콘텐츠를 불러올 수 없습니다.</div>';
