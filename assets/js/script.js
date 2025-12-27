@@ -10530,6 +10530,16 @@ document.addEventListener("DOMContentLoaded", () => {
                         if (e.ctrlKey && e.shiftKey && e.keyCode === 73) { e.preventDefault(); return false; }
                         if (e.ctrlKey && e.shiftKey && e.keyCode === 74) { e.preventDefault(); return false; }
                         if (e.ctrlKey && e.shiftKey && e.keyCode === 67) { e.preventDefault(); return false; }
+                        // Ctrl+C (복사) - 배포 환경에서만 차단
+                        if (e.ctrlKey && e.keyCode === 67 && !e.shiftKey) { e.preventDefault(); return false; }
+                        // Ctrl+A (전체 선택) - 배포 환경에서만 차단
+                        if (e.ctrlKey && e.keyCode === 65) { e.preventDefault(); return false; }
+                        // Ctrl+X (잘라내기) - 배포 환경에서만 차단
+                        if (e.ctrlKey && e.keyCode === 88) { e.preventDefault(); return false; }
+                        // Mac의 Cmd 키 지원 - 배포 환경에서만 차단
+                        if (e.metaKey && e.keyCode === 67 && !e.shiftKey) { e.preventDefault(); return false; }
+                        if (e.metaKey && e.keyCode === 65) { e.preventDefault(); return false; }
+                        if (e.metaKey && e.keyCode === 88) { e.preventDefault(); return false; }
                         if (e.ctrlKey && e.keyCode === 85) { e.preventDefault(); return false; }
                         if (e.ctrlKey && e.keyCode === 83) { e.preventDefault(); return false; }
                         if (e.ctrlKey && e.keyCode === 80) { e.preventDefault(); return false; }

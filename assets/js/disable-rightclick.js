@@ -56,6 +56,43 @@
             return false;
         }
         
+        // Ctrl+C (복사) - 배포 환경에서만 차단
+        if (e.ctrlKey && e.keyCode === 67 && !e.shiftKey) {
+            e.preventDefault();
+            return false;
+        }
+        
+        // Ctrl+A (전체 선택) - 배포 환경에서만 차단
+        if (e.ctrlKey && e.keyCode === 65) {
+            e.preventDefault();
+            return false;
+        }
+        
+        // Ctrl+X (잘라내기) - 배포 환경에서만 차단
+        if (e.ctrlKey && e.keyCode === 88) {
+            e.preventDefault();
+            return false;
+        }
+        
+        // Mac의 Cmd 키 지원 - 배포 환경에서만 차단
+        // Cmd+C (복사)
+        if (e.metaKey && e.keyCode === 67 && !e.shiftKey) {
+            e.preventDefault();
+            return false;
+        }
+        
+        // Cmd+A (전체 선택)
+        if (e.metaKey && e.keyCode === 65) {
+            e.preventDefault();
+            return false;
+        }
+        
+        // Cmd+X (잘라내기)
+        if (e.metaKey && e.keyCode === 88) {
+            e.preventDefault();
+            return false;
+        }
+        
         // Ctrl+U (소스 보기)
         if (e.ctrlKey && e.keyCode === 85) {
             e.preventDefault();
@@ -119,7 +156,69 @@
     // 동적으로 추가된 콘텐츠(예: slide= 파라미터로 로드된 콘텐츠)에도 이미지 보호 적용
     const observer = new MutationObserver(function(mutations) {
         addImageProtection();
+        // Portfolio 박스들에도 우클릭 방지 추가
+        addPortfolioBoxProtection();
     });
+    
+    // Portfolio 페이지의 썸네일 박스와 확대 박스에 우클릭 방지 추가
+    function addPortfolioBoxProtection() {
+        // 썸네일 박스들
+        const thumbnailBoxes = document.querySelectorAll('.test-thumbnail-box');
+        thumbnailBoxes.forEach(function(box) {
+            if (!box.dataset.rightclickProtected) {
+                box.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    return false;
+                }, false);
+                box.dataset.rightclickProtected = 'true';
+            }
+        });
+        
+        // 확대된 박스
+        const expandedBoxes = document.querySelectorAll('.test-expanded-box');
+        expandedBoxes.forEach(function(box) {
+            if (!box.dataset.rightclickProtected) {
+                box.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    return false;
+                }, false);
+                box.dataset.rightclickProtected = 'true';
+            }
+        });
+        
+        // 슬라이드 아이템들
+        const slideItems = document.querySelectorAll('.test-slide-item');
+        slideItems.forEach(function(item) {
+            if (!item.dataset.rightclickProtected) {
+                item.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    return false;
+                }, false);
+                item.dataset.rightclickProtected = 'true';
+            }
+        });
+        
+        // 슬라이드 리스트
+        const slideLists = document.querySelectorAll('.test-slide-list');
+        slideLists.forEach(function(list) {
+            if (!list.dataset.rightclickProtected) {
+                list.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    return false;
+                }, false);
+                list.dataset.rightclickProtected = 'true';
+            }
+        });
+    }
+    
+    // 초기 로드 시 Portfolio 박스 보호
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            addPortfolioBoxProtection();
+        });
+    } else {
+        addPortfolioBoxProtection();
+    }
     
     // DOM 변경 감지 시작
     observer.observe(document.body, {

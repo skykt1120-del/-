@@ -2599,6 +2599,10 @@ body {
     overflow: hidden;
     position: relative;
     cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .test-thumbnail-box.hidden {
@@ -3890,6 +3894,10 @@ body {
     position: relative;
     width: 100%;
     transition: all 0.3s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 /* 슬라이드 네비게이션 버튼 */
@@ -3973,6 +3981,10 @@ body {
     grid-template-columns: repeat(5, 1fr);
     gap: 16px;
     width: 100%;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .test-slide-item {
@@ -3986,6 +3998,10 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     padding: 8px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     box-sizing: border-box;
 }
 
