@@ -5026,7 +5026,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         .quote-text {
-            font-size: 28px;
+            font-size: 20px;
             font-weight: 800; /* Extra bold */
             color: #1e293b;
             line-height: 1.5;
@@ -5139,10 +5139,10 @@ document.addEventListener("DOMContentLoaded", () => {
 <i class="fas fa-quote-left quote-icon"></i>
 <i class="fas fa-quote-right quote-icon-right"></i>
 <div class="bg-pattern"></div>
-<p class="quote-text">
-                        "책임이란 결과가 나올 때까지 <span class="quote-highlight">자리를 지키는 것</span>이다.<br/>
-                        나는 전략기획자로서 모두의 생존이라는 선택지를 만들었고,<br/>
-                        그 판단이 끝나는 순간까지 함께했다."
+                    <p class="quote-text">
+                        "책임이란 결과의 순간까지 자리를 지키고 일을 끝마치는 것이라 생각합니다.<br/>
+                        저는 스타트업의 전략기획자로써 모두의 생존을 위한 선택지를 만들었고,<br/>
+                        책임의 부담감을 견디며 끝까지 자리를 지켰습니다."
                     </p>
 <div class="quote-author">
                         Strategic Planner's Epilogue
