@@ -10462,11 +10462,20 @@ document.addEventListener("DOMContentLoaded", () => {
             // Chart 사용 코드를 감싸서 Chart.js 로드 완료를 기다리도록 수정
             // Chart 사용 코드가 포함된 스크립트 태그를 찾아서 감싸기
             // 성능 최적화: Promise 기반 로딩 및 requestAnimationFrame 사용
+            // 정규식 수정: 스크립트 태그 전체를 매칭하여 여러 Chart와 Chart.defaults도 처리
             processedHtml = processedHtml.replace(
-                /<script>([\s\S]*?new\s+Chart\([\s\S]*?)<\/script>/gi,
+                /<script>([\s\S]*?)<\/script>/gi,
                 function(match, chartCode) {
-                    // 이미 감싸진 코드는 그대로 유지
-                    if (chartCode.includes('waitForChart') || chartCode.includes('window.Chart && window.ChartDataLabels') || chartCode.includes('chartJsLoadingPromise')) {
+                    // Chart 관련 코드가 없는 경우 스킵
+                    if (!chartCode.includes('Chart') && !chartCode.includes('new Chart')) {
+                        return match;
+                    }
+                    // Chart 관련 코드가 있지만 이미 감싸진 코드는 그대로 유지
+                    if (chartCode.includes('waitForChart') || chartCode.includes('window.Chart && window.ChartDataLabels') || chartCode.includes('chartJsLoadingPromise') || chartCode.includes('initCharts') || chartCode.includes('function initCharts')) {
+                        return match;
+                    }
+                    // Chart 관련 코드가 있는 경우에만 처리
+                    if (!chartCode.includes('Chart.defaults') && !chartCode.includes('new Chart')) {
                         return match;
                     }
                     // Promise 기반으로 Chart.js 로드 대기 (폴링 제거로 성능 개선)
@@ -10493,6 +10502,16 @@ document.addEventListener("DOMContentLoaded", () => {
                                     return true;
                                 }
                                 
+                                // Chart 코드를 함수로 감싸서 실행 (이스케이프 문제 방지)
+                                const executeChartCode = function() {
+                                    try {
+                                        ${chartCode.replace(/`/g, '\\`').replace(/\$/g, '\\$')}
+                                    } catch (e) {
+                                        console.error('Chart 초기화 오류:', e);
+                                        throw e;
+                                    }
+                                };
+                                
                                 function tryInitChart() {
                                     // DOM 요소 확인
                                     if (elementIds.length > 0 && !checkElementsExist()) {
@@ -10502,7 +10521,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     if (window.Chart) {
                                         // Chart.js가 이미 로드됨
                                         try {
-                                            ${chartCode}
+                                            executeChartCode();
                                             return true;
                                         } catch (e) {
                                             console.error('Chart 초기화 오류:', e);
@@ -10529,7 +10548,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                         // 둘 다 준비되면 초기화
                                         if (chartReady && domReady) {
                                             try {
-                                                ${chartCode}
+                                                executeChartCode();
                                             } catch (e) {
                                                 console.error('Chart 초기화 오류:', e);
                                             }
@@ -11308,11 +11327,11 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 <div class="flex-1 flex flex-col justify-between min-h-0">
 <div class="flex items-baseline gap-2 mb-1">
-<span class="text-gray-500 text-xs font-medium">성장률</span>
-<span class="text-3xl font-black text-mint">50.8%</span>
+<span class="text-gray-500 text-xs font-medium">23년 대비 30년</span>
+<span class="text-3xl font-black text-mint">17배 성장</span>
 </div>
 <div class="flex-1 min-h-0 mb-1">
-<div class="chart-container" style="height: 100px;">
+<div class="chart-container" style="height: 130px;">
 <canvas id="marketChart"></canvas>
 </div>
 </div>
@@ -11480,7 +11499,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 labels: ['OECD 평균', '한국'],
                 datasets: [{
                     label: '진료 부담',
-                    data: [1.0, 3.7],
+                    data: [1788, 6113],
                     backgroundColor: ['#E0E0E0', '#FF9F40'],
                     borderRadius: 4,
                     barPercentage: 0.5,
@@ -11494,7 +11513,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 scales: {
                     x: {
                         display: false,
-                        max: 4.5
+                        max: 7000
                     },
                     y: {
                         grid: { display: false, drawBorder: false },
@@ -11507,28 +11526,47 @@ document.addEventListener("DOMContentLoaded", () => {
                 },
                 plugins: {
                     legend: { display: false },
-                    tooltip: { enabled: true }
+                    tooltip: { enabled: true },
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'right',
+                        offset: 8,
+                        color: '#333',
+                        font: {
+                            family: 'Noto Sans KR',
+                            weight: 'bold',
+                            size: 14
+                        },
+                        formatter: function(value) {
+                            return value.toLocaleString('ko-KR') + '명';
+                        }
+                    }
                 },
                 layout: { padding: { right: 30 } }, // Space for labels
                 animation: {
                     onComplete: function() {
-                        const chartInstance = this;
-                        const ctx = chartInstance.ctx;
-                        ctx.font = "bold 14px 'Noto Sans KR'";
-                        ctx.fillStyle = "#333";
-                        ctx.textAlign = "left";
-                        ctx.textBaseline = "middle";
-                        
-                        this.data.datasets.forEach(function(dataset, i) {
-                            const meta = chartInstance.getDatasetMeta(i);
-                            meta.data.forEach(function(bar, index) {
-                                const data = dataset.data[index];
-                                ctx.fillText(data + "배", bar.x + 8, bar.y);
+                        // datalabels 플러그인이 없을 경우를 대비한 폴백
+                        if (!window.ChartDataLabels) {
+                            const chartInstance = this;
+                            const ctx = chartInstance.ctx;
+                            ctx.font = "bold 14px 'Noto Sans KR'";
+                            ctx.fillStyle = "#333";
+                            ctx.textAlign = "left";
+                            ctx.textBaseline = "middle";
+                            
+                            this.data.datasets.forEach(function(dataset, i) {
+                                const meta = chartInstance.getDatasetMeta(i);
+                                meta.data.forEach(function(bar, index) {
+                                    const data = dataset.data[index];
+                                    const formattedData = data.toLocaleString('ko-KR');
+                                    ctx.fillText(formattedData + "명", bar.x + 8, bar.y);
+                                });
                             });
-                        });
+                        }
                     }
                 }
-            }
+            },
+            plugins: window.ChartDataLabels ? [window.ChartDataLabels] : []
         });
 
         // Chart 4: Surgery Count (Horizontal Bar)
