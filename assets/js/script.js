@@ -314,7 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // 현재 박스 번호와 슬라이드 번호 저장
         currentBoxNumber = boxNumber;
         currentSlideNumber = 1;
-        maxSlideCount = boxNumber === "1" ? 8 : (boxNumber === "5" ? 10 : (boxNumber === "2" ? 8 : (boxNumber === "3" ? 1 : (boxNumber === "4" ? 6 : 5)))); // 전략1은 8개, 전략2는 10개, 서비스1은 8개, 서비스2는 1개, 넥스트1은 6개, 나머지는 5개
+        maxSlideCount = boxNumber === "1" ? 8 : (boxNumber === "5" ? 10 : (boxNumber === "2" ? 8 : (boxNumber === "3" ? 10 : (boxNumber === "4" ? 6 : 5)))); // 전략1은 8개, 전략2는 10개, 서비스1은 8개, 서비스2는 10개, 넥스트1은 6개, 나머지는 5개
         
         // 화살표 버튼 상태 업데이트
         updateNavButtons();
@@ -11010,7 +11010,2629 @@ document.addEventListener("DOMContentLoaded", () => {
         <img src="assets/images/서비스2-1썸네일(수정).png" alt="서비스2-1" class="slide-image" />
     </div>
 </body>
-</html>`
+</html>`,
+        2: `<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Slide 1: 기획 배경 및 시장 상황</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+        body { 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Noto Sans KR', sans-serif; 
+            overflow: hidden; 
+            background-color: #f0f0f0; 
+        }
+        .slide-container { 
+            width: 1280px; 
+            height: 720px; 
+            background-color: #ffffff; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+        }
+        
+        /* KT Identity Colors */
+        .bg-kt-red { background-color: #E60012; }
+        .text-kt-red { color: #E60012; }
+        .bg-mint { background-color: #87CEEB; }
+        .text-mint { color: #87CEEB; }
+        .bg-light-blue { background-color: #E8F4F6; }
+        
+        /* Shadow & Layout */
+        .card-shadow { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); }
+        .grid-dashboard {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 0.75rem; /* 12px gap */
+            height: 100%;
+        }
+        
+        /* Custom Adjustments for Fit */
+        .chart-container { position: relative; height: 100px; width: 100%; }
+        .burden-chart-container { position: relative; height: 90px; width: 100%; }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<header class="h-16 px-8 flex items-center justify-between border-b border-gray-100 bg-white z-10 shrink-0">
+<div class="flex items-center gap-4">
+<div class="bg-mint w-2 h-6 rounded-sm"></div>
+<h1 class="text-2xl font-bold text-gray-800 tracking-tight">1. 기획 배경 및 시장 상황</h1>
+</div>
+<div class="flex items-center gap-2 text-gray-400 text-sm font-medium">
+
+</div>
+</header>
+<!-- Main Content -->
+<div class="flex-1 flex p-6 gap-4 bg-gray-50 overflow-hidden h-full">
+<!-- Left Column: Philosophy & Key Message (32%) -->
+<div class="w-[32%] flex flex-col h-full">
+<!-- Philosophy Card -->
+<div class="bg-white p-6 rounded-2xl card-shadow flex-1 flex flex-col justify-center relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-2 bg-mint"></div>
+<!-- Background Icon -->
+<div class="absolute -right-6 -bottom-6 text-gray-50 opacity-20 text-9xl z-0">
+<i class="fa-solid fa-universal-access"></i>
+</div>
+<div class="relative z-10">
+<h3 class="text-mint font-bold text-base mb-1 uppercase tracking-wider">Core Philosophy</h3>
+<h2 class="text-3xl font-extrabold text-gray-800 leading-tight mb-5">
+                            Universal<br/>Design<br/>Concept
+                        </h2>
+<div class="bg-light-blue p-5 rounded-xl border-l-4 border-mint mb-6">
+<p class="text-gray-700 font-medium text-lg leading-relaxed">
+                                "가장 어려운 사용자를<br/>기준으로 설계하면,<br/>
+<span class="text-mint font-bold">모두에게 쉬운 서비스</span>가<br/>됩니다."
+                            </p>
+</div>
+<div>
+<p class="text-gray-500 text-xs mb-3 font-bold uppercase">서비스 기획 의도</p>
+<div class="space-y-3">
+<div class="flex items-start gap-2 text-gray-700">
+<i class="fa-solid fa-check text-kt-red mt-1 text-xs"></i>
+<p class="text-sm font-medium">고령층의 인지적 특성 고려</p>
+</div>
+<div class="flex items-start gap-2 text-gray-700">
+<i class="fa-solid fa-check text-kt-red mt-1 text-xs"></i>
+<p class="text-sm font-medium">반복 가능한 충분한 설명 시간 확보</p>
+</div>
+<div class="flex items-start gap-2 text-gray-700">
+<i class="fa-solid fa-check text-kt-red mt-1 text-xs"></i>
+<p class="text-sm font-medium">의료진의 단순 반복 업무 경감</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Data Dashboard (68%) -->
+<div class="w-[68%] grid-dashboard">
+<!-- Card 1: Aging Society -->
+<div class="bg-white p-4 rounded-2xl card-shadow flex flex-col justify-between h-full overflow-hidden">
+<div class="flex justify-between items-start mb-1 shrink-0">
+<div>
+<p class="text-gray-500 text-[10px] font-bold uppercase mb-0.5">사회적 배경</p>
+<p class="text-base font-bold text-gray-800">2025년 초고령사회 진입</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center text-kt-red shrink-0">
+<i class="fa-solid fa-users-rays text-sm"></i>
+</div>
+</div>
+<div class="flex items-center gap-3 flex-1 min-h-0">
+<div class="w-1/2 flex justify-center items-center h-full chart-container">
+<canvas id="agingChart"></canvas>
+</div>
+<div class="w-1/2">
+<p class="text-3xl font-black text-gray-800">20.0<span class="text-xl text-gray-500">%</span></p>
+<p class="text-[10px] text-gray-500 mt-0.5 font-medium">65세 이상 인구 비율<br/>(출처: 행정안전부 2024)</p>
+</div>
+</div>
+</div>
+<!-- Card 2: Market Growth -->
+<div class="bg-white p-4 rounded-2xl card-shadow flex flex-col justify-between h-full overflow-hidden">
+<div class="flex justify-between items-start mb-1 shrink-0">
+<div>
+<p class="text-gray-500 text-[10px] font-bold uppercase mb-0.5">시장 전망</p>
+<p class="text-base font-bold text-gray-800">국내 AI 헬스케어 시장</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-mint shrink-0">
+<i class="fa-solid fa-chart-line text-sm"></i>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-between min-h-0">
+<div class="flex items-baseline gap-2 mb-1">
+<span class="text-gray-500 text-xs font-medium">성장률</span>
+<span class="text-3xl font-black text-mint">50.8%</span>
+</div>
+<div class="flex-1 min-h-0 mb-1">
+<div class="chart-container" style="height: 100px;">
+<canvas id="marketChart"></canvas>
+</div>
+</div>
+<p class="text-[9px] text-gray-400 text-center">출처: 삼정KPMG 2024.07 보고서</p>
+</div>
+</div>
+<!-- Card 3: Medical Staff Burden -->
+<div class="bg-white p-4 rounded-2xl card-shadow flex flex-col justify-between h-full overflow-hidden">
+<div class="flex justify-between items-start mb-1 shrink-0">
+<div>
+<p class="text-gray-500 text-[10px] font-bold uppercase mb-0.5">의료 현황</p>
+<p class="text-base font-bold text-gray-800">과중한 진료 부담</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center text-orange-500 shrink-0">
+<i class="fa-solid fa-stethoscope text-sm"></i>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-center min-h-0">
+<div class="burden-chart-container">
+<canvas id="burdenChart"></canvas>
+</div>
+<p class="text-[10px] text-gray-500 font-medium text-center mt-2">의사 1인당 진료 부담 (OECD 평균 대비)</p>
+</div>
+</div>
+<!-- Card 4: Need for Solution -->
+<div class="bg-white p-4 rounded-2xl card-shadow flex flex-col justify-between relative overflow-hidden group h-full">
+<div class="absolute right-0 top-0 w-20 h-20 bg-gray-50 rounded-bl-full -mr-3 -mt-3 z-0"></div>
+<div class="relative z-10 flex justify-between items-start mb-1 shrink-0">
+<div>
+<p class="text-gray-500 text-[10px] font-bold uppercase mb-0.5">서비스 니즈</p>
+<p class="text-base font-bold text-gray-800">수술 동의 프로세스 혁신</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-purple-50 flex items-center justify-center text-purple-500 shrink-0">
+<i class="fa-solid fa-file-signature text-sm"></i>
+</div>
+</div>
+<div class="relative z-10 flex-1 flex flex-col justify-between min-h-0">
+<div class="mb-2">
+<div class="bg-gray-50 p-2 rounded-lg mb-2">
+<p class="text-[10px] text-gray-400 font-bold mb-1.5">주요 대형병원 수술 건수 (출처: 각 병원 2024년 연보)</p>
+<div class="chart-container" style="height: 80px;">
+<canvas id="surgeryChart"></canvas>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<div class="bg-white p-2 rounded-lg text-center border border-purple-100 shadow-sm flex flex-col justify-center">
+<p class="text-[10px] text-purple-400 font-bold mb-0.5">솔루션 목표</p>
+<p class="text-base font-bold text-purple-700">이해 중심</p>
+<p class="text-[9px] text-gray-500 font-medium">동의 체계 전환</p>
+</div>
+<div class="bg-gray-50 p-2 rounded-lg space-y-1">
+<div class="flex items-center justify-between">
+<p class="text-[9px] text-gray-500">현재 문제점</p>
+<p class="text-[9px] font-bold text-gray-700">설명 부족 민원 증가</p>
+</div>
+<div class="flex items-center justify-between">
+<p class="text-[9px] text-gray-500">해결 방안</p>
+<p class="text-[9px] font-bold text-mint">AI 기반 체계적 설명</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+        // Chart Config
+        Chart.defaults.font.family = "'Noto Sans KR', sans-serif";
+        Chart.defaults.color = '#666';
+
+        // Chart 1: Aging Population (Donut)
+        const ctxAging = document.getElementById('agingChart').getContext('2d');
+        new Chart(ctxAging, {
+            type: 'doughnut',
+            data: {
+                labels: ['65세 이상', '그 외'],
+                datasets: [{
+                    data: [20, 80],
+                    backgroundColor: ['#E60012', '#E0E0E0'],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '75%',
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: false }
+                },
+                layout: { padding: 0 }
+            }
+        });
+
+        // Chart 2: Market Growth (Line)
+        const ctxMarket = document.getElementById('marketChart').getContext('2d');
+        new Chart(ctxMarket, {
+            type: 'line',
+            data: {
+                labels: ['2023', '2025', '2027', '2030'],
+                datasets: [{
+                    label: '시장 규모 (억$)',
+                    data: [3.7, 12.5, 30.2, 66.7],
+                    borderColor: '#87CEEB',
+                    backgroundColor: 'rgba(135, 206, 235, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 3,
+                    pointBackgroundColor: '#87CEEB',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 6,
+                        titleFont: { size: 10 },
+                        bodyFont: { size: 10 },
+                        callbacks: {
+                            label: function(context) {
+                                return context.parsed.y.toFixed(1) + '억$';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            font: { size: 9 },
+                            color: '#6B7280',
+                            callback: function(value) {
+                                return value + '억$';
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            font: { size: 9 },
+                            color: '#6B7280'
+                        },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Chart 3: Burden Comparison (Bar)
+        const ctxBurden = document.getElementById('burdenChart').getContext('2d');
+        new Chart(ctxBurden, {
+            type: 'bar',
+            data: {
+                labels: ['OECD 평균', '한국'],
+                datasets: [{
+                    label: '진료 부담',
+                    data: [1.0, 3.7],
+                    backgroundColor: ['#E0E0E0', '#FF9F40'],
+                    borderRadius: 4,
+                    barPercentage: 0.5,
+                    categoryPercentage: 0.8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        display: false,
+                        max: 4.5
+                    },
+                    y: {
+                        grid: { display: false, drawBorder: false },
+                        ticks: { 
+                            font: { family: 'Noto Sans KR', weight: 'bold', size: 12 },
+                            color: '#333'
+                        },
+                        border: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: true }
+                },
+                layout: { padding: { right: 30 } }, // Space for labels
+                animation: {
+                    onComplete: function() {
+                        const chartInstance = this;
+                        const ctx = chartInstance.ctx;
+                        ctx.font = "bold 14px 'Noto Sans KR'";
+                        ctx.fillStyle = "#333";
+                        ctx.textAlign = "left";
+                        ctx.textBaseline = "middle";
+                        
+                        this.data.datasets.forEach(function(dataset, i) {
+                            const meta = chartInstance.getDatasetMeta(i);
+                            meta.data.forEach(function(bar, index) {
+                                const data = dataset.data[index];
+                                ctx.fillText(data + "배", bar.x + 8, bar.y);
+                            });
+                        });
+                    }
+                }
+            }
+        });
+
+        // Chart 4: Surgery Count (Horizontal Bar)
+        const ctxSurgery = document.getElementById('surgeryChart').getContext('2d');
+        new Chart(ctxSurgery, {
+            type: 'bar',
+            data: {
+                labels: ['서울아산', '삼성서울', '서울대'],
+                datasets: [{
+                    label: '수술 건수',
+                    data: [47471, 36805, 24478],
+                    backgroundColor: [
+                        'rgba(135, 206, 235, 0.8)',
+                        'rgba(135, 206, 235, 0.7)',
+                        'rgba(135, 206, 235, 0.6)'
+                    ],
+                    borderColor: '#87CEEB',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            font: { size: 9 },
+                            color: '#6B7280',
+                            callback: function(value) {
+                                if (value === 0) return '0';
+                                return (value / 10000).toFixed(0) + '만';
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            font: { size: 10, weight: 'bold' },
+                            color: '#333'
+                        },
+                        grid: { display: false },
+                        border: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 6,
+                        titleFont: { size: 10 },
+                        bodyFont: { size: 10 },
+                        callbacks: {
+                            label: function(context) {
+                                return '연 ' + context.parsed.x.toLocaleString() + '건';
+                            }
+                        }
+                    }
+                },
+                layout: { padding: { left: 0, right: 10 } }
+            }
+        });
+    </script>
+</body>
+</html>
+`,
+        3: `<!DOCTYPE html>
+<html lang="ko" data-theme="light" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Slide 2: 핵심 쟁점</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            transform: scale(0.95);
+            transform-origin: center center;
+        }
+
+        /* KT Identity Colors & Warning Colors */
+        .bg-kt-red { background-color: #E60012; }
+        .text-kt-red { color: #E60012; }
+        .bg-kt-gray { background-color: #434343; }
+        .text-kt-gray { color: #434343; }
+        .bg-mint { background-color: #87CEEB; }
+        .text-mint { color: #87CEEB; }
+        
+        /* Warning/Issue Colors */
+        .bg-warn-light { background-color: #FFF5F5; }
+        .border-warn { border-color: #FFCDD2; }
+        .text-warn-dark { color: #B71C1C; }
+
+        .card-shadow {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Cycle Diagram Styles */
+        .cycle-container {
+            position: relative;
+            width: 500px;
+            height: 450px;
+            margin: 0 auto;
+        }
+
+        .cycle-node {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .cycle-node-1 { top: 0; left: 50%; transform: translateX(-50%); background-color: #E8F4F6; border: 3px solid #87CEEB; } /* Patient */
+        .cycle-node-2 { bottom: 20px; right: 20px; background-color: #FFF3E0; border: 3px solid #FF9800; } /* Staff */
+        .cycle-node-3 { bottom: 20px; left: 20px; background-color: #F3E5F5; border: 3px solid #9C27B0; } /* Hospital */
+
+        .cycle-arrow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .issue-tag {
+            background-color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #555;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: absolute;
+            white-space: nowrap;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.absolute{position:absolute}.relative{position:relative}.bottom-6{bottom:1.5rem}.z-10{z-index:10}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-8{margin-bottom:2rem}.ml-1{margin-left:0.25rem}.mr-1{margin-right:0.25rem}.mt-1{margin-top:0.25rem}.flex{display:flex}.grid{display:grid}.h-10{height:2.5rem}.h-12{height:3rem}.h-20{height:5rem}.h-8{height:2rem}.w-10{width:2.5rem}.w-12{width:3rem}.w-2{width:0.5rem}.w-\[38\%\]{width:38%}.w-\[62\%\]{width:62%}.w-\[90\%\]{width:90%}.flex-1{flex:1 1 0%}.grid-rows-3{grid-template-rows:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-12{gap:3rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.overflow-hidden{overflow:hidden}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-sm{border-radius:0.125rem}.rounded-xl{border-radius:0.75rem}.border-b{border-bottom-width:1px}.border-l-8{border-left-width:8px}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-gray-800{--tw-bg-opacity:1;background-color:rgb(31 41 55 / var(--tw-bg-opacity, 1))}.bg-orange-50{--tw-bg-opacity:1;background-color:rgb(255 247 237 / var(--tw-bg-opacity, 1))}.bg-red-50{--tw-bg-opacity:1;background-color:rgb(254 242 242 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.p-12{padding:3rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-12{padding-left:3rem;padding-right:3rem}.text-center{text-align:center}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-normal{font-weight:400}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22 / var(--tw-text-opacity, 1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}</style><style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.absolute{position:absolute}.relative{position:relative}.bottom-6{bottom:1.5rem}.z-10{z-index:10}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-8{margin-bottom:2rem}.ml-1{margin-left:0.25rem}.mr-1{margin-right:0.25rem}.mt-1{margin-top:0.25rem}.flex{display:flex}.grid{display:grid}.h-10{height:2.5rem}.h-12{height:3rem}.h-20{height:5rem}.h-8{height:2rem}.w-10{width:2.5rem}.w-12{width:3rem}.w-2{width:0.5rem}.w-\[38\%\]{width:38%}.w-\[62\%\]{width:62%}.w-\[90\%\]{width:90%}.flex-1{flex:1 1 0%}.grid-rows-3{grid-template-rows:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-12{gap:3rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.overflow-hidden{overflow:hidden}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-sm{border-radius:0.125rem}.rounded-xl{border-radius:0.75rem}.border-b{border-bottom-width:1px}.border-l-8{border-left-width:8px}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-gray-800{--tw-bg-opacity:1;background-color:rgb(31 41 55 / var(--tw-bg-opacity, 1))}.bg-orange-50{--tw-bg-opacity:1;background-color:rgb(255 247 237 / var(--tw-bg-opacity, 1))}.bg-red-50{--tw-bg-opacity:1;background-color:rgb(254 242 242 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.p-12{padding:3rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-12{padding-left:3rem;padding-right:3rem}.text-center{text-align:center}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-normal{font-weight:400}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22 / var(--tw-text-opacity, 1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}</style></head>
+<body style="">
+<div class="slide-container">
+<!-- Header -->
+<header class="h-16 px-8 flex items-center justify-between border-b border-gray-100 bg-white z-10 shrink-0">
+<div class="flex items-center gap-4">
+<div class="bg-mint w-2 h-6 rounded-sm"></div>
+<h1 class="text-2xl font-bold text-gray-800 tracking-tight">2. 핵심 쟁점 (Core Issues)</h1>
+</div>
+<div class="flex items-center gap-2 text-gray-400 text-sm font-medium">
+
+</div>
+</header>
+<!-- Main Content -->
+<div class="flex-1 flex p-12 gap-12 bg-gray-50">
+<!-- Left Column: Legal & Data Facts -->
+<div class="w-[38%] flex flex-col gap-6">
+<!-- Legal Card -->
+<div class="bg-white p-6 rounded-2xl card-shadow border-l-8 border-kt-red">
+<div class="flex items-center gap-3 mb-3">
+<i class="fa-solid fa-scale-balanced text-kt-red text-xl"></i>
+<h3 class="text-gray-800 font-bold text-lg">의료법 제24조의2 (설명의무)</h3>
+</div>
+<div class="bg-gray-50 p-4 rounded-lg">
+<p class="text-gray-600 text-sm leading-relaxed">
+<span class="font-bold text-gray-800">"환자가 내용을 충분히 이해하고 동의했는가"</span>가<br> 
+                            법적 효력의 핵심 조건입니다.<br>
+                            단순 서명만으로는 설명 의무를 충족하지 못합니다.
+                        </p>
+</div>
+</div>
+<!-- Statistics Grid -->
+<div class="grid grid-rows-3 gap-4 flex-1">
+<!-- Stat 1 -->
+<div class="bg-white p-5 rounded-2xl card-shadow flex items-center justify-between">
+<div>
+<p class="text-gray-500 text-xs font-bold mb-1">고령 환자 설명 소요</p>
+<p class="text-3xl font-black text-gray-800">40~60<span class="text-lg text-gray-500 font-normal ml-1">분</span></p>
+<p class="text-xs text-kt-red font-medium mt-1">일반 환자 대비 2배 소요</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center text-kt-red">
+<i class="fa-solid fa-hourglass-half text-xl"></i>
+</div>
+</div>
+<!-- Stat 2 -->
+<div class="bg-white p-5 rounded-2xl card-shadow flex items-center justify-between">
+<div>
+<p class="text-gray-500 text-xs font-bold mb-1">환자 이해도 부족</p>
+<p class="text-3xl font-black text-gray-800">30<span class="text-lg text-gray-500 font-normal ml-1">%</span></p>
+<p class="text-xs text-orange-500 font-medium mt-1">10명 중 3명은 이해 못함</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-orange-50 flex items-center justify-center text-orange-500">
+<i class="fa-solid fa-circle-question text-xl"></i>
+</div>
+</div>
+<!-- Stat 3 -->
+<div class="bg-white p-5 rounded-2xl card-shadow flex items-center justify-between">
+<div>
+<p class="text-gray-500 text-xs font-bold mb-1">연간 의료분쟁</p>
+<p class="text-3xl font-black text-gray-800">2,089<span class="text-lg text-gray-500 font-normal ml-1">건</span></p>
+<p class="text-xs text-gray-500 mt-1">'설명 위반'이 주요 원인</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
+<i class="fa-solid fa-gavel text-xl"></i>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Vicious Cycle Diagram -->
+<div class="w-[62%] bg-white rounded-3xl card-shadow p-8 flex flex-col items-center relative overflow-hidden" style="transform: translate(-14.988848px, -11.776952px);">
+<div class="text-center mb-8 z-10">
+<h3 class="text-xl font-extrabold text-gray-800 mb-2" style="position: relative; transform: translate(-176.654275px, -28.907063px);">비효율의 악순환 구조 (Vicious Cycle)</h3>
+<p class="text-gray-500 text-sm" style="position: relative; transform: translate(171.301115px, -61.026022px);">개별적인 문제가 아닌, 서로 연결되어 악화되는 구조적 한계</p>
+</div>
+<div class="cycle-container" style="transform: translate(-19.271375px, -58.884758px);">
+<!-- SVG Arrows Background -->
+<svg class="cycle-arrow" viewBox="0 0 500 450">
+<!-- Triangle path connecting centers roughly -->
+<path d="M250 80 L420 380 L80 380 Z" fill="none" stroke="#E0E0E0" stroke-dasharray="5,5" stroke-width="2"></path>
+<!-- Arrow 1: Patient -> Staff -->
+<path d="M290 110 Q400 200 420 310" fill="none" marker-end="url(#arrowhead-red)" stroke="#FFCDD2" stroke-width="4"></path>
+<!-- Arrow 2: Staff -> Hospital -->
+<path d="M380 400 Q250 440 120 400" fill="none" marker-end="url(#arrowhead-red)" stroke="#FFCDD2" stroke-width="4"></path>
+<!-- Arrow 3: Hospital -> Patient -->
+<path d="M80 310 Q100 200 210 110" fill="none" marker-end="url(#arrowhead-red)" stroke="#FFCDD2" stroke-width="4"></path>
+<defs>
+<marker id="arrowhead-red" markerHeight="7" markerWidth="10" orient="auto" refX="9" refY="3.5">
+<polygon fill="#FFCDD2" points="0 0, 10 3.5, 0 7"></polygon>
+</marker>
+</defs>
+</svg>
+<!-- Node 1: Patient -->
+<div class="cycle-node cycle-node-1" style="transform: translate(-71.732344px, -18.200743px);">
+<i class="fa-solid fa-user-injured text-3xl text-mint mb-2"></i>
+<p class="font-bold text-gray-800 text-lg">환자</p>
+<p class="text-xs text-gray-500 text-center">Patient</p>
+<div class="issue-tag" style="top: 10px; right: -90px; color: rgb(230, 0, 18); transform: translate(-36.401487px, -18.200743px);">
+<i class="fa-solid fa-triangle-exclamation mr-1"></i>용어 이해 불가
+                        </div>
+<div class="issue-tag" style="top: 50px; right: -100px; color: rgb(230, 0, 18); transform: translate(-40.684015px, -17.130112px);">
+                            심리적 불안감
+                        </div>
+</div>
+<!-- Node 2: Staff -->
+<div class="cycle-node cycle-node-2" style="transform: translate(17.130112px, 13.918216px);">
+<i class="fa-solid fa-user-doctor text-3xl text-orange-500 mb-2"></i>
+<p class="font-bold text-gray-800 text-lg">의료진</p>
+<p class="text-xs text-gray-500 text-center">Medical Staff</p>
+<div class="issue-tag" style="bottom: -30px; right: 0px; color: rgb(230, 0, 18); transform: translate(88.862454px, -87.791822px);">
+<i class="fa-solid fa-fire mr-1"></i>번아웃(Burnout)
+                        </div>
+<div class="issue-tag" style="top: -20px; right: -20px; color: rgb(230, 0, 18); transform: translate(12.847584px, 11.776952px);">
+                            무한 반복 설명
+                        </div>
+</div>
+<!-- Node 3: Hospital -->
+<div class="cycle-node cycle-node-3" style="transform: translate(-26.765799px, -8.565055px);">
+<i class="fa-solid fa-hospital text-3xl text-purple-600 mb-2"></i>
+<p class="font-bold text-gray-800 text-lg">병원</p>
+<p class="text-xs text-gray-500 text-center">Hospital</p>
+<div class="issue-tag" style="bottom: -30px; left: 0px; color: rgb(230, 0, 18); transform: translate(-56.743494px, -102.780669px);">
+<i class="fa-solid fa-chart-line-down mr-1"></i>매출/효율 하락
+                        </div>
+<div class="issue-tag" style="top: -20px; left: -30px; color: #E60012;">
+                            법적 분쟁 리스크
+                        </div>
+</div>
+</div>
+<!-- Solution Key Message -->
+<div class="absolute bottom-6 w-[90%] bg-gray-800 text-white p-4 rounded-xl flex items-center justify-between shadow-lg" style="transform: translate(3.211896px, 16.05948px);">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-kt-red flex items-center justify-center">
+<i class="fa-solid fa-lightbulb text-white text-lg"></i>
+</div>
+<div>
+<p class="font-bold text-lg">해결 과제 (Task)</p>
+<p class="text-xs text-gray-300">악순환을 끊기 위한 골든타임 개입 필요</p>
+</div>
+</div>
+<div class="flex gap-4 text-sm font-medium">
+<span class="flex items-center gap-1"><i class="fa-solid fa-check text-mint"></i> 눈높이 설명</span>
+<span class="flex items-center gap-1"><i class="fa-solid fa-check text-mint"></i> 무제한 반복</span>
+<span class="flex items-center gap-1"><i class="fa-solid fa-check text-mint"></i> 이해도 데이터화</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>`,
+        4: `<!DOCTYPE html>
+<html lang="ko" data-theme="light" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Slide 3: 서비스 경쟁 포지셔닝</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            transform: scale(0.95);
+            transform-origin: center center;
+        }
+
+        /* KT Identity Colors */
+        .bg-kt-red { background-color: #E60012; }
+        .text-kt-red { color: #E60012; }
+        .bg-kt-gray { background-color: #434343; }
+        .text-kt-gray { color: #434343; }
+        .bg-mint { background-color: #87CEEB; }
+        .text-mint { color: #87CEEB; }
+        .bg-light-mint { background-color: #E8F4F6; }
+        .border-mint { border-color: #87CEEB; }
+
+        .card-shadow {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Positioning Matrix Styles */
+        .matrix-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: #F8F9FA;
+            border-radius: 1rem;
+            border: 1px solid #E9ECEF;
+        }
+
+        .matrix-axis-x {
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            right: 5%;
+            height: 2px;
+            background-color: #CFD8DC;
+        }
+
+        .matrix-axis-y {
+            position: absolute;
+            left: 50%;
+            top: 5%;
+            bottom: 5%;
+            width: 2px;
+            background-color: #CFD8DC;
+        }
+
+        .matrix-quadrant-label {
+            position: absolute;
+            font-weight: 900;
+            font-size: 3rem;
+            color: #E9ECEF;
+            z-index: 0;
+            text-transform: uppercase;
+        }
+
+        .q1 { top: 20px; right: 20px; color: #E0F7FA; } /* Leader */
+        .q2 { top: 20px; left: 20px; } /* Specialist */
+        .q3 { bottom: 20px; left: 20px; } /* Basic */
+        .q4 { bottom: 20px; right: 20px; } /* Niche */
+
+        .matrix-point {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .point-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .point-label {
+            margin-top: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #555;
+            background: rgba(255,255,255,0.9);
+            padding: 2px 6px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .point-kt {
+            z-index: 20;
+        }
+        
+        .point-kt .point-dot {
+            width: 24px;
+            height: 24px;
+            background-color: #E60012;
+            box-shadow: 0 0 0 6px rgba(230, 0, 18, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        .point-kt .point-label {
+            color: #E60012;
+            font-size: 0.9rem;
+            border: 1px solid #E60012;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(230, 0, 18, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(230, 0, 18, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(230, 0, 18, 0); }
+        }
+
+        .competitor-table th {
+            background-color: #f3f4f6;
+            color: #4b5563;
+            font-weight: 600;
+            padding: 0.75rem;
+            font-size: 0.8rem;
+        }
+        
+        .competitor-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 0.8rem;
+            color: #374151;
+        }
+
+        .competitor-table tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.absolute{position:absolute}.relative{position:relative}.bottom-\[5\%\]{bottom:5%}.left-\[5\%\]{left:5%}.left-\[50\%\]{left:50%}.right-\[5\%\]{right:5%}.top-\[5\%\]{top:5%}.top-\[50\%\]{top:50%}.z-10{z-index:10}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.flex{display:flex}.grid{display:grid}.h-10{height:2.5rem}.h-20{height:5rem}.h-8{height:2rem}.h-full{height:100%}.w-1\/2{width:50%}.w-1\/4{width:25%}.w-10{width:2.5rem}.w-2{width:0.5rem}.w-8{width:2rem}.w-full{width:100%}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-y-1\/2{--tw-translate-y:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.translate-x-1\/2{--tw-translate-x:50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.translate-y-1\/2{--tw-translate-y:50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.rotate-\[-90deg\]{--tw-rotate:-90deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.rotate-\[90deg\]{--tw-rotate:90deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-10{gap:2.5rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.overflow-hidden{overflow:hidden}.rounded{border-radius:0.25rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-sm{border-radius:0.125rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.bg-gray-400{--tw-bg-opacity:1;background-color:rgb(156 163 175 / var(--tw-bg-opacity, 1))}.bg-orange-50{--tw-bg-opacity:1;background-color:rgb(255 247 237 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.p-12{padding:3rem}.p-4{padding:1rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-12{padding-left:3rem;padding-right:3rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.pl-10{padding-left:2.5rem}.text-left{text-align:left}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-\[9px\]{font-size:9px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.tracking-wide{letter-spacing:0.025em}.tracking-widest{letter-spacing:0.1em}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-gray-100{--tw-text-opacity:1;color:rgb(243 244 246 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}</style></head>
+<body style="">
+<div class="slide-container">
+<!-- Header -->
+<header class="h-16 px-8 flex items-center justify-between border-b border-gray-100 bg-white z-10 shrink-0">
+<div class="flex items-center gap-4">
+<div class="bg-mint w-2 h-6 rounded-sm"></div>
+<h1 class="text-2xl font-bold text-gray-800 tracking-tight">3. 서비스 경쟁 포지셔닝</h1>
+</div>
+<div class="flex items-center gap-2 text-gray-400 text-sm font-medium">
+
+</div>
+</header>
+<!-- Main Content -->
+<div class="flex-1 flex p-12 gap-10 bg-white">
+<!-- Left Column: Positioning Matrix (50%) -->
+<div class="w-1/2 flex flex-col">
+<div class="mb-4">
+<h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+<span class="w-8 h-8 rounded-lg bg-mint text-white flex items-center justify-center text-sm"><i class="fa-solid fa-crosshairs"></i></span>
+                    Market Positioning
+                </h3>
+<p class="text-sm text-gray-500 mt-1 pl-10">기술적 우위와 환자 경험을 동시에 충족하는 Leader Position</p>
+</div>
+<div class="flex-1 relative">
+<!-- Matrix Chart -->
+<div class="matrix-container shadow-inner">
+<!-- Labels -->
+<div class="matrix-quadrant-label q1">Leader</div>
+<div class="matrix-quadrant-label q2 text-gray-100">Specialist</div>
+<div class="matrix-quadrant-label q3 text-gray-100">Basic</div>
+<div class="matrix-quadrant-label q4 text-gray-100">Niche</div>
+<!-- Axis Lines -->
+<div class="matrix-axis-x"></div>
+<div class="matrix-axis-y"></div>
+<div class="absolute top-[5%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-xs font-bold text-gray-400 uppercase tracking-widest">High Tech (AI)</div>
+<div class="absolute bottom-[5%] left-[50%] -translate-x-1/2 translate-y-1/2 bg-white px-2 text-xs font-bold text-gray-400 uppercase tracking-widest">Low Tech (Digital)</div>
+<div class="absolute left-[5%] top-[50%] -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-xs font-bold text-gray-400 uppercase tracking-widest rotate-[-90deg]">Admin-Centric</div>
+<div class="absolute right-[5%] top-[50%] translate-x-1/2 -translate-y-1/2 bg-white px-2 text-xs font-bold text-gray-400 uppercase tracking-widest rotate-[90deg]">Patient-Centric</div>
+<!-- Data Points -->
+<!-- KT AI (Our Service) -->
+<div class="matrix-point point-kt" style="top: 15%; left: 85%;">
+<div class="point-dot"></div>
+<div class="point-label">KT AI수술동의</div>
+<div class="bg-white text-[10px] text-gray-400 mt-1 px-1 rounded border border-gray-100 shadow-sm">맥락인식 + 맞춤형</div>
+</div>
+<!-- Competitor 1: Electronic Consent (Basic) -->
+<div class="matrix-point" style="top: 80%; left: 20%;">
+<div class="point-dot bg-gray-400"></div>
+<div class="point-label">기존 전자동의서</div>
+<div class="text-[9px] text-gray-400 mt-0.5">단순 서명 전자화</div>
+</div>
+<!-- Competitor 2: General Chatbot (Niche) -->
+<div class="matrix-point" style="top: 70%; left: 75%;">
+<div class="point-dot bg-gray-400"></div>
+<div class="point-label">일반 병원 챗봇</div>
+<div class="text-[9px] text-gray-400 mt-0.5">예약/안내 중심</div>
+</div>
+<!-- Competitor 3: Patient Edu LMS (Specialist) -->
+<div class="matrix-point" style="top: 30%; left: 30%;">
+<div class="point-dot bg-gray-400"></div>
+<div class="point-label">환자 교육 LMS</div>
+<div class="text-[9px] text-gray-400 mt-0.5">일방향 교육</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Strategic USP & Comparison (50%) -->
+<div class="w-1/2 flex flex-col gap-6">
+<!-- Top: 3 Key Differentiators -->
+<div>
+<h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+<span class="w-8 h-8 rounded-lg bg-kt-red text-white flex items-center justify-center text-sm"><i class="fa-solid fa-star"></i></span>
+                    Core Differentiators
+                </h3>
+<div class="grid grid-cols-1 gap-3">
+<!-- USP 1 -->
+<div class="bg-white border border-gray-100 rounded-xl p-4 flex items-start gap-4 card-shadow hover:border-mint transition-colors duration-300">
+<div class="w-10 h-10 rounded-full bg-light-mint flex items-center justify-center flex-shrink-0 text-mint">
+<i class="fa-solid fa-brain text-lg"></i>
+</div>
+<div>
+<h4 class="font-bold text-gray-800 text-sm mb-1">LLM 기반 맥락 파악 (Context-Aware)</h4>
+<p class="text-xs text-gray-500 leading-relaxed">
+                                단순 키워드 매칭이 아닌, 환자의 질문 의도와 이전 대화 맥락을 파악하여 
+                                <span class="text-mint font-bold">"아까 그거요"</span> 같은 지시어까지 정확히 이해하고 답변
+                            </p>
+</div>
+</div>
+<!-- USP 2 -->
+<div class="bg-white border border-gray-100 rounded-xl p-4 flex items-start gap-4 card-shadow hover:border-mint transition-colors duration-300">
+<div class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center flex-shrink-0 text-orange-500">
+<i class="fa-solid fa-glasses text-lg"></i>
+</div>
+<div>
+<h4 class="font-bold text-gray-800 text-sm mb-1">고령자 초개인화 UX (Hyper-Personalized)</h4>
+<p class="text-xs text-gray-500 leading-relaxed">
+                                큰 글씨, 느린 음성, 쉬운 말 변환 등 
+                                <span class="text-orange-500 font-bold">시니어 전용 모드</span> 자동 추천 및 아바타 인터랙션 제공
+                            </p>
+</div>
+</div>
+<!-- USP 3 -->
+<div class="bg-white border border-gray-100 rounded-xl p-4 flex items-start gap-4 card-shadow hover:border-mint transition-colors duration-300">
+<div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 text-blue-600">
+<i class="fa-solid fa-file-contract text-lg"></i>
+</div>
+<div>
+<h4 class="font-bold text-gray-800 text-sm mb-1">실질적 이해 기반 동의 (Smart Consent)</h4>
+<p class="text-xs text-gray-500 leading-relaxed">
+                                형식적 서명이 아닌 <span class="text-blue-600 font-bold">이해도 측정 데이터</span>를 법적 증빙자료로 활용하여 의료분쟁 리스크 최소화
+                            </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom: Comparison Table -->
+<div class="flex-1 flex flex-col">
+<h3 class="text-sm font-bold text-gray-500 mb-2 uppercase tracking-wide">Competitor Analysis</h3>
+<div class="bg-white rounded-xl border border-gray-200 overflow-hidden flex-1">
+<table class="w-full text-left competitor-table h-full">
+<thead>
+<tr>
+<th class="w-1/4">구분</th>
+<th class="w-1/4">기존 전자동의서</th>
+<th class="w-1/4">일반 챗봇</th>
+<th class="w-1/4 bg-light-mint text-mint border-b border-mint">KT AI 서비스</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="font-bold text-gray-600">주요 기능</td>
+<td>서류의 디지털화</td>
+<td>예약/단순 안내</td>
+<td class="bg-light-mint font-bold text-gray-800 border-l border-mint">맞춤형 설명+동의</td>
+</tr>
+<tr>
+<td class="font-bold text-gray-600">소통 방식</td>
+<td>일방향 (Read)</td>
+<td>텍스트 위주</td>
+<td class="bg-light-mint font-bold text-gray-800 border-l border-mint">멀티형 (Voice/text)</td>
+</tr>
+<tr>
+<td class="font-bold text-gray-600">이해도 확인</td>
+<td><span class="text-gray-400">불가능 (서명만)</span></td>
+<td><span class="text-gray-400">단편적</span></td>
+<td class="bg-light-mint font-bold text-gray-800 border-l border-mint">구간별 측정/데이터화</td>
+</tr>
+<tr>
+<td class="font-bold text-gray-600">타겟 대응</td>
+<td>획일적 UI</td>
+<td>범용적 UI</td>
+<td class="bg-light-mint font-bold text-gray-800 border-l border-mint">고령자 전용 모드</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>`,
+        5: `<!DOCTYPE html>
+<html lang="ko" data-theme="light" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Slide 4: 타겟 분석 및 사용자 페르소나</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        /* KT Identity Colors */
+        .bg-kt-red { background-color: #E60012; }
+        .text-kt-red { color: #E60012; }
+        .bg-kt-gray { background-color: #434343; }
+        .text-kt-gray { color: #434343; }
+        .bg-mint { background-color: #87CEEB; }
+        .text-mint { color: #87CEEB; }
+        .bg-light-mint { background-color: #E8F4F6; }
+        .border-mint { border-color: #87CEEB; }
+
+        .card-shadow {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .persona-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .persona-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.absolute{position:absolute}.relative{position:relative}.z-10{z-index:10}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-3{margin-top:0.75rem}.flex{display:flex}.grid{display:grid}.h-10{height:2.5rem}.h-12{height:3rem}.h-16{height:4rem}.h-20{height:5rem}.h-8{height:2rem}.h-full{height:100%}.w-1\/2{width:50%}.w-1\/3{width:33.333333%}.w-10{width:2.5rem}.w-12{width:3rem}.w-2{width:0.5rem}.w-8{width:2rem}.w-full{width:100%}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-10{gap:2.5rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.overflow-hidden{overflow:hidden}.rounded{border-radius:0.25rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-green-50{--tw-bg-opacity:1;background-color:rgb(240 253 244 / var(--tw-bg-opacity, 1))}.bg-orange-50{--tw-bg-opacity:1;background-color:rgb(255 247 237 / var(--tw-bg-opacity, 1))}.bg-purple-50{--tw-bg-opacity:1;background-color:rgb(250 245 255 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.p-12{padding:3rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-12{padding-left:3rem;padding-right:3rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.pl-10{padding-left:2.5rem}.text-left{text-align:left}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-\[9px\]{font-size:9px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-tight{letter-spacing:-0.025em}.tracking-wide{letter-spacing:0.025em}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-gray-100{--tw-text-opacity:1;color:rgb(243 244 246 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-green-600{--tw-text-opacity:1;color:rgb(22 163 74 / var(--tw-text-opacity, 1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22 / var(--tw-text-opacity, 1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}</style></head>
+<body style="">
+<div class="slide-container">
+<!-- Header -->
+<header class="h-16 px-8 flex items-center justify-between border-b border-gray-100 bg-white z-10 shrink-0">
+<div class="flex items-center gap-4">
+<div class="bg-mint w-2 h-6 rounded-sm"></div>
+<h1 class="text-2xl font-bold text-gray-800 tracking-tight">4. 타겟 분석 및 사용자 페르소나</h1>
+</div>
+<div class="flex items-center gap-2 text-gray-400 text-sm font-medium">
+
+</div>
+</header>
+<!-- Main Content -->
+<div class="flex-1 flex px-12 pt-6 pb-12 gap-10 bg-white overflow-hidden">
+<!-- Left: Target Segmentation (40%) -->
+<div class="w-2/5 flex flex-col">
+<div class="mb-3">
+<h3 class="text-xl font-bold text-gray-800 flex items-center gap-2 mb-2">
+<span class="w-8 h-8 rounded-lg bg-mint text-white flex items-center justify-center text-sm"><i class="fa-solid fa-users"></i></span>
+                    Target Segmentation
+                </h3>
+<p class="text-sm text-gray-500 pl-10">65세 이상 고령 환자 중심, 보호자 보조 활용</p>
+</div>
+<div class="flex-1 bg-gray-50 rounded-xl p-6 flex flex-col gap-4 shadow-inner">
+<!-- Primary Target -->
+<div class="bg-white rounded-lg p-4 border-2 border-mint card-shadow">
+<div class="flex items-center justify-between mb-2">
+<h4 class="font-bold text-gray-800 text-sm">1차 타겟</h4>
+<span class="bg-mint text-white text-xs px-2 py-1 rounded-full font-semibold">Primary</span>
+</div>
+<div class="text-xs text-gray-600 leading-relaxed">
+<p class="font-semibold text-gray-800 mb-1">65세 이상 고령 환자</p>
+<ul class="list-disc pl-4 space-y-1 text-gray-500">
+<li>만성질환 관리 필요</li>
+<li>스마트폰 사용 가능 (기초 수준)</li>
+<li>비대면 의료 서비스 경험 적음</li>
+</ul>
+</div>
+</div>
+<!-- Secondary Target -->
+<div class="bg-white rounded-lg p-4 border border-gray-200 card-shadow">
+<div class="flex items-center justify-between mb-2">
+<h4 class="font-bold text-gray-800 text-sm">2차 타겟</h4>
+<span class="bg-gray-400 text-white text-xs px-2 py-1 rounded-full font-semibold">Secondary</span>
+</div>
+<div class="text-xs text-gray-600 leading-relaxed">
+<p class="font-semibold text-gray-800 mb-1">보호자 (자녀/배우자)</p>
+<ul class="list-disc pl-4 space-y-1 text-gray-500">
+<li>고령 부모의 의료 결정 지원</li>
+<li>원격 모니터링 및 관리</li>
+<li>정보 공유 및 상담 동반</li>
+</ul>
+</div>
+</div>
+<!-- Key Characteristics -->
+<div class="bg-white rounded-lg p-4 border border-gray-200 card-shadow">
+<h4 class="font-bold text-gray-800 text-sm mb-2">공통 특성</h4>
+<div class="grid grid-cols-2 gap-2 text-xs">
+<div class="bg-purple-50 p-2 rounded text-purple-600 font-medium text-center">디지털 격차</div>
+<div class="bg-orange-50 p-2 rounded text-orange-500 font-medium text-center">정보 접근성</div>
+<div class="bg-green-50 p-2 rounded text-green-600 font-medium text-center">건강 관심도</div>
+<div class="bg-blue-50 p-2 rounded text-blue-600 font-medium text-center">의료 신뢰</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Persona Cards (60%) -->
+<div class="w-3/5 flex flex-col">
+<div class="mb-3">
+<h3 class="text-xl font-bold text-gray-800 flex items-center gap-2 mb-2">
+<span class="w-8 h-8 rounded-lg bg-kt-red text-white flex items-center justify-center text-sm"><i class="fa-solid fa-user-circle"></i></span>
+                    User Personas
+                </h3>
+<p class="text-sm text-gray-500 pl-10">대표 사용자 3인 프로필 및 니즈</p>
+</div>
+<div class="flex-1 grid grid-cols-3 gap-4">
+<!-- Persona 1: 김00 -->
+<div class="bg-white rounded-xl p-4 border border-gray-200 persona-card card-shadow flex flex-col">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center">
+<i class="fa-solid fa-user text-purple-600 text-xl"></i>
+</div>
+<div>
+<h4 class="font-bold text-gray-800 text-sm">김00</h4>
+<p class="text-xs text-gray-500">72세, 여성</p>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<div>
+<p class="text-xs font-semibold text-gray-600 mb-1">상황</p>
+<p class="text-[10px] text-gray-500 leading-tight">고혈압·당뇨 관리 중, 혼자 거주, 자녀는 타지역 거주</p>
+</div>
+<div>
+<p class="text-xs font-semibold text-gray-600 mb-1">Pain Point</p>
+<ul class="text-[10px] text-gray-500 space-y-1">
+<li>• 병원 가서 설명 들어도 이해 안 됨</li>
+<li>• 집에 와서 다시 생각하면 모르겠음</li>
+<li>• 자녀에게 물어보기 부담스러움</li>
+</ul>
+</div>
+<div>
+<p class="text-xs font-semibold text-gray-600 mb-1">Need</p>
+<ul class="text-[10px] text-gray-500 space-y-1">
+<li>• 쉬운 말로 반복 설명</li>
+<li>• 집에서 다시 확인 가능</li>
+<li>• 음성으로 듣고 싶음</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Persona 2: 박00 -->
+<div class="bg-white rounded-xl p-4 border border-gray-200 persona-card card-shadow flex flex-col">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-12 h-12 rounded-full bg-orange-50 flex items-center justify-center">
+<i class="fa-solid fa-user text-orange-500 text-xl"></i>
+</div>
+<div>
+<h4 class="font-bold text-gray-800 text-sm">박00</h4>
+<p class="text-xs text-gray-500">68세, 남성</p>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<div>
+<p class="text-xs font-semibold text-gray-600 mb-1">상황</p>
+<p class="text-[10px] text-gray-500 leading-tight">관절 수술 예정, 배우자와 함께 거주, 스마트폰 사용 능숙</p>
+</div>
+<div>
+<p class="text-xs font-semibold text-gray-600 mb-1">Pain Point</p>
+<ul class="text-[10px] text-gray-500 space-y-1">
+<li>• 수술 전 설명이 너무 길고 복잡함</li>
+<li>• 위험성 설명이 무서워서 듣기 싫음</li>
+<li>• 서명만 하면 되는 줄 알았음</li>
+</ul>
+</div>
+<div>
+<p class="text-xs font-semibold text-gray-600 mb-1">Need</p>
+<ul class="text-[10px] text-gray-500 space-y-1">
+<li>• 핵심만 간단히 설명</li>
+<li>• 위험성도 이해하기 쉽게</li>
+<li>• 배우자와 함께 확인</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Persona 3: 이00 (보호자) -->
+<div class="bg-white rounded-xl p-4 border border-gray-200 persona-card card-shadow flex flex-col">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center">
+<i class="fa-solid fa-user-tie text-green-600 text-xl"></i>
+</div>
+<div>
+<h4 class="font-bold text-gray-800 text-sm">이00</h4>
+<p class="text-xs text-gray-500">45세, 남성(보호자)</p>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<div>
+<p class="text-xs font-semibold text-gray-600 mb-1">상황</p>
+<p class="text-[10px] text-gray-500 leading-tight">부모(78세) 수술 동의서 작성 도와야 함, 직장인, 시간 부족</p>
+</div>
+<div>
+<p class="text-xs font-semibold text-gray-600 mb-1">Pain Point</p>
+<ul class="text-[10px] text-gray-500 space-y-1">
+<li>• 부모가 이해 못하는 것 같아 걱정</li>
+<li>• 본인도 의학 용어 모름</li>
+<li>• 병원 가는 시간 내기 어려움</li>
+</ul>
+</div>
+<div>
+<p class="text-xs font-semibold text-gray-600 mb-1">Need</p>
+<ul class="text-[10px] text-gray-500 space-y-1">
+<li>• 부모 이해도 확인 가능</li>
+<li>• 원격으로 함께 상담</li>
+<li>• 기록 남아서 나중에 확인</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>`,
+        6: `<!DOCTYPE html>
+<html lang="ko" data-theme="light" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Slide 5: 유저플로우 및 주요기능</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            transform: scale(0.95);
+            transform-origin: center center;
+        }
+
+        /* KT Identity Colors */
+        .bg-kt-red { background-color: #E60012; }
+        .text-kt-red { color: #E60012; }
+        .bg-kt-gray { background-color: #434343; }
+        .text-kt-gray { color: #434343; }
+        .bg-mint { background-color: #87CEEB; }
+        .text-mint { color: #87CEEB; }
+        .bg-mint-light { background-color: #E8F4F6; }
+        
+        /* Flow Colors */
+        .bg-flow-step { background-color: #F8F9FA; }
+        .border-flow-step { border-color: #E9ECEF; }
+        .text-flow-num { color: #ADB5BD; }
+        
+        .step-active { 
+            background-color: #E8F4F6; 
+            border-color: #87CEEB;
+        }
+        .step-active .text-flow-num { color: #87CEEB; }
+
+        .card-shadow {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Connecting Arrows */
+        .arrow-right {
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #CFD8DC;
+            z-index: 10;
+        }
+        
+        .step-box {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .step-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        /* Feature Icons */
+        .feature-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.relative{position:relative}.z-10{z-index:10}.mb-0\.5{margin-bottom:0.125rem}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.ml-2{margin-left:0.5rem}.mr-1{margin-right:0.25rem}.mt-auto{margin-top:auto}.flex{display:flex}.grid{display:grid}.h-10{height:2.5rem}.h-20{height:5rem}.h-8{height:2rem}.h-full{height:100%}.w-10{width:2.5rem}.w-2{width:0.5rem}.w-8{width:2rem}.flex-1{flex:1 1 0%}.grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.grid-cols-6{grid-template-columns:repeat(6, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:0.5rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-sm{border-radius:0.125rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-t{border-top-width:1px}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-gray-600{--tw-border-opacity:1;border-color:rgb(75 85 99 / var(--tw-border-opacity, 1))}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254 / var(--tw-bg-opacity, 1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-gray-700{--tw-bg-opacity:1;background-color:rgb(55 65 81 / var(--tw-bg-opacity, 1))}.bg-gray-800{--tw-bg-opacity:1;background-color:rgb(31 41 55 / var(--tw-bg-opacity, 1))}.bg-orange-100{--tw-bg-opacity:1;background-color:rgb(255 237 213 / var(--tw-bg-opacity, 1))}.bg-orange-50{--tw-bg-opacity:1;background-color:rgb(255 247 237 / var(--tw-bg-opacity, 1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255 / var(--tw-bg-opacity, 1))}.bg-purple-50{--tw-bg-opacity:1;background-color:rgb(250 245 255 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.p-12{padding:3rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-12{padding-left:3rem;padding-right:3rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-4{padding-left:1rem;padding-right:1rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.pt-3{padding-top:0.75rem}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-medium{font-weight:500}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246 / var(--tw-text-opacity, 1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22 / var(--tw-text-opacity, 1))}.text-orange-600{--tw-text-opacity:1;color:rgb(234 88 12 / var(--tw-text-opacity, 1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247 / var(--tw-text-opacity, 1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.group:hover .group-hover\:bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:bg-orange-600{--tw-bg-opacity:1;background-color:rgb(234 88 12 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:bg-purple-600{--tw-bg-opacity:1;background-color:rgb(147 51 234 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}</style><style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.relative{position:relative}.z-10{z-index:10}.mb-0\.5{margin-bottom:0.125rem}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.ml-2{margin-left:0.5rem}.mr-1{margin-right:0.25rem}.mt-auto{margin-top:auto}.flex{display:flex}.grid{display:grid}.h-10{height:2.5rem}.h-20{height:5rem}.h-8{height:2rem}.h-full{height:100%}.w-10{width:2.5rem}.w-2{width:0.5rem}.w-8{width:2rem}.flex-1{flex:1 1 0%}.grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.grid-cols-6{grid-template-columns:repeat(6, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:0.5rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-sm{border-radius:0.125rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-t{border-top-width:1px}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-gray-600{--tw-border-opacity:1;border-color:rgb(75 85 99 / var(--tw-border-opacity, 1))}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254 / var(--tw-bg-opacity, 1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-gray-700{--tw-bg-opacity:1;background-color:rgb(55 65 81 / var(--tw-bg-opacity, 1))}.bg-gray-800{--tw-bg-opacity:1;background-color:rgb(31 41 55 / var(--tw-bg-opacity, 1))}.bg-orange-100{--tw-bg-opacity:1;background-color:rgb(255 237 213 / var(--tw-bg-opacity, 1))}.bg-orange-50{--tw-bg-opacity:1;background-color:rgb(255 247 237 / var(--tw-bg-opacity, 1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255 / var(--tw-bg-opacity, 1))}.bg-purple-50{--tw-bg-opacity:1;background-color:rgb(250 245 255 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.p-12{padding:3rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-12{padding-left:3rem;padding-right:3rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-4{padding-left:1rem;padding-right:1rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.pt-3{padding-top:0.75rem}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-medium{font-weight:500}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246 / var(--tw-text-opacity, 1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22 / var(--tw-text-opacity, 1))}.text-orange-600{--tw-text-opacity:1;color:rgb(234 88 12 / var(--tw-text-opacity, 1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247 / var(--tw-text-opacity, 1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.group:hover .group-hover\:bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:bg-orange-600{--tw-bg-opacity:1;background-color:rgb(234 88 12 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:bg-purple-600{--tw-bg-opacity:1;background-color:rgb(147 51 234 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}</style></head>
+<body style="">
+<div class="slide-container">
+<!-- Header -->
+<header class="h-16 px-8 flex items-center justify-between border-b border-gray-100 bg-white z-10 shrink-0">
+<div class="flex items-center gap-4">
+<div class="bg-mint w-2 h-6 rounded-sm"></div>
+<h1 class="text-2xl font-bold text-gray-800 tracking-tight">5. 유저플로우 및 주요기능</h1>
+</div>
+<div class="flex items-center gap-2 text-gray-400 text-sm font-medium">
+
+</div>
+</header>
+<!-- Main Content -->
+<div class="flex-1 flex flex-col p-12 bg-white gap-8">
+<!-- Top Section: 6-Step User Flow -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="w-8 h-8 rounded-lg bg-mint text-white flex items-center justify-center text-sm"><i class="fa-solid fa-route"></i></span>
+<h3 class="text-xl font-bold text-gray-800">Seamless User Journey</h3>
+<span class="text-sm text-gray-500 ml-2">중단 없는 연속적 경험 (Seamless Flow)</span>
+</div>
+<div class="grid grid-cols-6 gap-6 relative">
+<!-- Step 1 -->
+<div class="step-box bg-white border-2 border-flow-step rounded-xl p-4 flex flex-col items-center text-center">
+<span class="text-flow-num font-black text-2xl mb-2">01</span>
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mb-3 text-gray-600">
+<i class="fa-solid fa-bell"></i>
+</div>
+<p class="font-bold text-gray-800 text-sm mb-1">진입 &amp; 인증</p>
+<p class="text-xs text-gray-500">알림톡 링크<br>간편 본인확인</p>
+<i class="fa-solid fa-chevron-right arrow-right"></i>
+</div>
+<!-- Step 2 -->
+<div class="step-box bg-white border-2 border-flow-step rounded-xl p-4 flex flex-col items-center text-center">
+<span class="text-flow-num font-black text-2xl mb-2">02</span>
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mb-3 text-gray-600">
+<i class="fa-solid fa-clipboard-question"></i>
+</div>
+<p class="font-bold text-gray-800 text-sm mb-1">사전 문진</p>
+<p class="text-xs text-gray-500">기저질환 체크<br><span class="text-kt-red font-bold">모드 자동 분기</span></p>
+<i class="fa-solid fa-chevron-right arrow-right"></i>
+</div>
+<!-- Step 3 -->
+<div class="step-box step-active border-2 rounded-xl p-4 flex flex-col items-center text-center shadow-md">
+<span class="text-flow-num font-black text-2xl mb-2">03</span>
+<div class="w-10 h-10 rounded-full bg-mint text-white flex items-center justify-center mb-3">
+<i class="fa-solid fa-robot"></i>
+</div>
+<p class="font-bold text-gray-800 text-sm mb-1">AI 설명 시작</p>
+<p class="text-xs text-gray-600">설명창 전환<br>맞춤형 UI 제공</p>
+<i class="fa-solid fa-chevron-right arrow-right text-mint"></i>
+</div>
+<!-- Step 4 -->
+<div class="step-box bg-white border-2 border-flow-step rounded-xl p-4 flex flex-col items-center text-center">
+<span class="text-flow-num font-black text-2xl mb-2">04</span>
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mb-3 text-gray-600">
+<i class="fa-solid fa-book-open"></i>
+</div>
+<p class="font-bold text-gray-800 text-sm mb-1">핵심 학습</p>
+<p class="text-xs text-gray-500">수술법/합병증<br>영상 및 시각자료</p>
+<i class="fa-solid fa-chevron-right arrow-right"></i>
+</div>
+<!-- Step 5 -->
+<div class="step-box bg-white border-2 border-flow-step rounded-xl p-4 flex flex-col items-center text-center">
+<span class="text-flow-num font-black text-2xl mb-2">05</span>
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mb-3 text-gray-600">
+<i class="fa-solid fa-comments"></i>
+</div>
+<p class="font-bold text-gray-800 text-sm mb-1">Q&amp;A &amp; 체크</p>
+<p class="text-xs text-gray-500">하이라이트 질문<br>이해도 확인</p>
+<i class="fa-solid fa-chevron-right arrow-right"></i>
+</div>
+<!-- Step 6 -->
+<div class="step-box bg-white border-2 border-flow-step rounded-xl p-4 flex flex-col items-center text-center">
+<span class="text-flow-num font-black text-2xl mb-2">06</span>
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mb-3 text-gray-600">
+<i class="fa-solid fa-file-signature"></i>
+</div>
+<p class="font-bold text-gray-800 text-sm mb-1">서명 &amp; 완료</p>
+<p class="text-xs text-gray-500">전자서명법 준수<br>EMR 자동 전송</p>
+</div>
+</div>
+</div>
+<!-- Middle Section: Core Features Grid -->
+<div class="flex-1 flex flex-col gap-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="w-8 h-8 rounded-lg bg-kt-red text-white flex items-center justify-center text-sm"><i class="fa-solid fa-star"></i></span>
+<h3 class="text-xl font-bold text-gray-800">Core Features</h3>
+</div>
+<div class="grid grid-cols-4 gap-5 h-full">
+<!-- Feature 1: Easy Language -->
+<div class="bg-gray-50 rounded-2xl p-6 flex flex-col border border-gray-100 hover:border-mint transition-colors group">
+<div class="feature-icon-wrapper bg-blue-100 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+<i class="fa-solid fa-language text-xl"></i>
+</div>
+<h4 class="font-bold text-gray-800 mb-2">쉬운 말 변환</h4>
+<p class="text-xs text-gray-500 leading-relaxed mb-3">
+                        복잡한 의학 용어를 환자 눈높이의 일상 언어로 자동 풀이<br>
+                        (Ex. 복강경 → 배에 작은 구멍)
+                    </p>
+<div class="mt-auto pt-3 border-t border-gray-200">
+<span class="text-[10px] font-bold text-blue-500 bg-blue-50 px-2 py-1 rounded">LLM 기반</span>
+</div>
+</div>
+<!-- Feature 2: Multi-modal -->
+<div class="bg-gray-50 rounded-2xl p-6 flex flex-col border border-gray-100 hover:border-mint transition-colors group">
+<div class="feature-icon-wrapper bg-orange-100 text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+<i class="fa-solid fa-photo-film text-xl"></i>
+</div>
+<h4 class="font-bold text-gray-800 mb-2">시각화 &amp; TTS</h4>
+<p class="text-xs text-gray-500 leading-relaxed mb-3">
+                        3D 해부도 및 영상 자료 연동. 
+                        고령자를 위한 느린 음성(TTS)과 사투리 인식(STT) 지원
+                    </p>
+<div class="mt-auto pt-3 border-t border-gray-200">
+<span class="text-[10px] font-bold text-orange-500 bg-orange-50 px-2 py-1 rounded">멀티모달</span>
+</div>
+</div>
+<!-- Feature 3: Highlight Q&A -->
+<div class="bg-gray-50 rounded-2xl p-6 flex flex-col border border-gray-100 hover:border-mint transition-colors group">
+<div class="feature-icon-wrapper bg-mint-light text-mint group-hover:bg-mint group-hover:text-white transition-colors">
+<i class="fa-solid fa-highlighter text-xl"></i>
+</div>
+<h4 class="font-bold text-gray-800 mb-2">하이라이트 질문</h4>
+<p class="text-xs text-gray-500 leading-relaxed mb-3">
+                        모르는 문장을 드래그하면 즉시 설명. 
+                        "이거요" 같은 지시어의 맥락을 파악해 답변
+                    </p>
+<div class="mt-auto pt-3 border-t border-gray-200">
+<span class="text-[10px] font-bold text-mint bg-mint-light px-2 py-1 rounded">특허 출원</span>
+</div>
+</div>
+<!-- Feature 4: Data & Legal -->
+<div class="bg-gray-50 rounded-2xl p-6 flex flex-col border border-gray-100 hover:border-mint transition-colors group">
+<div class="feature-icon-wrapper bg-purple-100 text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+<i class="fa-solid fa-scale-balanced text-xl"></i>
+</div>
+<h4 class="font-bold text-gray-800 mb-2">법적 데이터 관리</h4>
+<p class="text-xs text-gray-500 leading-relaxed mb-3">
+                        이해도 측정 결과, 질의응답 로그를 전자문서와 함께 저장하여 법적 효력 확보
+                    </p>
+<div class="mt-auto pt-3 border-t border-gray-200">
+<span class="text-[10px] font-bold text-purple-500 bg-purple-50 px-2 py-1 rounded">리스크 관리</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Continuity & Sync -->
+<div class="bg-gray-800 rounded-xl p-5 flex items-center justify-between text-white" style="position: relative; transform: translate(2.141264px, -89.933086px);">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
+<i class="fa-solid fa-arrows-rotate text-mint"></i>
+</div>
+<div>
+<h4 class="font-bold text-sm mb-0.5">실시간 동기화 &amp; 이어하기 (Continuity)</h4>
+<p class="text-xs text-gray-400">챗봇 ↔ 설명창 데이터 실시간 Sync, 이탈 시점부터 즉시 재개 가능</p>
+</div>
+</div>
+<div class="flex gap-8 px-4 border-l border-gray-600">
+<div class="text-center">
+<p class="text-[10px] text-gray-400 mb-1">진행률 저장</p>
+<p class="font-bold text-mint"><i class="fa-solid fa-check mr-1"></i><span style="font-size: 14px;">Auto Save</span></p>
+</div>
+<div class="text-center">
+<p class="text-[10px] text-gray-400 mb-1">의료진 알림</p>
+<p class="font-bold text-mint"><i class="fa-solid fa-check mr-1"></i><span style="font-size: 14px;">Real-time</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>`,
+        7: `<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AS-IS vs TO-BE</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.95);
+            transform-origin: center center;
+        }
+
+        /* Color definitions */
+        .bg-mint { background-color: #87CEEB; }
+        .text-mint { color: #87CEEB; }
+        
+        /* Main Layout */
+        .main-content {
+            flex: 1;
+            display: flex;
+            position: relative;
+            background-color: #f8fafc;
+        }
+
+        /* Center Connector */
+        .center-connector {
+            position: absolute;
+            left: 50%;
+            top: 55%; /* Slightly adjusted to align with cards */
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 72px; /* Adjusted gap to match card spacing visually */
+        }
+        
+        /* Arrow Circle Style - Modified as requested */
+        .arrow-circle {
+            width: 40px;
+            height: 40px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #87CEEB; /* Sky Blue for consistency */
+            font-size: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #EFF6FF;
+            z-index: 20;
+        }
+
+        /* Columns */
+        .col-container {
+            flex: 1;
+            padding: 30px 50px 30px 50px; /* Adjusted padding */
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* AS-IS Side (Left) */
+        .col-left {
+            background-color: #F9FAFB;
+            border-right: 1px solid #E5E7EB;
+            padding-right: 60px;
+        }
+        .asis-title {
+            color: #6B7280;
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+        .asis-subtitle {
+            color: #9CA3AF;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* TO-BE Side (Right) */
+        .col-right {
+            background-color: #EFF6FF;
+            padding-left: 60px;
+        }
+        .tobe-title {
+            color: #87CEEB;
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+        .tobe-subtitle {
+            color: #87CEEB;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Cards Common */
+        .process-card {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            position: relative;
+            height: 96px; /* Fixed height for consistency */
+        }
+
+        /* AS-IS Cards (Paper Style) */
+        .asis-card-inner {
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-left: 4px solid #9CA3AF;
+            border-radius: 4px;
+            padding: 16px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .asis-card-inner:hover {
+            transform: translateX(-4px);
+        }
+        .asis-icon {
+            width: 48px;
+            height: 48px;
+            background: #F3F4F6;
+            color: #6B7280;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            border-radius: 4px;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+
+        /* TO-BE Cards (Mobile App Style) */
+        .tobe-card-inner {
+            background: white;
+            border-radius: 20px;
+            padding: 16px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 10px 15px -3px rgba(135, 206, 235, 0.1), 0 4px 6px -2px rgba(135, 206, 235, 0.05);
+            border: 1px solid #DBEAFE;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .tobe-card-inner:hover {
+            transform: translateX(4px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(135, 206, 235, 0.15), 0 10px 10px -5px rgba(135, 206, 235, 0.1);
+            border-color: #87CEEB;
+        }
+        .tobe-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #87CEEB 0%, #87CEEB 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            border-radius: 12px;
+            margin-right: 16px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 6px -1px rgba(135, 206, 235, 0.3);
+        }
+        
+        /* Category Badge */
+        .category-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        .cat-gray { background: #F3F4F6; color: #9CA3AF; }
+        .cat-blue { background: #EFF6FF; color: #87CEEB; }
+
+        /* Text Styles */
+        .card-content h4 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin: 0 0 2px 0;
+            line-height: 1.2;
+        }
+        .card-content p {
+            font-size: 0.85rem;
+            margin: 0;
+            line-height: 1.4;
+        }
+        .asis-card-inner h4 { color: #374151; }
+        .asis-card-inner p { color: #6B7280; }
+        .tobe-card-inner h4 { color: #87CEEB; }
+        .tobe-card-inner p { color: #4B5563; }
+
+        .footer {
+            padding: 0 40px 15px 40px;
+            color: #9CA3AF;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: transparent;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<header class="h-16 px-8 flex items-center justify-between border-b border-gray-100 bg-white z-10 shrink-0">
+<div class="flex items-center gap-4">
+<div class="bg-mint w-2 h-6 rounded-sm"></div>
+<h1 class="text-2xl font-bold text-gray-800 tracking-tight">6. AS-IS vs TO-BE</h1>
+</div>
+<div class="flex items-center gap-2 text-gray-400 text-sm font-medium">
+
+<span>|</span>
+
+</div>
+</header>
+<!-- Main Content -->
+<main class="main-content">
+<!-- Center Connector -->
+<div class="center-connector">
+<div class="arrow-circle"><i class="fas fa-chevron-right"></i></div>
+<div class="arrow-circle"><i class="fas fa-chevron-right"></i></div>
+<div class="arrow-circle"><i class="fas fa-chevron-right"></i></div>
+<div class="arrow-circle"><i class="fas fa-chevron-right"></i></div>
+</div>
+<!-- Left Column: AS-IS (Analog/Paper Process) -->
+<div class="col-container col-left">
+<div>
+<h2 class="asis-title">AS-IS</h2>
+<div class="asis-subtitle">
+<i class="fas fa-history"></i>
+<span>현재 (서비스 도입 전)</span>
+</div>
+</div>
+<!-- Items List -->
+<div class="flex flex-col gap-2">
+<!-- Item 1 -->
+<div class="process-card">
+<div class="asis-card-inner">
+<div class="asis-icon"><i class="fas fa-user-md"></i></div>
+<div class="card-content">
+<h4>의료진이 직접 설명</h4>
+<p>상당 시간 할애, 반복 업무</p>
+</div>
+<span class="category-badge cat-gray">Description</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="process-card">
+<div class="asis-card-inner">
+<div class="asis-icon"><i class="fas fa-file-alt"></i></div>
+<div class="card-content">
+<h4>종이 동의서 기반</h4>
+<p>일방향 설명, 형식적 동의</p>
+</div>
+<span class="category-badge cat-gray">Medium</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="process-card">
+<div class="asis-card-inner">
+<div class="asis-icon"><i class="fas fa-question-circle"></i></div>
+<div class="card-content">
+<h4>이해도 파악 불가</h4>
+<p>환자가 진짜 이해했는지 모름</p>
+</div>
+<span class="category-badge cat-gray">Insight</span>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="process-card">
+<div class="asis-card-inner">
+<div class="asis-icon"><i class="fas fa-user-slash"></i></div>
+<div class="card-content">
+<h4>수술 후 관리 단절</h4>
+<p>수술 동의서 작성 후 끝</p>
+</div>
+<span class="category-badge cat-gray">Care</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: TO-BE (Digital/App Process) -->
+<div class="col-container col-right relative">
+<div class="z-10">
+<h2 class="tobe-title">TO-BE</h2>
+<div class="tobe-subtitle">
+<i class="fas fa-rocket"></i>
+<span>서비스 도입 후 변화</span>
+</div>
+</div>
+<!-- Items List -->
+<div class="flex flex-col gap-2 z-10">
+<!-- Item 1 -->
+<div class="process-card">
+<div class="tobe-card-inner">
+<div class="tobe-icon"><i class="fas fa-robot"></i></div>
+<div class="card-content">
+<h4>AI 챗봇 기본 설명</h4>
+<p>의료진은 핵심 보완만 집중</p>
+</div>
+<span class="category-badge cat-blue">Description</span>
+<!-- App UI Decor -->
+<div class="absolute bottom-2 right-2 w-2 h-2 rounded-full bg-green-400"></div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="process-card">
+<div class="tobe-card-inner">
+<div class="tobe-icon"><i class="fas fa-mobile-screen"></i></div>
+<div class="card-content">
+<h4>디지털 기반 쌍방향</h4>
+<p>질의응답, 맞춤형 콘텐츠</p>
+</div>
+<span class="category-badge cat-blue">Medium</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="process-card">
+<div class="tobe-card-inner">
+<div class="tobe-icon"><i class="fas fa-chart-line"></i></div>
+<div class="card-content">
+<h4>이해도 객관적 측정</h4>
+<p>구간별 체크, 데이터화</p>
+</div>
+<span class="category-badge cat-blue">Insight</span>
+<div class="absolute bottom-2 right-2 text-mint text-[10px]"><i class="fas fa-check-double"></i></div>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="process-card">
+<div class="tobe-card-inner">
+<div class="tobe-icon"><i class="fas fa-heart-pulse"></i></div>
+<div class="card-content">
+<h4>통합 관리 확장</h4>
+<p>수술 전후 리마인드 &amp; 케어</p>
+</div>
+<span class="category-badge cat-blue">Care</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer removed -->
+</div>
+</body>
+</html>`,
+        8: `<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Slide 2: Smart Consent 서비스 개요</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body { 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Noto Sans KR', sans-serif; 
+            overflow: hidden; 
+            background-color: #f0f0f0; 
+        }
+        .slide-container { 
+            width: 1280px; 
+            height: 720px; 
+            background-color: #f8fafc; /* Very light slate background for clean medical look */
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+        }
+        
+        /* KT Identity Colors & Custom Palette */
+        .bg-kt-red { background-color: #E60012; }
+        .text-kt-red { color: #E60012; }
+        .bg-mint { background-color: #87CEEB; }
+        .text-mint { color: #87CEEB; }
+        .bg-mint-light { background-color: #E0F7FA; }
+        .border-mint { border-color: #87CEEB; }
+        
+        .bg-soft-blue { background-color: #E8F4F6; }
+        
+        /* Shadows */
+        .card-shadow { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06); }
+        .inner-shadow { box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+
+        /* Custom Image Containers */
+        .phone-frame {
+            border: 8px solid #fff;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .feature-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .value-prop-item {
+            position: relative;
+            padding-left: 1.25rem;
+        }
+        .value-prop-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.4rem;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: #87CEEB;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<header class="h-16 px-8 flex items-center justify-between border-b border-gray-200 bg-white z-20 shrink-0">
+<div class="flex items-center gap-4">
+<div class="bg-mint w-2 h-6 rounded-sm"></div>
+<h1 class="text-2xl font-bold text-gray-800 tracking-tight">7. AI 수술동의 시각화 자료</h1>
+</div>
+<div class="flex items-center gap-2 text-gray-400 text-sm font-medium">
+
+</div>
+</header>
+<!-- Main Content -->
+<div class="flex-1 flex flex-col p-8 gap-6 overflow-hidden relative">
+<!-- Background Decoration -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-bl-full -z-10 opacity-60"></div>
+<div class="absolute bottom-0 left-0 w-96 h-96 bg-mint-light rounded-tr-full -z-10 opacity-30"></div>
+<!-- Top Section: 3 Main Features (Flex Row) -->
+<div class="flex gap-6 h-[420px] items-stretch">
+<!-- Feature 1: Main Screen -->
+<div class="flex-1 bg-white rounded-2xl card-shadow p-5 flex flex-col items-center border border-gray-100 relative group transition-transform hover:-translate-y-1 duration-300">
+<div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-bold shadow-sm z-10 whitespace-nowrap">
+                        메인 화면
+                    </div>
+<div class="w-full flex-1 flex items-center justify-center mt-4 mb-2 bg-gray-50 rounded-xl inner-shadow p-2 overflow-hidden">
+<img alt="메인 화면 - 의사 곰 캐릭터와 대화창" class="h-full object-contain rounded-lg shadow-sm" src="assets/images/메인화면.png"/>
+</div>
+<div class="text-center w-full mt-2">
+<p class="text-gray-800 font-bold text-lg mb-1">친근한 캐릭터 인터페이스</p>
+<p class="text-gray-500 text-xs">환자의 불안감을 낮추는<br/>친근한 캐릭터 활용</p>
+</div>
+</div>
+<!-- Feature 2: Surgery Explanation -->
+<div class="flex-1 bg-white rounded-2xl card-shadow p-5 flex flex-col items-center border border-gray-100 relative group transition-transform hover:-translate-y-1 duration-300">
+<div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-bold shadow-sm z-10 whitespace-nowrap">
+                        수술 설명 화면
+                    </div>
+<div class="w-full flex-1 flex items-center justify-center mt-4 mb-2 bg-gray-50 rounded-xl inner-shadow p-2 overflow-hidden">
+<img alt="수술 설명 화면 - 담낭 제거 수술 일러스트" class="h-full object-contain rounded-lg shadow-sm" src="assets/images/설명.png"/>
+</div>
+<div class="text-center w-full mt-2">
+<p class="text-gray-800 font-bold text-lg mb-1">단계별 시각적 설명</p>
+<p class="text-gray-500 text-xs">직관적인 해부학적 이미지와<br/>눈높이 맞춤형 텍스트/음성 안내</p>
+</div>
+</div>
+<!-- Feature 3: AI Customizing -->
+<div class="flex-1 bg-white rounded-2xl card-shadow p-5 flex flex-col items-center border border-gray-100 relative group transition-transform hover:-translate-y-1 duration-300">
+<div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-bold shadow-sm z-10 whitespace-nowrap">
+                        병원별 AI 커스터마이징
+                    </div>
+<div class="w-full flex-1 flex items-center justify-center mt-4 mb-2 bg-gray-50 rounded-xl inner-shadow p-4 overflow-hidden">
+<img alt="병원별 AI 커스터마이징 - 다양한 의료진 캐릭터" class="w-full object-contain drop-shadow-md transform group-hover:scale-105 transition-transform duration-500" src="assets/images/커스터.png"/>
+</div>
+<div class="text-center w-full mt-2">
+<p class="text-gray-800 font-bold text-lg mb-1">맞춤형 페르소나</p>
+<p class="text-gray-500 text-xs">병원 아이덴티티를 반영한<br/>다양한 의료진 캐릭터 및 톤앤매너 설정</p>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Value Proposition -->
+<div class="flex-1 bg-white rounded-2xl card-shadow p-4 flex gap-6 items-center border-l-4 border-mint">
+<!-- Title Area -->
+<div class="w-1/4 shrink-0 border-r border-gray-100 pr-4">
+<h3 class="text-lg font-extrabold text-gray-800 mb-1.5">핵심 가치 제안</h3>
+<p class="text-xs text-gray-500 leading-relaxed">
+                    Smart Consent는<br/>
+                    환자와 의료진 모두를 위한<br/>
+<span class="text-mint font-bold">최적의 소통 경험</span>을 제공합니다.
+                </p>
+</div>
+<!-- Values Grid -->
+<div class="flex-1 grid grid-cols-3 gap-4">
+<!-- Value 1 -->
+<div class="flex flex-col items-center text-center p-2 rounded-xl hover:bg-gray-50 transition-colors">
+<div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-blue-500 mb-2 text-lg shadow-sm">
+<i class="fa-solid fa-face-smile"></i>
+</div>
+<h4 class="font-bold text-gray-800 mb-1.5 text-sm">환자: 쉬운 이해</h4>
+<ul class="text-[10px] text-gray-500 text-left space-y-0.5 w-full pl-4">
+<li class="value-prop-item">고령층 친화적 유니버설 디자인</li>
+<li class="value-prop-item">눈높이 맞춤 설명으로 불안 해소</li>
+</ul>
+</div>
+<!-- Value 2 -->
+<div class="flex flex-col items-center text-center p-2 rounded-xl hover:bg-gray-50 transition-colors">
+<div class="w-10 h-10 bg-mint-light rounded-full flex items-center justify-center text-mint mb-2 text-lg shadow-sm">
+<i class="fa-solid fa-clock-rotate-left"></i>
+</div>
+<h4 class="font-bold text-gray-800 mb-1.5 text-sm">의료진: 업무 효율화</h4>
+<ul class="text-[10px] text-gray-500 text-left space-y-0.5 w-full pl-4">
+<li class="value-prop-item">반복 설명 부담 획기적 경감</li>
+<li class="value-prop-item">진료 외 시간 활용성 증대</li>
+</ul>
+</div>
+<!-- Value 3 -->
+<div class="flex flex-col items-center text-center p-2 rounded-xl hover:bg-gray-50 transition-colors">
+<div class="w-10 h-10 bg-purple-50 rounded-full flex items-center justify-center text-purple-500 mb-2 text-lg shadow-sm">
+<i class="fa-solid fa-shield-halved"></i>
+</div>
+<h4 class="font-bold text-gray-800 mb-1.5 text-sm">병원: 브랜드 강화</h4>
+<ul class="text-[10px] text-gray-500 text-left space-y-0.5 w-full pl-4">
+<li class="value-prop-item">6단계 프로세스로 체계적 동의</li>
+<li class="value-prop-item">스마트 병원 이미지 제고</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
+`,
+        9: `<!DOCTYPE html>
+<html lang="ko" data-theme="light" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Slide 8: R&amp;R(AI/의료진 역할 영역)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .bg-kt-red { background-color: #E60012; }
+        .text-kt-red { color: #E60012; }
+        .border-kt-red { border-color: #E60012; }
+        
+        .bg-kt-gray { background-color: #434343; }
+        .text-kt-gray { color: #434343; }
+        
+        .bg-mint { background-color: #87CEEB; }
+        .text-mint { color: #87CEEB; }
+        .bg-mint-light { background-color: #E8F4F6; }
+        .border-mint { border-color: #87CEEB; }
+
+        .role-medical-bg { background-color: #F8F9FA; }
+        .role-medical-accent { color: #2D3748; }
+        .role-ai-bg { background-color: #F0FDFA; }
+        .role-ai-accent { color: #87CEEB; }
+
+        .card-shadow {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .center-connector {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .connector-circle {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background-color: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #E2E8F0;
+            font-size: 24px;
+            color: #718096;
+            z-index: 21;
+        }
+
+        .flow-arrow-top {
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            width: 120px;
+            height: 40px;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .flow-arrow-bottom {
+            position: absolute;
+            bottom: 25%;
+            left: 50%;
+            width: 120px;
+            height: 40px;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .role-card {
+            transition: transform 0.3s ease;
+        }
+        .role-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.absolute{position:absolute}.relative{position:relative}.left-0{left:0px}.left-1\/2{left:50%}.right-0{right:0px}.top-1\/2{top:50%}.top-\[-20px\]{top:-20px}.z-10{z-index:10}.mb-2{margin-bottom:0.5rem}.mb-8{margin-bottom:2rem}.flex{display:flex}.h-16{height:4rem}.h-2{height:0.5rem}.h-20{height:5rem}.h-8{height:2rem}.h-px{height:1px}.w-1\/2{width:50%}.w-16{width:4rem}.w-2{width:0.5rem}.w-full{width:100%}.flex-1{flex:1 1 0%}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-y-1\/2{--tw-translate-y:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-sm{border-radius:0.125rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-l-4{border-left-width:4px}.border-r{border-right-width:1px}.border-r-4{border-right-width:4px}.border-t{border-top-width:1px}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.border-gray-600{--tw-border-opacity:1;border-color:rgb(75 85 99 / var(--tw-border-opacity, 1))}.bg-gray-300{--tw-bg-opacity:1;background-color:rgb(209 213 219 / var(--tw-bg-opacity, 1))}.bg-gray-500{--tw-bg-opacity:1;background-color:rgb(107 114 128 / var(--tw-bg-opacity, 1))}.bg-gray-800{--tw-bg-opacity:1;background-color:rgb(31 41 55 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.p-12{padding:3rem}.p-5{padding:1.25rem}.px-12{padding-left:3rem;padding-right:3rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.pl-20{padding-left:5rem}.pr-20{padding-right:5rem}.text-right{text-align:right}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-medium{font-weight:500}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.tracking-widest{letter-spacing:0.1em}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-yellow-400{--tw-text-opacity:1;color:rgb(250 204 21 / var(--tw-text-opacity, 1))}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}</style></head>
+<body style="">
+<div class="slide-container">
+<header class="h-16 px-8 flex items-center justify-between border-b border-gray-100 bg-white z-10 shrink-0">
+<div class="flex items-center gap-4">
+<div class="bg-mint w-2 h-6 rounded-sm"></div>
+<h1 class="text-2xl font-bold text-gray-800 tracking-tight">8. R&amp;R (AI/의료진 역할 영역)</h1>
+</div>
+<div class="flex items-center gap-2 text-gray-400 text-sm font-medium">
+
+<span>|</span>
+
+</div>
+</header>
+<div class="flex-1 flex relative">
+<div class="center-connector">
+<div class="connector-circle">
+<i class="fa-solid fa-handshake"></i>
+</div>
+</div>
+<div class="w-1/2 bg-role-medical-bg p-12 pr-20 flex flex-col border-r border-gray-200 relative">
+<div class="flex items-center gap-4 mb-8">
+<div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center border border-gray-200">
+<i class="fa-solid fa-user-doctor text-3xl text-gray-700"></i>
+</div>
+<div>
+<h2 class="text-2xl font-black text-gray-800">Medical Staff</h2>
+<p class="text-sm text-gray-500 font-medium">의료진 (Human Expert)</p>
+</div>
+</div>
+<div class="flex flex-col gap-4 flex-1">
+<div class="role-card bg-white p-5 rounded-xl border-l-4 border-gray-600 card-shadow">
+<h3 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+<i class="fa-solid fa-gavel text-gray-500"></i>
+                            법적/윤리적 최종 책임
+                        </h3>
+<p class="text-sm text-gray-600 leading-relaxed">
+                            수술 동의에 대한 법적 효력을 보증하며, AI 설명 내용의 적절성을 최종적으로 확인하고 승인합니다.
+                        </p>
+</div>
+<div class="role-card bg-white p-5 rounded-xl border-l-4 border-gray-600 card-shadow">
+<h3 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+<i class="fa-solid fa-stethoscope text-gray-500"></i>
+                            고위험/복잡 질문 응대
+                        </h3>
+<p class="text-sm text-gray-600 leading-relaxed">
+                            환자 개별 상태에 따른 특이사항이나 AI가 답변하기 어려운 심층적/비정형 질문을 직접 해결합니다.
+                        </p>
+</div>
+<div class="role-card bg-white p-5 rounded-xl border-l-4 border-gray-600 card-shadow">
+<h3 class="font-bold text-gray-800 mb-2 flex items-center gap-2">
+<i class="fa-solid fa-heart-pulse text-gray-500"></i>
+                            환자 상태 및 이해도 판단
+                        </h3>
+<p class="text-sm text-gray-600 leading-relaxed">
+                            데이터상 이해도가 높더라도 실제 환자의 인지 능력과 심리 상태를 종합적으로 고려하여 동의를 받습니다.
+                        </p>
+</div>
+</div>
+</div>
+<div class="w-1/2 bg-role-ai-bg p-12 pl-20 flex flex-col relative">
+<div class="flex items-center justify-end gap-4 mb-8 text-right">
+<div>
+<h2 class="text-2xl font-black text-gray-800">AI Assistant</h2>
+<p class="text-sm text-mint font-medium">인공지능 (Tech Support)</p>
+</div>
+<div class="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center border border-mint">
+<i class="fa-solid fa-microchip text-3xl text-mint"></i>
+</div>
+</div>
+<div class="flex flex-col gap-4 flex-1">
+<div class="role-card bg-white p-5 rounded-xl border-r-4 border-mint card-shadow text-right">
+<h3 class="font-bold text-gray-800 mb-2 flex items-center justify-end gap-2">
+                            표준화된 기본 설명
+                            <i class="fa-solid fa-book-medical text-mint"></i>
+</h3>
+<p class="text-sm text-gray-600 leading-relaxed">
+                            수술 방법, 합병증 등 필수 고지 항목을 누락 없이 정확하고 표준화된 방식으로 전달합니다.
+                        </p>
+</div>
+<div class="role-card bg-white p-5 rounded-xl border-r-4 border-mint card-shadow text-right">
+<h3 class="font-bold text-gray-800 mb-2 flex items-center justify-end gap-2">
+                            무제한 반복 &amp; 맞춤 변환
+                            <i class="fa-solid fa-rotate-right text-mint"></i>
+</h3>
+<p class="text-sm text-gray-600 leading-relaxed">
+                            고령 환자를 위해 쉬운 말로 변환하고, 100번 질문해도 지치지 않고 친절하게 반복 설명합니다.
+                        </p>
+</div>
+<div class="role-card bg-white p-5 rounded-xl border-r-4 border-mint card-shadow text-right">
+<h3 class="font-bold text-gray-800 mb-2 flex items-center justify-end gap-2">
+                            데이터 축적 &amp; 로그 관리
+                            <i class="fa-solid fa-database text-mint"></i>
+</h3>
+<p class="text-sm text-gray-600 leading-relaxed">
+                            모든 질의응답 과정과 이해도 측정 결과를 기록하여 법적 증빙을 위한 로그 데이터를 축적합니다.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-gray-800 text-white h-16 px-12 flex items-center justify-between z-10">
+<div class="flex items-center gap-3">
+<i class="fa-solid fa-triangle-exclamation text-yellow-400"></i>
+<p class="text-xs font-medium text-gray-300">
+<span class="text-white font-bold">책임의 경계:</span> 
+                    AI는 설명을 보조하는 도구이며, 모든 의료 행위와 설명 의무의 최종 법적 책임은 의료진에게 있습니다.
+                </p>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 text-xs text-gray-400">
+<span class="w-2 h-2 rounded-full bg-gray-500"></span>
+                    Human Judgment
+                </div>
+<div class="flex items-center gap-2 text-xs text-gray-400">
+<span class="w-2 h-2 rounded-full bg-mint"></span>
+                    AI Processing
+                </div>
+</div>
+</div>
+</div>
+
+</body></html>`,
+        10: `<!DOCTYPE html>
+<html lang="ko" data-theme="light" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Slide 9: 기대효과 및 확장성</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .bg-kt-red { background-color: #E60012; }
+        .text-kt-red { color: #E60012; }
+        .border-kt-red { border-color: #E60012; }
+        
+        .bg-mint { background-color: #87CEEB; }
+        .bg-mint-dark { background-color: #008CA3; }
+        .bg-mint-light { background-color: #E8F4F6; }
+        .text-mint { color: #87CEEB; }
+        .border-mint { border-color: #87CEEB; }
+
+        .card-shadow {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .effect-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .effect-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        .roadmap-step {
+            position: relative;
+            flex: 1;
+            padding: 16px;
+            background-color: #F8F9FA;
+            border-radius: 12px;
+            border-left: 4px solid #E2E8F0;
+            transition: all 0.3s ease;
+        }
+
+        .roadmap-step.active {
+            background-color: #E8F4F6;
+            border-left-color: #87CEEB;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            width: 32px;
+            height: 32px;
+            background-color: #434343;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 10;
+        }
+        
+        .roadmap-step.active .step-number {
+            background-color: #87CEEB;
+        }
+
+        .arrow-connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #CBD5E0;
+            font-size: 24px;
+            padding: 0 10px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 140px;
+            width: 100%;
+        }
+
+        .kpi-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .badge-up { background-color: #E8F4F6; color: #87CEEB; }
+        .badge-down { background-color: #FFF5F5; color: #E60012; }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.z-10{z-index:10}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mr-1{margin-right:0.25rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-3{margin-top:0.75rem}.mt-4{margin-top:1rem}.flex{display:flex}.grid{display:grid}.h-16{height:4rem}.h-20{height:5rem}.h-8{height:2rem}.h-\[380px\]{height:380px}.h-full{height:100%}.w-1\/3{width:33.333333%}.w-16{width:4rem}.w-2{width:0.5rem}.w-2\/3{width:66.666667%}.w-8{width:2rem}.w-full{width:100%}.flex-1{flex:1 1 0%}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.items-stretch{align-items:stretch}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-8{gap:2rem}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-sm{border-radius:0.125rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-gray-700{--tw-bg-opacity:1;background-color:rgb(55 65 81 / var(--tw-bg-opacity, 1))}.bg-orange-50{--tw-bg-opacity:1;background-color:rgb(255 247 237 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/60{background-color:rgb(255 255 255 / 0.6)}.p-12{padding:3rem}.p-3{padding:0.75rem}.p-6{padding:1.5rem}.px-12{padding-left:3rem;padding-right:3rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.pl-2{padding-left:0.5rem}.text-left{text-align:left}.text-center{text-align:center}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-medium{font-weight:500}.uppercase{text-transform:uppercase}.tracking-tight{letter-spacing:-0.025em}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250 / var(--tw-text-opacity, 1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-orange-400{--tw-text-opacity:1;color:rgb(251 146 60 / var(--tw-text-opacity, 1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}</style></head>
+<body style="">
+<div class="slide-container">
+<header class="h-16 px-8 flex items-center justify-between border-b border-gray-100 bg-white z-10 shrink-0">
+<div class="flex items-center gap-4">
+<div class="bg-mint w-2 h-6 rounded-sm"></div>
+<h1 class="text-2xl font-bold text-gray-800 tracking-tight">9. 기대효과 및 확장성</h1>
+</div>
+<div class="flex items-center gap-2 text-gray-400 text-sm font-medium">
+
+<span>|</span>
+
+</div>
+</header>
+<div class="flex-1 flex flex-col p-8 bg-white gap-4 overflow-hidden">
+<div class="flex gap-4 h-[340px]">
+<div class="w-2/3 flex flex-col gap-3">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-8 h-8 rounded-lg bg-mint text-white flex items-center justify-center text-sm"><i class="fa-solid fa-bullseye"></i></span>
+<h3 class="text-xl font-bold text-gray-800">이해관계자별 기대효과</h3>
+</div>
+<div class="flex-1 grid grid-cols-3 gap-3">
+<div class="effect-card bg-white border border-gray-100 rounded-2xl p-4 flex flex-col items-center text-center card-shadow">
+<div class="w-14 h-14 rounded-full bg-orange-50 flex items-center justify-center text-orange-500 mb-3 text-2xl">
+<i class="fa-solid fa-hospital-user"></i>
+</div>
+<h4 class="font-bold text-gray-800 mb-1">환자 (Patient)</h4>
+<p class="text-xs text-orange-500 font-bold mb-3">불안 해소 &amp; 이해 증진</p>
+<ul class="text-sm text-gray-600 space-y-1 text-left w-full px-2">
+<li class="flex items-start gap-2">
+<i class="fa-solid fa-check text-orange-400 mt-1 text-xs"></i>
+<span>눈높이 맞춤 설명으로 막연한 수술 공포감 해소</span>
+</li>
+<li class="flex items-start gap-2">
+<i class="fa-solid fa-check text-orange-400 mt-1 text-xs"></i>
+<span>언제든 다시 듣는 반복 학습으로 궁금증 완전 해결</span>
+</li>
+</ul>
+</div>
+<div class="effect-card bg-white border border-gray-100 rounded-2xl p-4 flex flex-col items-center text-center card-shadow">
+<div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 mb-3 text-2xl">
+<i class="fa-solid fa-user-doctor"></i>
+</div>
+<h4 class="font-bold text-gray-800 mb-1">의료진 (Staff)</h4>
+<p class="text-xs text-blue-500 font-bold mb-3">업무 효율 &amp; 집중</p>
+<ul class="text-sm text-gray-600 space-y-1 text-left w-full px-2">
+<li class="flex items-start gap-2">
+<i class="fa-solid fa-check text-blue-400 mt-1 text-xs"></i>
+<span>단순 반복 설명 업무 감소로 진료 피로도 저하</span>
+</li>
+<li class="flex items-start gap-2">
+<i class="fa-solid fa-check text-blue-400 mt-1 text-xs"></i>
+<span>고위험 환자 및 고난이도 수술 준비에 시간 집중</span>
+</li>
+</ul>
+</div>
+<div class="effect-card bg-white border border-gray-100 rounded-2xl p-4 flex flex-col items-center text-center card-shadow">
+<div class="w-14 h-14 rounded-full bg-mint-light flex items-center justify-center text-mint mb-3 text-2xl">
+<i class="fa-solid fa-hospital"></i>
+</div>
+<h4 class="font-bold text-gray-800 mb-1">병원 (Hospital)</h4>
+<p class="text-xs text-mint font-bold mb-3">리스크 관리 &amp; 브랜딩</p>
+<ul class="text-sm text-gray-600 space-y-1 text-left w-full px-2">
+<li class="flex items-start gap-2">
+<i class="fa-solid fa-check text-mint mt-1 text-xs"></i>
+<span>설명 의무 이행 데이터 확보로 법적 분쟁 예방</span>
+</li>
+<li class="flex items-start gap-2">
+<i class="fa-solid fa-check text-mint mt-1 text-xs"></i>
+<span>환자 중심의 스마트 병원 이미지 제고</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="w-1/3 flex flex-col gap-3">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-8 h-8 rounded-lg bg-kt-red text-white flex items-center justify-center text-sm"><i class="fa-solid fa-chart-line"></i></span>
+<h3 class="text-xl font-bold text-gray-800">주요 KPI 목표</h3>
+</div>
+<div class="bg-gray-50 rounded-2xl p-4 border border-gray-200 flex flex-col justify-between h-full">
+<div class="chart-container" style="height: 140px;">
+<canvas id="kpiChart" width="344" height="140" style="display: block; box-sizing: border-box; height: 140px; width: 344.7px;"></canvas>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-1">
+<div class="bg-white p-2 rounded-lg border border-gray-100 shadow-sm">
+<p class="text-[10px] text-gray-400 mb-0.5">설명 소요시간</p>
+<div class="flex items-center justify-between">
+<span class="font-black text-gray-800 text-base">15분</span>
+<span class="kpi-badge badge-down"><i class="fa-solid fa-arrow-down mr-1"></i>70%</span>
+</div>
+</div>
+<div class="bg-white p-2 rounded-lg border border-gray-100 shadow-sm">
+<p class="text-[10px] text-gray-400 mb-0.5">환자 이해도</p>
+<div class="flex items-center justify-between">
+<span class="font-black text-gray-800 text-base">95점</span>
+<span class="kpi-badge badge-up"><i class="fa-solid fa-arrow-up mr-1"></i>30%</span>
+</div>
+</div>
+<div class="bg-white p-2 rounded-lg border border-gray-100 shadow-sm">
+<p class="text-[10px] text-gray-400 mb-0.5">설명 부족 민원</p>
+<div class="flex items-center justify-between">
+<span class="font-black text-gray-800 text-base">0건</span>
+<span class="kpi-badge badge-down"><i class="fa-solid fa-arrow-down mr-1"></i>99%</span>
+</div>
+</div>
+<div class="bg-white p-2 rounded-lg border border-gray-100 shadow-sm">
+<p class="text-[10px] text-gray-400 mb-0.5">수술 노쇼율</p>
+<div class="flex items-center justify-between">
+<span class="font-black text-gray-800 text-base">2%</span>
+<span class="kpi-badge badge-down"><i class="fa-solid fa-arrow-down mr-1"></i>80%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3 mt-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-8 h-8 rounded-lg bg-gray-700 text-white flex items-center justify-center text-sm"><i class="fa-solid fa-map-location-dot"></i></span>
+<h3 class="text-xl font-bold text-gray-800">확장 로드맵 (Expansion Roadmap)</h3>
+</div>
+<div class="flex items-stretch gap-2">
+<div class="roadmap-step active">
+<div class="step-number">1</div>
+<h4 class="font-bold text-gray-800 text-lg mb-1 pl-2">수술 전후 통합 케어</h4>
+<div class="bg-white/60 rounded-lg p-2 text-sm text-gray-600">
+<p class="mb-1"><span class="font-bold text-mint">●</span> 수술 전: 금식, 복약 중단 리마인드</p>
+<p><span class="font-bold text-mint">●</span> 수술 후: 회복 가이드, 식단 관리 알림</p>
+</div>
+<p class="text-xs text-gray-400 mt-2 pl-2 font-bold uppercase">2026. 1Q ~ 2Q</p>
+</div>
+<div class="arrow-connector">
+<i class="fa-solid fa-chevron-right"></i>
+</div>
+<div class="roadmap-step">
+<div class="step-number">2</div>
+<h4 class="font-bold text-gray-800 text-lg mb-1 pl-2">타 진료과 및 시술 확장</h4>
+<div class="bg-white/60 rounded-lg p-2 text-sm text-gray-600">
+<p class="mb-1"><span class="font-bold text-gray-400">●</span> 내시경, MRI 등 검사 동의서 적용</p>
+<p><span class="font-bold text-gray-400">●</span> 만성질환 교육용 챗봇으로 확대</p>
+</div>
+<p class="text-xs text-gray-400 mt-2 pl-2 font-bold uppercase">2026. 3Q ~ 4Q</p>
+</div>
+<div class="arrow-connector">
+<i class="fa-solid fa-chevron-right"></i>
+</div>
+<div class="roadmap-step">
+<div class="step-number">3</div>
+<h4 class="font-bold text-gray-800 text-lg mb-1 pl-2">PHR 기반 통합 플랫폼</h4>
+<div class="bg-white/60 rounded-lg p-2 text-sm text-gray-600">
+<p class="mb-1"><span class="font-bold text-gray-400">●</span> 환자 건강기록(PHR) 데이터 연동</p>
+<p><span class="font-bold text-gray-400">●</span> 병원 예약, 결제, 보험 청구 원스톱</p>
+</div>
+<p class="text-xs text-gray-400 mt-2 pl-2 font-bold uppercase">2027 ~ Future</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+        const ctx = document.getElementById('kpiChart').getContext('2d');
+        const kpiChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['소요시간(분)', '이해도(점)', '분쟁(건)'],
+                datasets: [
+                    {
+                        label: 'Before (기존)',
+                        data: [50, 65, 12],
+                        backgroundColor: '#E2E8F0',
+                        borderRadius: 4,
+                        barPercentage: 0.6
+                    },
+                    {
+                        label: 'After (도입 후)',
+                        data: [15, 95, 1],
+                        backgroundColor: ['#87CEEB', '#87CEEB', '#E60012'],
+                        borderRadius: 4,
+                        barPercentage: 0.6
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        align: 'end',
+                        labels: {
+                            boxWidth: 10,
+                            font: { size: 10, family: 'Noto Sans KR' }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { display: false },
+                        ticks: { display: false }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { size: 10, family: 'Noto Sans KR' } }
+                    }
+                },
+                animation: {
+                    duration: 1500,
+                    easing: 'easeOutQuart'
+                }
+            }
+        });
+    </script>
+
+</body></html>`
     };
 
     // 서비스2 파일 내용을 메인박스에 로드하는 함수
