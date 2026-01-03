@@ -5,8 +5,13 @@
 // 별도의 스크롤 제어는 하지 않고, 추후 확장 시를 대비해 기본 구조만 남겨둡니다.
 
 // Chart.js 전역 로딩 상태 관리 (성능 최적화)
-let chartJsLoadingPromise = null;
-let chartJsLoaded = false;
+// window 객체에 저장하여 iframe 내부에서도 접근 가능하도록 함
+if (!window.chartJsLoadingPromise) {
+    window.chartJsLoadingPromise = null;
+}
+if (typeof window.chartJsLoaded === 'undefined') {
+    window.chartJsLoaded = false;
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     // 현재 페이지에 맞는 네비게이션 링크에 active 클래스 추가
@@ -10383,12 +10388,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Chart.js를 전역적으로 한 번만 로드하고 재사용 (성능 최적화)
                     (function() {
                         // 이미 로드 중이거나 로드된 경우 재사용
-                        if (window.Chart && window.ChartDataLabels) {
-                            chartJsLoaded = true;
+                        if (window.Chart) {
+                            window.chartJsLoaded = true;
                             return;
                         }
                         
-                        if (chartJsLoadingPromise) {
+                        if (window.chartJsLoadingPromise) {
                             // 이미 로딩 중이면 기다림
                             return;
                         }
@@ -10413,7 +10418,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         };
                         
                         // Chart.js를 Promise로 비동기 로드 (성능 개선)
-                        chartJsLoadingPromise = new Promise((resolve, reject) => {
+                        window.chartJsLoadingPromise = new Promise((resolve, reject) => {
                             const chartScript = document.createElement('script');
                             chartScript.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
                             chartScript.async = true; // 비동기 로드로 변경하여 블로킹 방지
@@ -10430,11 +10435,11 @@ document.addEventListener("DOMContentLoaded", () => {
                                     pluginScript.onerror = function() {
                                         console.warn('chartjs-plugin-datalabels 로드 실패');
                                         // 플러그인 없이도 진행
-                                        chartJsLoaded = true;
+                                        window.chartJsLoaded = true;
                                         resolve();
                                     };
                                     pluginScript.onload = function() {
-                                        chartJsLoaded = true;
+                                        window.chartJsLoaded = true;
                                         resolve();
                                     };
                                     document.head.appendChild(pluginScript);
@@ -10469,28 +10474,55 @@ document.addEventListener("DOMContentLoaded", () => {
                         (function() {
                             function initCharts() {
                                 if (window.Chart) {
-                                    // requestAnimationFrame으로 Chart 초기화를 최적화
-                                    requestAnimationFrame(function() {
+                                    // Chart.js가 이미 로드됨
+                                    try {
                                         ${chartCode}
+                                    } catch (e) {
+                                        console.error('Chart 초기화 오류:', e);
+                                    }
+                                } else if (window.chartJsLoadingPromise) {
+                                    // Chart.js 로딩 중이면 Promise 대기
+                                    window.chartJsLoadingPromise.then(function() {
+                                        if (window.Chart) {
+                                            try {
+                                                ${chartCode}
+                                            } catch (e) {
+                                                console.error('Chart 초기화 오류:', e);
+                                            }
+                                        }
+                                    }).catch(function(err) {
+                                        console.error('Chart.js 로드 실패:', err);
                                     });
                                 } else {
-                                    // Chart.js 로딩 Promise 대기
+                                    // Chart.js가 아직 로드되지 않았고 로딩도 시작되지 않음
+                                    // 폴백: 폴링으로 대기 (최대 5초)
+                                    let attempts = 0;
+                                    const maxAttempts = 50;
                                     const checkChart = function() {
-                                        if (chartJsLoadingPromise) {
-                                            chartJsLoadingPromise.then(function() {
-                                                requestAnimationFrame(function() {
-                                                    ${chartCode}
-                                                });
-                                            }).catch(function() {
-                                                console.error('Chart.js 로드 실패');
-                                            });
-                                        } else if (window.Chart) {
-                                            requestAnimationFrame(function() {
+                                        attempts++;
+                                        if (window.Chart) {
+                                            try {
                                                 ${chartCode}
+                                            } catch (e) {
+                                                console.error('Chart 초기화 오류:', e);
+                                            }
+                                        } else if (window.chartJsLoadingPromise) {
+                                            // 로딩이 시작되었으면 Promise 대기
+                                            window.chartJsLoadingPromise.then(function() {
+                                                if (window.Chart) {
+                                                    try {
+                                                        ${chartCode}
+                                                    } catch (e) {
+                                                        console.error('Chart 초기화 오류:', e);
+                                                    }
+                                                }
+                                            }).catch(function(err) {
+                                                console.error('Chart.js 로드 실패:', err);
                                             });
-                                        } else {
-                                            // 폴백: 최대 5초 대기
+                                        } else if (attempts < maxAttempts) {
                                             setTimeout(checkChart, 100);
+                                        } else {
+                                            console.warn('Chart.js 로드 타임아웃');
                                         }
                                     };
                                     checkChart();
