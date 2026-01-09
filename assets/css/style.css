@@ -2589,6 +2589,37 @@ body {
     display: none;
 }
 
+/* 섹션 토글 버튼 스타일 */
+.section-toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.section-toggle-btn:hover {
+    background-color: #f3f4f6;
+    color: #111827;
+}
+
+.section-toggle-btn i {
+    font-size: 14px;
+    transition: transform 0.3s ease;
+}
+
+.section-thumbnails {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
 .test-thumbnail-box {
     aspect-ratio: 16 / 9;
     background: #ffffff;

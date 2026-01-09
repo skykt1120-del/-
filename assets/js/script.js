@@ -14166,6 +14166,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const filter = link.getAttribute("data-filter");
 
+                // 필터에 따라 해당 섹션 펼치기 기능
+                if (typeof window.toggleSection === 'function') {
+                    if (filter === "strategy") {
+                        window.toggleSection("strategy", true);
+                    } else if (filter === "service") {
+                        window.toggleSection("service", true);
+                    } else if (filter === "next") {
+                        window.toggleSection("next", true);
+                    } else if (filter === "all") {
+                        // 전체 보기일 때는 모든 섹션 펼치기
+                        window.toggleSection("strategy", true);
+                        window.toggleSection("service", true);
+                        window.toggleSection("next", true);
+                    }
+                }
+
                 // 필터링 로직
                 thumbnailBoxes.forEach(box => {
                     const boxNumber = box.getAttribute("data-box");

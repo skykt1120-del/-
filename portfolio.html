@@ -25,7 +25,6 @@
                 <li>
                     <a href="portfolio.html" class="nav-link active">Portfolio</a>
                 </li>
-                <li><a href="contact.html" class="nav-link">Contact</a></li>
             </ul>
         </div>
     </nav>
@@ -48,27 +47,48 @@
                 <!-- Grid View -->
                 <div class="test-thumbnail-grid" id="thumbnailGrid">
                     <!-- 전략 기획 포트폴리오 섹션 -->
-                    <h2 class="section-title" style="grid-column: 1 / -1;">전략 기획 포트폴리오</h2>
-                    <div class="test-thumbnail-box strategy1-box" data-box="1">
-                        <!-- 썸네일 내용은 CSS로 처리되며, 클릭 시 전략1-1이 로드됩니다 -->
-                    </div>
-                    <div class="test-thumbnail-box strategy2-box" data-box="5">
-                        <!-- 썸네일 내용은 CSS로 처리되며, 클릭 시 전략2-1이 로드됩니다 -->
+                    <h2 class="section-title" style="grid-column: 1 / -1; display: flex; align-items: center; gap: 8px;">
+                        <span>전략 기획 포트폴리오</span>
+                        <button class="section-toggle-btn" data-section="strategy" aria-label="섹션 펼치기/접기">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </h2>
+                    <div class="section-thumbnails" data-section="strategy">
+                        <div class="test-thumbnail-box strategy1-box" data-box="1">
+                            <!-- 썸네일 내용은 CSS로 처리되며, 클릭 시 전략1-1이 로드됩니다 -->
+                        </div>
+                        <div class="test-thumbnail-box strategy2-box" data-box="5">
+                            <!-- 썸네일 내용은 CSS로 처리되며, 클릭 시 전략2-1이 로드됩니다 -->
+                        </div>
                     </div>
                     
                     <!-- 서비스 기획 포트폴리오 섹션 -->
-                    <h2 class="section-title" style="grid-column: 1 / -1;">서비스 기획 포트폴리오</h2>
-                    <div class="test-thumbnail-box service-box" data-box="2">
-                        <!-- 썸네일 내용은 CSS로 처리되며, 클릭 시 서비스1-1이 로드됩니다 -->
-                    </div>
-                    <div class="test-thumbnail-box service-box" data-box="3">
-                        <!-- 썸네일 내용은 CSS로 처리되며, 클릭 시 서비스2-1이 로드됩니다 -->
+                    <h2 class="section-title" style="grid-column: 1 / -1; display: flex; align-items: center; gap: 8px;">
+                        <span>서비스 기획 포트폴리오</span>
+                        <button class="section-toggle-btn" data-section="service" aria-label="섹션 펼치기/접기">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </h2>
+                    <div class="section-thumbnails" data-section="service">
+                        <div class="test-thumbnail-box service-box" data-box="2">
+                            <!-- 썸네일 내용은 CSS로 처리되며, 클릭 시 서비스1-1이 로드됩니다 -->
+                        </div>
+                        <div class="test-thumbnail-box service-box" data-box="3">
+                            <!-- 썸네일 내용은 CSS로 처리되며, 클릭 시 서비스2-1이 로드됩니다 -->
+                        </div>
                     </div>
                     
                     <!-- Next Step 섹션 -->
-                    <h2 class="section-title" style="grid-column: 1 / -1;">Next Step</h2>
-                    <div class="test-thumbnail-box service-box next1-thumbnail-box" data-box="4">
-                        <!-- 썸네일 내용은 CSS로 처리되며, 클릭 시 넥스트1-1이 로드됩니다 -->
+                    <h2 class="section-title" style="grid-column: 1 / -1; display: flex; align-items: center; gap: 8px;">
+                        <span>Next Step</span>
+                        <button class="section-toggle-btn" data-section="next" aria-label="섹션 펼치기/접기">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </h2>
+                    <div class="section-thumbnails" data-section="next">
+                        <div class="test-thumbnail-box service-box next1-thumbnail-box" data-box="4">
+                            <!-- 썸네일 내용은 CSS로 처리되며, 클릭 시 넥스트1-1이 로드됩니다 -->
+                        </div>
                     </div>
                 </div>
 
@@ -95,6 +115,89 @@
 
     <script src="assets/js/script.js"></script>
     <script src="assets/js/disable-rightclick.js"></script>
+    <script>
+        // 섹션 펼치기/접기 기능 (전역 함수로 노출)
+        window.toggleSection = function(section, forceExpand = null) {
+            const thumbnailsContainer = document.querySelector(`.section-thumbnails[data-section="${section}"]`);
+            const toggleButton = document.querySelector(`.section-toggle-btn[data-section="${section}"]`);
+            
+            if (thumbnailsContainer && toggleButton) {
+                const icon = toggleButton.querySelector('i');
+                const isCurrentlyHidden = thumbnailsContainer.style.display === 'none';
+                
+                // 섹션별 박스 번호 매핑
+                const sectionBoxes = {
+                    'strategy': ['1', '5'],
+                    'service': ['2', '3'],
+                    'next': ['4']
+                };
+                
+                // 섹션의 썸네일 박스들이 실제로 보이는지 확인하는 함수
+                const areBoxesVisible = function() {
+                    if (!sectionBoxes[section]) return false;
+                    return sectionBoxes[section].some(boxNum => {
+                        const box = document.querySelector(`.test-thumbnail-box[data-box="${boxNum}"]`);
+                        return box && !box.classList.contains('hidden');
+                    });
+                };
+                
+                if (forceExpand !== null) {
+                    // 강제로 펼치기/접기
+                    if (forceExpand) {
+                        thumbnailsContainer.style.display = '';
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                        
+                        // 해당 섹션의 썸네일 박스 표시
+                        if (sectionBoxes[section]) {
+                            sectionBoxes[section].forEach(boxNum => {
+                                const box = document.querySelector(`.test-thumbnail-box[data-box="${boxNum}"]`);
+                                if (box) {
+                                    box.classList.remove('hidden');
+                                }
+                            });
+                        }
+                    } else {
+                        thumbnailsContainer.style.display = 'none';
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    }
+                } else {
+                    // 토글 - 섹션이 숨겨져 있거나 썸네일이 숨겨져 있으면 펼치기
+                    if (isCurrentlyHidden || !areBoxesVisible()) {
+                        thumbnailsContainer.style.display = '';
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                        
+                        // 해당 섹션의 썸네일 박스 표시
+                        if (sectionBoxes[section]) {
+                            sectionBoxes[section].forEach(boxNum => {
+                                const box = document.querySelector(`.test-thumbnail-box[data-box="${boxNum}"]`);
+                                if (box) {
+                                    box.classList.remove('hidden');
+                                }
+                            });
+                        }
+                    } else {
+                        thumbnailsContainer.style.display = 'none';
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleButtons = document.querySelectorAll('.section-toggle-btn');
+            
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const section = this.getAttribute('data-section');
+                    window.toggleSection(section);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
 
