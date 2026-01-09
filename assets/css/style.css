@@ -2511,7 +2511,7 @@ body {
 
 /* Test Page Styles */
 .test-section {
-    padding-top: 100px;
+    padding-top: 50px;
     padding-bottom: 60px;
     background: #fbfbfd;
     min-height: calc(100vh - 52px);
@@ -2520,63 +2520,69 @@ body {
 }
 
 .test-container {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 40px;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     max-width: none;
     margin: 0;
     padding: 0;
+    gap: 24px;
 }
 
-/* Sidebar */
-.test-sidebar {
+/* Top Menu Bar */
+.test-top-menu {
     background: #ffffff;
-    border-radius: 0 16px 16px 0;
-    padding: 24px 0;
+    border-radius: 16px;
+    padding: 7px 24px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
     border: 1px solid #e5e7eb;
-    border-left: none;
-    height: fit-content;
-    position: sticky;
-    top: 100px;
+    width: 100%;
 }
 
-.test-sidebar-menu {
+.test-top-menu-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
 }
 
-.test-sidebar-link {
+.test-top-menu-link {
     display: block;
-    padding: 12px 24px;
+    padding: 6px 24px;
     color: #4b5563;
     text-decoration: none;
     font-size: 14px;
     letter-spacing: -0.02em;
     transition: all 0.2s ease;
-    border-left: 3px solid transparent;
+    border-radius: 8px;
+    text-align: center;
+    border-bottom: 3px solid transparent;
 }
 
-.test-sidebar-link:hover {
+.test-top-menu-link:hover {
     color: #111827;
     background: #f9fafb;
 }
 
-.test-sidebar-link.active {
+.test-top-menu-link.active {
     color: #0071e3;
     background: rgba(0, 113, 227, 0.05);
-    border-left-color: #0071e3;
+    border-bottom-color: #0071e3;
     font-weight: 500;
+}
+
+/* Sidebar (deprecated, kept for compatibility) */
+.test-sidebar {
+    display: none;
 }
 
 /* Main Content */
 .test-main-content {
     background: transparent;
-    padding-right: 40px;
+    padding: 0;
+    width: 100%;
 }
 
 .test-thumbnail-grid {
@@ -3911,6 +3917,17 @@ body {
     position: relative;
 }
 
+/* 전략1, 전략2, 서비스1, 서비스2, Next Step 박스의 경우 큰 박스를 가운데 정렬하고 작은 박스를 아래에 배치 */
+.test-expanded-view:has(.test-expanded-box[data-box="1"]),
+.test-expanded-view:has(.test-expanded-box[data-box="2"]),
+.test-expanded-view:has(.test-expanded-box[data-box="3"]),
+.test-expanded-view:has(.test-expanded-box[data-box="4"]),
+.test-expanded-view:has(.test-expanded-box[data-box="5"]) {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
 .test-expanded-view.hidden {
     display: none;
 }
@@ -3929,6 +3946,24 @@ body {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+}
+
+/* 전략1 박스 확대 시 크기 조정: 사이드바 이동 전의 크기 유지 */
+/* 이전 구조: test-container가 grid (240px 1fr, gap 40px), test-main-content (padding-right: 40px) */
+/* 이전 큰 박스 크기: 메인 콘텐츠 영역의 80% - 3.2px */
+/* 메인 콘텐츠 영역 = 전체 너비 - 240px - 40px - 40px = 전체 너비 - 320px */
+/* 큰 박스 크기 = (전체 너비 - 320px) * 0.8 - 3.2px */
+/* 현재 구조: 전체 너비 사용, 따라서 이전 크기를 유지하려면 */
+/* 큰 박스 크기 = calc((100% - 320px) * 0.8 - 3.2px) = calc(80% - 256px - 3.2px) = calc(80% - 259.2px) */
+/* 전략1, 전략2, 서비스1, 서비스2, Next Step 박스의 큰 박스 크기 및 가운데 정렬 */
+.test-expanded-view .test-expanded-box[data-box="1"],
+.test-expanded-view .test-expanded-box[data-box="2"],
+.test-expanded-view .test-expanded-box[data-box="3"],
+.test-expanded-view .test-expanded-box[data-box="4"],
+.test-expanded-view .test-expanded-box[data-box="5"] {
+    width: calc(80% - 259.2px);
+    max-width: calc(80% - 259.2px);
+    margin: 0 auto; /* 가운데 정렬 */
 }
 
 /* 슬라이드 네비게이션 버튼 */
@@ -4016,6 +4051,58 @@ body {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+}
+
+/* 전략1 박스의 경우 작은 박스 리스트를 가로로 8개 배치 (8x1) */
+.test-expanded-view:has(.test-expanded-box[data-box="1"]) .test-slide-list {
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: 1fr;
+    width: 100%;
+    flex-shrink: 0;
+    max-width: 100%;
+}
+
+/* 서비스1 박스의 경우 작은 박스 리스트를 가로로 8개 배치 (8x1) */
+.test-expanded-view:has(.test-expanded-box[data-box="2"]) .test-slide-list {
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: 1fr;
+    width: 100%;
+    flex-shrink: 0;
+    max-width: 100%;
+}
+
+/* 서비스2 박스의 경우 작은 박스 리스트를 가로로 10개 배치 (10x1) */
+.test-expanded-view:has(.test-expanded-box[data-box="3"]) .test-slide-list {
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: 1fr;
+    width: 100%;
+    flex-shrink: 0;
+    max-width: 100%;
+}
+
+/* Next Step 박스의 경우 작은 박스 리스트를 가로로 6개 배치 (6x1) */
+/* 작은 박스의 크기를 서비스1과 동일하게 유지 */
+/* 서비스1은 8개를 배치하므로 각 박스 크기 = (100% - gap * 7) / 8 = (100% - 112px) / 8 */
+/* 여기서 100%는 .test-expanded-view의 너비 */
+/* Next Step도 동일한 크기의 박스를 6개 배치하려면, 전체 너비를 계산해야 함 */
+/* 전체 너비 = 각 박스 크기 * 6 + gap * 5 = ((100% - 112px) / 8) * 6 + 80px */
+/* = (600% - 672px) / 8 + 80px = 75% - 84px + 80px = 75% - 4px */
+/* Next Step 박스의 경우 작은 박스 리스트를 가로로 6개 배치 (6x1) */
+.test-expanded-view:has(.test-expanded-box[data-box="4"]) .test-slide-list {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr;
+    width: 100%;
+    flex-shrink: 0;
+    max-width: 100%;
+}
+
+/* 전략2 박스의 경우 작은 박스 리스트를 가로로 10개 배치 (10x1) */
+.test-expanded-view:has(.test-expanded-box[data-box="5"]) .test-slide-list {
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: 1fr;
+    width: 100%;
+    flex-shrink: 0;
+    max-width: 100%;
 }
 
 .test-slide-item {
@@ -4305,12 +4392,11 @@ body {
 /* Responsive for Test Page */
 @media (max-width: 960px) {
     .test-container {
-        grid-template-columns: 200px 1fr;
-        gap: 24px;
+        gap: 20px;
     }
 
     .test-main-content {
-        padding-right: 24px;
+        padding: 0;
     }
 
     .test-thumbnail-grid {
@@ -4318,12 +4404,12 @@ body {
         gap: 16px;
     }
 
-    .test-sidebar {
-        padding: 20px 0;
+    .test-top-menu {
+        padding: 12px 16px;
     }
 
-    .test-sidebar-link {
-        padding: 10px 20px;
+    .test-top-menu-link {
+        padding: 10px 16px;
         font-size: 13px;
     }
 
@@ -4335,39 +4421,25 @@ body {
 
 @media (max-width: 720px) {
     .test-container {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 24px;
+        gap: 16px;
     }
 
     .test-main-content {
-        padding-right: 16px;
-        padding-left: 16px;
+        padding: 0;
     }
 
-    .test-sidebar {
-        position: relative;
-        top: 0;
-        border-radius: 0 0 12px 12px;
-        border-left: none;
-        border-right: none;
+    .test-top-menu {
+        padding: 12px 16px;
     }
 
-    .test-sidebar-menu {
-        flex-direction: row;
-        overflow-x: auto;
-        padding: 0 16px;
+    .test-top-menu-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
     }
 
-    .test-sidebar-link {
-        white-space: nowrap;
-        padding: 10px 16px;
-        border-left: none;
-        border-bottom: 3px solid transparent;
-    }
-
-    .test-sidebar-link.active {
-        border-left: none;
-        border-bottom-color: #0071e3;
+    .test-top-menu-link {
+        padding: 10px 12px;
+        font-size: 12px;
     }
 
     .test-thumbnail-grid {

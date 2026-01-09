@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 테스트 페이지 필터링 및 확대 기능
-    const sidebarLinks = document.querySelectorAll(".test-sidebar-link");
+    const sidebarLinks = document.querySelectorAll(".test-top-menu-link");
     const thumbnailBoxes = document.querySelectorAll(".test-thumbnail-box");
     const thumbnailGrid = document.getElementById("thumbnailGrid");
     const expandedView = document.getElementById("expandedView");
@@ -180,6 +180,34 @@ document.addEventListener("DOMContentLoaded", () => {
         currentSlideNumber = 1;
     }
 
+    // 화살표 버튼 위치 조정 함수 (전역으로 사용)
+    function updateButtonPosition() {
+        if (prevSlideBtn && nextSlideBtn && expandedBox && expandedView) {
+            const expandedBoxRect = expandedBox.getBoundingClientRect();
+            const expandedViewRect = expandedView.getBoundingClientRect();
+            const boxTop = expandedBoxRect.top - expandedViewRect.top;
+            const boxLeft = expandedBoxRect.left - expandedViewRect.left;
+            const boxRight = boxLeft + expandedBoxRect.width;
+            const boxCenter = boxTop + expandedBoxRect.height / 2;
+            
+            // 세로 위치 (중앙) - 반응형에 따라 큰 박스의 위아래 높이 가운데 위치에 유지
+            prevSlideBtn.style.top = `${boxCenter}px`;
+            nextSlideBtn.style.top = `${boxCenter}px`;
+            prevSlideBtn.style.transform = 'translateY(-50%)';
+            nextSlideBtn.style.transform = 'translateY(-50%)';
+            
+            // 가로 위치
+            // 왼쪽 버튼: 박스 왼쪽에서 54px 왼쪽에 위치
+            prevSlideBtn.style.left = `${boxLeft - 54}px`;
+            
+            // 오른쪽 버튼: 박스 오른쪽에서 16px 오른쪽에 위치 (원래대로 복구)
+            // expandedView 기준으로 계산
+            const boxRightRelativeToView = boxRight - expandedViewRect.left;
+            nextSlideBtn.style.left = `${boxRightRelativeToView + 16}px`;
+            nextSlideBtn.style.right = 'auto'; // right 값 초기화
+        }
+    }
+
     // 박스 확대 함수
     function expandBox(boxNumber) {
         console.log('expandBox 호출됨, boxNumber:', boxNumber);
@@ -203,34 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
         updateURL(boxNumber, 1);
         
         // 화살표 버튼 위치 조정 (test-expanded-box의 중앙에 맞춤)
-        const updateButtonPosition = () => {
-            if (prevSlideBtn && nextSlideBtn && expandedBox) {
-                const expandedBoxRect = expandedBox.getBoundingClientRect();
-                const expandedViewRect = expandedView.getBoundingClientRect();
-                const boxTop = expandedBoxRect.top - expandedViewRect.top;
-                const boxLeft = expandedBoxRect.left - expandedViewRect.left;
-                const boxCenter = boxTop + expandedBoxRect.height / 2;
-                
-                // 세로 위치 (중앙)
-                prevSlideBtn.style.top = `${boxCenter}px`;
-                nextSlideBtn.style.top = `${boxCenter}px`;
-                prevSlideBtn.style.transform = 'translateY(-50%)';
-                nextSlideBtn.style.transform = 'translateY(-50%)';
-                
-                // 가로 위치
-                const boxRight = boxLeft + expandedBoxRect.width;
-                const expandedViewWidth = expandedViewRect.width;
-                const currentRightOffset = expandedViewWidth - boxRight;
-                
-                // 왼쪽 버튼: 박스 왼쪽에서 16px 왼쪽에 위치
-                prevSlideBtn.style.left = `${boxLeft - 16}px`;
-                
-                // 오른쪽 버튼: 박스 오른쪽 경계선에서 현재 오프셋만큼 더 오른쪽으로 이동
-                // right 값이 작을수록 더 오른쪽에 위치하므로, 현재 오프셋만큼 빼서 더 오른쪽으로 이동
-                nextSlideBtn.style.right = `${-currentRightOffset}px`; // 현재 오프셋만큼 더 오른쪽으로 이동
-            }
-        };
-        
         // 즉시 실행 및 약간의 지연 후 재실행 (레이아웃 완료 대기)
         updateButtonPosition();
         setTimeout(updateButtonPosition, 100);
@@ -331,19 +331,13 @@ document.addEventListener("DOMContentLoaded", () => {
         // 슬라이드 리스트 생성 - 박스 번호에 따라 개수 다름
         slideList.innerHTML = "";
         
-        // 넥스트1 박스는 특별한 레이아웃 처리 (넥스트1-1~넥스트1-5를 먼저 생성하고, 넥스트1-1 아래에 넥스트1-6 추가)
+        // 넥스트1 박스는 일반적인 방식으로 6개 모두 생성
         if (boxNumber === "4") {
-            // 넥스트1-1부터 넥스트1-5까지 생성
-            for (let i = 1; i <= 5; i++) {
+            // 넥스트1-1부터 넥스트1-6까지 모두 생성
+            for (let i = 1; i <= 6; i++) {
                 const slideItem = createNext1SlideItem(i, boxNumber);
                 slideList.appendChild(slideItem);
             }
-            // 넥스트1-6을 넥스트1-1 아래에 추가하기 위해 특별한 처리
-            const slideItem6 = createNext1SlideItem(6, boxNumber);
-            // 넥스트1-6을 첫 번째 행, 두 번째 열에 배치 (넥스트1-1 아래)
-            slideItem6.style.gridRow = '2';
-            slideItem6.style.gridColumn = '1';
-            slideList.appendChild(slideItem6);
         } else {
             // 다른 박스들은 기존 방식대로 생성
             for (let i = 1; i <= maxSlideCount; i++) {
@@ -411,6 +405,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     // 나머지 박스는 추후 동일한 방식으로 구현 예정
                     console.log(`슬라이드 아이템 클릭: ${slideName}`);
                 }
+                
+                // 버튼 위치 업데이트
+                setTimeout(updateButtonPosition, 100);
                 });
                 
                 slideList.appendChild(slideItem);
@@ -454,6 +451,9 @@ document.addEventListener("DOMContentLoaded", () => {
             
             console.log('넥스트1 콘텐츠 로드 시작:', slideNum);
             loadNext1ContentToMainBox(expandedBox, slideNum);
+            
+            // 버튼 위치 업데이트
+            setTimeout(updateButtonPosition, 100);
         });
         
         return slideItem;
@@ -490,7 +490,8 @@ document.addEventListener("DOMContentLoaded", () => {
             loadStrategy2ContentToMainBox(expandedBox, currentSlideNumber);
         }
         
-        // 스크롤 이동 제거 (사용자가 보고 있는 화면에서 스크롤이 이동하지 않도록)
+        // 버튼 위치 업데이트
+        setTimeout(updateButtonPosition, 100);
     }
     
     // 이전 슬라이드로 이동
@@ -513,7 +514,8 @@ document.addEventListener("DOMContentLoaded", () => {
             loadStrategy2ContentToMainBox(expandedBox, currentSlideNumber);
         }
         
-        // 스크롤 이동 제거 (사용자가 보고 있는 화면에서 스크롤이 이동하지 않도록)
+        // 버튼 위치 업데이트
+        setTimeout(updateButtonPosition, 100);
     }
     
     // 화살표 버튼 클릭 이벤트 추가
@@ -2181,21 +2183,22 @@ document.addEventListener("DOMContentLoaded", () => {
 </body>
 </html>`,
         2: `<!DOCTYPE html>
-
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Chapter 1. 배경과 문제 정의</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>전략1-2</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
             padding: 0;
-            background-color: #f3f4f6;
         }
         .slide-container {
             width: 1280px;
@@ -2204,750 +2207,84 @@ document.addEventListener("DOMContentLoaded", () => {
             position: relative;
             overflow: hidden;
             display: flex;
-        }
-        /* Left Sidebar */
-        .sidebar {
-            width: 280px;
-            background-color: #051c2c;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            padding: 60px 40px;
-            flex-shrink: 0;
-        }
-        .chapter-label {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #9ca3af;
-            margin-bottom: 16px;
-            font-weight: 700;
-        }
-        .chapter-title {
-            font-size: 32px;
-            font-weight: 900;
-            line-height: 1.3;
-            margin-bottom: 40px;
-            color: #ffffff;
-        }
-        .nav-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 24px;
-            opacity: 0.5;
-            transition: opacity 0.3s;
-        }
-        .nav-item.active {
-            opacity: 1;
-            color: #60a5fa;
-        }
-        .nav-number {
-            font-size: 12px;
-            font-weight: 700;
-            margin-right: 12px;
-            width: 20px;
-        }
-        .nav-text {
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            padding: 60px 80px;
-            background-color: #f9fafb;
-            display: flex;
-            flex-direction: column;
-        }
-        .page-header {
-            margin-bottom: 30px;
-            border-bottom: 1px solid #e5e7eb;
-            padding-bottom: 20px;
-        }
-        .page-title {
-            font-size: 28px;
-            font-weight: 800;
-            color: #111827;
-            display: flex;
-            align-items: center;
-        }
-        .page-title i {
-            color: #ef4444; /* Red for crisis context */
-            margin-right: 16px;
-            font-size: 24px;
-        }
-        
-        /* Custom Layout for 3 Sections */
-        .content-layout {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            gap: 24px;
-        }
-        
-        .top-section {
-            display: flex;
-            gap: 24px;
-            flex: 1;
-        }
-
-        .card {
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 32px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            border-left: none;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-bg {
-            flex: 1;
-            border-left: none;
-        }
-        
-        .card-crisis {
-            flex: 1;
-            border-left: none;
-        }
-
-        .card-diagram {
-            height: 180px;
-            border-left: none;
             justify-content: center;
-        }
-
-        .card-header {
-            display: flex;
             align-items: center;
-            margin-bottom: 20px;
-        }
-        .card-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 16px;
-            font-size: 18px;
-        }
-        .card-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1f2937;
-        }
-        
-        /* Icon Colors */
-        .icon-bg { background-color: transparent; color: #3b82f6; }
-        .icon-crisis { background-color: transparent; color: #ef4444; }
-        .icon-diagram { background-color: transparent; color: #f59e0b; }
-
-        .card-content {
-            color: #4b5563;
-            font-size: 15px;
-            line-height: 1.6;
-            flex: 1;
-        }
-        .bullet-list {
-            list-style: none;
             padding: 0;
-            margin: 0;
         }
-        .bullet-list li {
-            position: relative;
-            padding-left: 16px;
-            margin-bottom: 10px;
-        }
-        .bullet-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: #9ca3af;
-            font-weight: bold;
-        }
-
-        .highlight-text {
-            font-weight: 600;
-            color: #111827;
-            background-color: #f3f4f6;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        /* Flow Diagram Styling */
-        .flow-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-            width: 100%;
-        }
-        .flow-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            width: 180px;
-            padding: 16px;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
-            background-color: #f9fafb;
-        }
-        .flow-item.highlight {
-            border-color: #ef4444;
-            background-color: #fef2f2;
-            border-left: 4px solid #ef4444;
-        }
-        .flow-item.end {
-            border-color: #ef4444;
-            background-color: #fef2f2;
-            border-left: 4px solid #ef4444;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        }
-        
-        .flow-icon {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: #6b7280;
-        }
-        .highlight .flow-icon { color: #1e293b; }
-        .end .flow-icon { color: #1e293b; }
-        
-        .flow-text {
-            font-size: 14px;
-            font-weight: 700;
-            color: #374151;
-            line-height: 1.3;
-        }
-        .highlight .flow-text { color: #1e293b; }
-        .end .flow-text { color: #1e293b; }
-
-        .flow-arrow {
-            color: #9ca3af;
-            font-size: 20px;
-        }
-    </style>
-</head>
-<body>
-<div class="slide-container">
-<!-- Sidebar -->
-<aside class="sidebar">
-<div class="chapter-label">Current Chapter</div>
-<h1 class="chapter-title">배경과<br/>문제 정의</h1>
-<div class="nav-group">
-<div class="nav-item active">
-<span class="nav-number">01</span>
-<span class="nav-text">Context &amp; Diagnosis</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">02</span>
-<span class="nav-text">Strategic Choice</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">03</span>
-<span class="nav-text">Fundraising Execution</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">04</span>
-<span class="nav-text">Results &amp; Impact</span>
-</div>
-</div>
-</aside>
-<!-- Main Content -->
-<main class="main-content">
-<header class="page-header">
-<h2 class="page-title">
-<i class="fas fa-exclamation-triangle"></i>
-                    설립 직후 직면한 통제 불가능한 외부 위기
-                </h2>
-</header>
-<div class="content-layout">
-<div class="top-section">
-<!-- 1. 배경 (Background) -->
-<div class="card card-bg">
-<div class="card-header">
-<div class="card-icon icon-bg"><i class="fas fa-history"></i></div>
-<h3 class="card-title">배경 (Background)</h3>
-</div>
-<div class="card-content">
-<ul class="bullet-list">
-<li>
-<p>개인 PC 설치형 <strong>로보어드바이저 판매</strong>를 핵심 아이템으로 출발</p>
-</li>
-<li>
-<p>'우리만의 매출로 성장'이라는 비교적 <strong>폐쇄적인 방향</strong>에서 출발</p>
-</li>
-<li>
-<p>설립 직후 통제 불가능한 <span class="highlight-text">외부 위기 발생: 코로나19</span></p>
-</li>
-</ul>
-</div>
-</div>
-<!-- 2. 초기 위기 인식 (Crisis Recognition) -->
-<div class="card card-crisis">
-<div class="card-header">
-<div class="card-icon icon-crisis"><i class="fas fa-bolt"></i></div>
-<h3 class="card-title">초기 위기 인식</h3>
-</div>
-<div class="card-content">
-<ul class="bullet-list">
-<li>
-<p>법인의 진입 시장: <strong>금융 산업</strong> (국내 정책 및 글로벌 환경에 고도로 민감)</p>
-</li>
-<li>
-<p>초기 스타트업 특성상 <strong>금융위기 = 즉각적인 재무 위기</strong> 가능성</p>
-</li>
-<li>
-<p>업력이 짧은 금융 IT 기업에 대한 <strong>낮은 시장 신뢰</strong> 및 실적 가시화 장기 소요</p>
-</li>
-<li>
-<p>팬데믹 지속 기간의 <strong>극심한 불확실성</strong></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<!-- 3. 도식화 (Diagram) -->
-<div class="card card-diagram">
-<div class="card-header" style="margin-bottom: 10px;">
-<div class="card-icon icon-diagram"><i class="fas fa-project-diagram"></i></div>
-<h3 class="card-title">위기 전이 메커니즘</h3>
-</div>
-<div class="flow-container">
-<div class="flow-item highlight">
-<i class="fas fa-virus flow-icon"></i>
-<span class="flow-text">코로나19<br/>팬데믹</span>
-</div>
-<i class="fas fa-chevron-right flow-arrow"></i>
-<div class="flow-item">
-<i class="fas fa-globe-americas flow-icon"></i>
-<span class="flow-text">글로벌<br/>금융 충격</span>
-</div>
-<i class="fas fa-chevron-right flow-arrow"></i>
-<div class="flow-item">
-<i class="fas fa-landmark flow-icon"></i>
-<span class="flow-text">금융 산업<br/>전반 위축</span>
-</div>
-<i class="fas fa-chevron-right flow-arrow"></i>
-<div class="flow-item end">
-<i class="fas fa-coins flow-icon"></i>
-<span class="flow-text">초기 스타트업<br/>자금 리스크</span>
-</div>
-</div>
-</div>
-</div>
-</main>
-</div>`,
-        3: `<!DOCTYPE html>
-
-<html lang="ko">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Chapter 1. 진짜 문제 인식</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f3f4f6;
-        }
-        .slide-container {
-            width: 1280px;
-            height: 720px;
-            background-color: #ffffff;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-        }
-        /* Left Sidebar */
-        .sidebar {
-            width: 280px;
-            background-color: #051c2c;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            padding: 60px 40px;
-            flex-shrink: 0;
-        }
-        .chapter-label {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #9ca3af;
-            margin-bottom: 16px;
-            font-weight: 700;
-        }
-        .chapter-title {
-            font-size: 32px;
-            font-weight: 900;
-            line-height: 1.3;
-            margin-bottom: 40px;
-            color: #ffffff;
-        }
-        .nav-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 24px;
-            opacity: 0.5;
-            transition: opacity 0.3s;
-        }
-        .nav-item.active {
-            opacity: 1;
-            color: #60a5fa;
-        }
-        .nav-number {
-            font-size: 12px;
-            font-weight: 700;
-            margin-right: 12px;
-            width: 20px;
-        }
-        .nav-text {
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            padding: 50px 70px;
-            background-color: #f9fafb;
-            display: flex;
-            flex-direction: column;
-        }
-        .page-header {
-            margin-bottom: 30px;
-            border-bottom: 1px solid #e5e7eb;
-            padding-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-        .page-title {
-            font-size: 28px;
-            font-weight: 800;
-            color: #111827;
-            display: flex;
-            align-items: center;
-        }
-        .page-title i {
-            color: #ef4444;
-            margin-right: 16px;
-            font-size: 24px;
-        }
-
-        /* Content Layout */
-        .content-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            flex: 1;
-        }
-
-        /* Top Section: Analysis & Chart */
-        .top-section {
-            display: flex;
-            gap: 24px;
-            height: 280px; /* Fixed height for consistency */
-        }
-        
-        .analysis-box {
-            flex: 1;
-            background-color: white;
-            border-radius: 8px;
-            padding: 24px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border-left: none;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .section-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-        }
-        .section-title i {
-            margin-right: 10px;
-            color: #4b5563;
-        }
-
-        .insight-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            margin-bottom: 1px;
-        }
-        .insight-list li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 10px;
-            font-size: 15px;
-            color: #374151;
-            line-height: 1.5;
-        }
-        .insight-list li::before {
-            content: "•";
-            position: absolute;
-            left: 4px;
-            color: #1e293b;
-            font-weight: bold;
-        }
-        
-        .indicator-tags {
-            margin-top: 1px;
-            margin-bottom: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .indicator-tag {
-            background-color: #f3f4f6;
-            color: #4b5563;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-            border: 1px solid #e5e7eb;
-        }
-
-        .chart-box {
-            flex: 1;
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border: 1px solid #e5e7eb;
-            display: flex;
-            flex-direction: column;
-        }
-        .chart-image-container {
-            flex: 1;
+        .slide-image {
             width: 100%;
             height: 100%;
-            position: relative;
-            background-color: #f9fafb;
-            border-radius: 4px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .chart-image {
-            max-width: 100%;
-            max-height: 100%;
             object-fit: contain;
-        }
-        .chart-caption {
-            font-size: 12px;
-            color: #6b7280;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        /* Bottom Section: News Cards */
-        .bottom-section {
-            display: flex;
-            gap: 24px;
-            flex: 1;
-        }
-        
-        .news-card {
-            flex: 1;
-            background-color: #fff;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            transition: transform 0.2s;
-        }
-        .news-card::before {
-            content: "";
-            position: absolute;
-            top: 24px;
-            bottom: 24px;
-            left: 0;
-            width: 4px;
-            background-color: transparent;
-        }
-        .news-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-        }
-        .news-card.alert::before { background-color: transparent; }
-        .news-card.info::before { background-color: transparent; }
-
-        .news-source {
-            font-size: 12px;
-            color: #6b7280;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            padding-left: 16px;
-        }
-        .news-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #111827;
-            margin-bottom: 12px;
-            line-height: 1.4;
-            padding-left: 16px;
-            min-height: 50px; /* Align heights */
-        }
-        .news-body {
-            font-size: 14px;
-            color: #4b5563;
-            line-height: 1.6;
-            padding-left: 16px;
-            border-top: 1px solid #f3f4f6;
-            padding-top: 12px;
-            margin-top: auto;
-        }
-        
-        /* Decorative Label */
-        .news-label {
-            position: absolute;
-            top: -10px;
-            right: 20px;
-            background-color: #1f2937;
-            color: white;
-            font-size: 10px;
-            padding: 2px 8px;
-            border-radius: 2px;
-            text-transform: uppercase;
-            font-weight: 700;
+            display: block;
         }
     </style>
 </head>
 <body>
-<div class="slide-container">
-<!-- Sidebar -->
-<aside class="sidebar">
-<div class="chapter-label">Current Chapter</div>
-<h1 class="chapter-title">배경과<br/>문제 정의</h1>
-<div class="nav-group">
-<div class="nav-item active">
-<span class="nav-number">01</span>
-<span class="nav-text">Context &amp; Diagnosis</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">02</span>
-<span class="nav-text">Strategic Choice</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">03</span>
-<span class="nav-text">Fundraising Execution</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">04</span>
-<span class="nav-text">Results &amp; Impact</span>
-</div>
-</div>
-</aside>
-<!-- Main Content -->
-<main class="main-content">
-<header class="page-header">
-<h2 class="page-title">
-<i class="fas fa-magnifying-glass-chart"></i>
-<p>'진짜 문제'에 대한 심층적 인식과 판단 근거</p>
-</h2>
-</header>
-<div class="content-wrapper">
-<!-- Top Section -->
-<div class="top-section">
-<!-- Insight Box -->
-<div class="analysis-box">
-<div class="section-title">
-<i class="fas fa-brain"></i>
-<span>핵심 인식 (Key Insight)</span>
-</div>
-<ul class="insight-list">
-<li>단순한 질병 이슈가 아닌 <strong>글로벌 금융 시스템 위기</strong>로 인식</li>
-<li>각국의 무역·여행·산업 전반 <strong>동시다발적 봉쇄(Lockdown)</strong> 시작</li>
-<li>2000년대 후반 <span class="text-red-600 font-bold">서브프라임 모기지 사태보다 심각한 국면</span>으로 판단</li>
-</ul>
-<div class="indicator-tags">
-<span class="indicator-tag"><i class="fas fa-check mr-1"></i>시장 뉴스</span>
-<span class="indicator-tag"><i class="fas fa-check mr-1"></i>규제/정책 변화</span>
-<span class="indicator-tag"><i class="fas fa-check mr-1"></i>KOSPI/KOSDAQ</span>
-<span class="indicator-tag text-red-600 border-red-200 bg-red-50"><i class="fas fa-chart-line mr-1"></i>시장 공포 지수 (VIX)</span>
-</div>
-</div>
-<!-- Chart Box -->
-<div class="chart-box">
-<div class="section-title">
-<i class="fas fa-chart-area"></i>
-<span>참고 지표: 시장 변동성 지수 (VIX)</span>
-</div>
-<div class="chart-image-container">
-<img alt="VIX Index Chart showing spike in 2020" class="chart-image" src="assets/images/vix지수.jpg"/>
-</div>
-<div class="chart-caption">
-                        * 2020년 3월 팬데믹 선언 직후 역대 최고 수준 급등 (불확실성 극대화)
-                    </div>
-</div>
-</div>
-<!-- Bottom Section: News Cards -->
-<div class="bottom-section">
-<!-- News Card 1 -->
-<div class="news-card alert">
-<div class="news-label">Market Warning</div>
-<div class="news-source">
-<span>하나금융경영연구소</span>
-<span>2020.02.16</span>
-</div>
-<h3 class="news-title">“코로나19 경제적 피해,<br/>사스(SARS) 충격 뛰어 넘을 것”</h3>
-<div class="news-body">
-<p>사태 장기화 시 제조업 전반 타격 불가피. 코로나19의 경제적 파급력은 과거 사스 충격보다 훨씬 강력할 가능성 제기됨.</p>
-</div>
-</div>
-<!-- News Card 2 -->
-<div class="news-card info">
-<div class="news-label">Industry Impact</div>
-<div class="news-source">
-<span>디지털타임스</span>
-<span>2020.06.21</span>
-</div>
-<h3 class="news-title">코로나19 팬데믹에 급속 위축…<br/>신산업 발굴·융합 시급해져</h3>
-<div class="news-body">
-<p>기업 영업이익률 급감 및 투자심리 급속 위축. 생산·수출 감소세 뚜렷하며 해외직접투자 규모 15.3% 감소 기록.</p>
-</div>
-</div>
-</div>
-</div>
-</main>
-</div>
+    <div class="slide-container">
+        <img src="assets/images/전략1-2.png" alt="전략1-2" class="slide-image" />
+    </div>
+</body>
+</html>`,
+        3: `<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>전략1-3</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+        }
+        .slide-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <img src="assets/images/전략1-3.png" alt="전략1-3" class="slide-image" />
+    </div>
 </body>
 </html>`,
         4: `<!DOCTYPE html>
-
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Chapter 1. 나의 역할과 책임</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>전략1-4</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
             padding: 0;
-            background-color: #f3f4f6;
-            overflow: hidden;
         }
         .slide-container {
             width: 1280px;
@@ -2956,429 +2293,41 @@ document.addEventListener("DOMContentLoaded", () => {
             position: relative;
             overflow: hidden;
             display: flex;
-        }
-        /* Left Sidebar */
-        .sidebar {
-            width: 280px;
-            background-color: #051c2c;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            padding: 60px 40px;
-            flex-shrink: 0;
-        }
-        .chapter-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #9ca3af;
-            margin-bottom: 16px;
-            font-weight: 700;
-        }
-        .chapter-title {
-            font-size: 30px;
-            font-weight: 900;
-            line-height: 1.3;
-            margin-bottom: 40px;
-            color: #ffffff;
-        }
-        .nav-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 24px;
-            opacity: 0.5;
-            transition: opacity 0.3s;
-        }
-        .nav-item.active {
-            opacity: 1;
-            color: #60a5fa;
-        }
-        .nav-number {
-            font-size: 12px;
-            font-weight: 700;
-            margin-right: 12px;
-            width: 20px;
-        }
-        .nav-text {
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            padding: 40px 60px;
-            background-color: #f9fafb;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .page-header {
-            margin-bottom: 20px;
-            border-bottom: 1px solid #e5e7eb;
-            padding-bottom: 12px;
-        }
-        .page-title {
-            font-size: 24px;
-            font-weight: 800;
-            color: #111827;
-            display: flex;
-            align-items: center;
-            line-height: 1.3;
-        }
-        .page-title i {
-            color: #3b82f6;
-            margin-right: 12px;
-            font-size: 20px;
-        }
-        
-        /* Custom Layout for 3 Sections */
-        .content-layout {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            gap: 16px;
-            overflow: hidden;
-        }
-        
-        .top-section {
-            display: flex;
-            gap: 20px;
-            flex: 1;
-            min-height: 0;
-        }
-
-        .card {
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            border-left: none;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .card-org {
-            flex: 1;
-            border-left: none;
-        }
-        
-        .card-role {
-            flex: 1.2;
-            border-left: none;
-            background-color: #ffffff;
-            border: 1px solid #e5e7eb;
-        }
-
-        .card-diagram {
-            height: 160px;
-            border-left: none;
             justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .card-header {
-            display: flex;
             align-items: center;
-            margin-bottom: 12px;
-        }
-        .card-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 12px;
-            font-size: 16px;
-        }
-        .card-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1f2937;
-        }
-        
-        /* Icon Colors */
-        .icon-org { background-color: #f1f5f9; color: #64748b; }
-        .icon-role { background-color: #dbeafe; color: #3b82f6; }
-        .icon-diagram { background-color: #d1fae5; color: #10b981; }
-
-        .card-content {
-            color: #4b5563;
-            font-size: 13px;
-            line-height: 1.5;
-            flex: 1;
-            overflow: hidden;
-        }
-        
-        /* Sub-list for roles */
-        .role-group {
-            margin-bottom: 12px;
-        }
-        .role-title {
-            font-weight: 700;
-            color: #374151;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            font-size: 13px;
-        }
-        .role-title i {
-            margin-right: 6px;
-            font-size: 12px;
-            color: #9ca3af;
-        }
-        
-        .bullet-list {
-            list-style: none;
             padding: 0;
-            margin: 0;
         }
-        .bullet-list li {
-            position: relative;
-            padding-left: 14px;
-            margin-bottom: 4px;
-            font-size: 12px;
-        }
-        .bullet-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: #9ca3af;
-            font-weight: bold;
-        }
-
-        /* Flow Diagram Styling */
-        .flow-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 20px;
+        .slide-image {
             width: 100%;
-            gap: 20px;
+            height: 100%;
+            object-fit: contain;
+            display: block;
         }
-        .flow-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            width: 150px;
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            background-color: #ffffff;
-            z-index: 10;
-        }
-        .flow-item.hub {
-            border-color: #3b82f6;
-            background-color: #eff6ff;
-            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
-            transform: scale(1.05);
-        }
-        .flow-item.external {
-            border-color: #e5e7eb;
-            background-color: #f9fafb;
-            border-style: dashed;
-        }
-        
-        .flow-icon {
-            font-size: 20px;
-            margin-bottom: 8px;
-            color: #6b7280;
-        }
-        .hub .flow-icon { color: #2563eb; }
-        
-        .flow-text {
-            font-size: 12px;
-            font-weight: 700;
-            color: #374151;
-            line-height: 1.3;
-        }
-        .hub .flow-text { color: #1e40af; }
-
-        .flow-arrow-container {
-            display: flex;
-            align-items: center;
-            color: #94a3b8;
-            font-size: 14px;
-            padding: 0 10px;
-        }
-        .flow-arrow-line {
-            height: 2px;
-            width: 40px;
-            background-color: #cbd5e1;
-            position: relative;
-        }
-        .flow-arrow-line::before, .flow-arrow-line::after {
-            content: '';
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-top: 2px solid #cbd5e1;
-            border-right: 2px solid #cbd5e1;
-            top: -3px;
-        }
-        .flow-arrow-line::before {
-            left: 0;
-            transform: rotate(-135deg);
-        }
-        .flow-arrow-line::after {
-            right: 0;
-            transform: rotate(45deg);
-        }
-
     </style>
 </head>
 <body>
-<div class="slide-container">
-<!-- Sidebar -->
-<aside class="sidebar">
-<div class="chapter-label">Current Chapter</div>
-<h1 class="chapter-title">조직 구성과<br/>역할 정의</h1>
-<div class="nav-group">
-<div class="nav-item active">
-<span class="nav-number">01</span>
-<span class="nav-text">Context &amp; Diagnosis</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">02</span>
-<span class="nav-text">Strategic Choice</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">03</span>
-<span class="nav-text">Fundraising Execution</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">04</span>
-<span class="nav-text">Results &amp; Impact</span>
-</div>
-</div>
-</aside>
-<!-- Main Content -->
-<main class="main-content">
-<header class="page-header">
-<h2 class="page-title">
-<i class="fas fa-users-cog"></i>
-                    위기 대응을 위한 전략적 커뮤니케이션 및 역할 재정립
-                </h2>
-</header>
-<div class="content-layout">
-<div class="top-section">
-<!-- 1. 조직 구성 (Organization) -->
-<div class="card card-org">
-<div class="card-header">
-<div class="card-icon icon-org"><i class="fas fa-sitemap"></i></div>
-<h3 class="card-title">R&amp;R</h3>
-</div>
-<div class="card-content">
-<div class="role-group">
-<div class="role-title"><i class="fas fa-user-tie"></i> CEO</div>
-<ul class="bullet-list">
-<li><p>외부 사업체 제휴 및 협업 구조 설계</p></li>
-<li><p>기존 산업 협력업체 네트워크 관리</p></li>
-<li><p>대외 협력 전반 및 영업 총괄</p></li>
-</ul>
-</div>
-<div class="role-group" style="margin-bottom: 0;">
-<div class="role-title"><i class="fas fa-code"></i> 개발자</div>
-<ul class="bullet-list">
-<li><p>로보어드바이저 서비스 안정화</p></li>
-<li><p>알고리즘 및 서비스 고도화 개발 집중</p></li>
-</ul>
-</div>
-</div>
-</div>
-<!-- 2. 나의 역할 (My Role) -->
-<div class="card card-role">
-<div class="card-header">
-<div class="card-icon icon-role"><i class="fas fa-chess-knight"></i></div>
-<h3 class="card-title">나의 역할</h3>
-</div>
-<div class="card-content">
-<div class="role-group">
-<div class="role-title" style="color: #1e40af;"><i class="fas fa-bullseye" style="color: #3b82f6;"></i> 전략적 커뮤니케이션 허브</div>
-<p style="font-size: 14px; margin-bottom: 12px; color: #4b5563;">내부 조직과 CEO 사이의 의사결정 조율 및 외부 연결</p>
-</div>
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-<ul class="bullet-list">
-<li><p>환경 분석 및 리스크 요인 정리</p></li>
-<li><p>필요 제반 사항 도출·공유</p></li>
-<li><p>보완 과제 정의 및 실행 관리</p></li>
-</ul>
-<ul class="bullet-list">
-<li><p>외부 커뮤니케이션(IR) 동행</p></li>
-<li><p>운영 자금 계획 및 운용</p></li>
-<li><p>초기 핵심 고객 관리</p></li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<!-- 3. 도식화 (Communication Flow) -->
-<div class="card card-diagram">
-<div class="card-header" style="margin-bottom: 0; padding-bottom: 10px;">
-<div class="card-icon icon-diagram"><i class="fas fa-project-diagram"></i></div>
-<h3 class="card-title">커뮤니케이션 구조도</h3>
-</div>
-<div class="flow-container">
-<!-- Internal -->
-<div class="flow-item">
-<i class="fas fa-laptop-code flow-icon"></i>
-<span class="flow-text">내부 조직<br/>(개발/운영)</span>
-</div>
-<!-- Arrow -->
-<div class="flow-arrow-container">
-<div class="flow-arrow-line"></div>
-</div>
-<!-- Me (Hub) -->
-<div class="flow-item hub">
-<i class="fas fa-user-cog flow-icon"></i>
-<span class="flow-text">전략기획 (나)<br/>Communication Hub</span>
-</div>
-<!-- Arrow -->
-<div class="flow-arrow-container">
-<div class="flow-arrow-line"></div>
-</div>
-<!-- CEO -->
-<div class="flow-item">
-<i class="fas fa-user-tie flow-icon"></i>
-<span class="flow-text">CEO<br/>(의사결정)</span>
-</div>
-<!-- Arrow -->
-<div class="flow-arrow-container">
-<div class="flow-arrow-line"></div>
-</div>
-<!-- External -->
-<div class="flow-item external">
-<i class="fas fa-handshake flow-icon"></i>
-<span class="flow-text">외부 이해관계자<br/>(투자자/제휴사)</span>
-</div>
-</div>
-</div>
-</div>
-</main>
-</div>
+    <div class="slide-container">
+        <img src="assets/images/전략1-4.png" alt="전략1-4" class="slide-image" />
+    </div>
 </body>
 </html>`,
         5: `<!DOCTYPE html>
-
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Chapter 2. 전략 옵션과 선택</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>전략1-5</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
             padding: 0;
-            background-color: #f3f4f6;
-            overflow: hidden;
         }
         .slide-container {
             width: 1280px;
@@ -3387,469 +2336,41 @@ document.addEventListener("DOMContentLoaded", () => {
             position: relative;
             overflow: hidden;
             display: flex;
-        }
-        /* Left Sidebar */
-        .sidebar {
-            width: 280px;
-            background-color: #051c2c;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            padding: 60px 40px;
-            flex-shrink: 0;
-        }
-        .chapter-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #9ca3af;
-            margin-bottom: 16px;
-            font-weight: 700;
-        }
-        .chapter-title {
-            font-size: 30px;
-            font-weight: 900;
-            line-height: 1.3;
-            margin-bottom: 40px;
-            color: #ffffff;
-        }
-        .nav-item {
-            display: flex;
+            justify-content: center;
             align-items: center;
-            margin-bottom: 24px;
-            opacity: 0.5;
-            transition: opacity 0.3s;
+            padding: 0;
         }
-        .nav-item.active {
-            opacity: 1;
-            color: #60a5fa;
-        }
-        .nav-number {
-            font-size: 12px;
-            font-weight: 700;
-            margin-right: 12px;
-            width: 20px;
-        }
-        .nav-text {
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            padding: 50px 70px;
-            background-color: #f8fafc;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .page-header {
-            margin-bottom: 20px;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: end;
-        }
-        .page-title {
-            font-size: 24px;
-            font-weight: 800;
-            color: #1e293b;
-            display: flex;
-            align-items: center;
-        }
-        .page-subtitle {
-            font-size: 14px;
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        /* Strategy Framework Layout */
-        .framework-container {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+        .slide-image {
+            width: 100%;
             height: 100%;
-            overflow: hidden;
-        }
-
-        /* 1. Top Strategy Box */
-        .strategy-top {
-            background-color: #1e40af;
-            color: white;
-            padding: 20px 24px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 6px -1px rgba(30, 64, 175, 0.3);
-            flex-shrink: 0;
-        }
-        .strategy-badge {
-            background-color: rgba(255,255,255,0.2);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            display: inline-block;
-        }
-        .strategy-main-text {
-            font-size: 22px;
-            font-weight: 800;
-        }
-        .strategy-sub-text {
-            font-size: 14px;
-            opacity: 0.9;
-            margin-top: 4px;
-            font-weight: 400;
-        }
-
-        /* 2. Middle Pillars (Options Comparison) */
-        .pillars-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            flex: 1;
-            min-height: 0;
-        }
-        .pillar-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 18px;
-            border-top: 4px solid #cbd5e1;
-            box-shadow: 0 2px 4px -1px rgba(0,0,0,0.06);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: visible;
-        }
-        /* Status Badges */
-        .status-badge {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            font-size: 9px;
-            font-weight: 700;
-            padding: 3px 6px;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
-        
-        /* Option A: Dropped */
-        .pillar-card.gray { 
-            border-top-color: #94a3b8; 
-            background-color: #f8fafc;
-        }
-        .pillar-card.gray .pillar-title { color: #64748b; }
-        .pillar-card.gray .status-badge { background-color: #e2e8f0; color: #64748b; }
-        .pillar-card.gray .pillar-icon { background-color: #e2e8f0; color: #64748b; }
-
-        /* Option B: Pivot */
-        .pillar-card.amber { 
-            border-top-color: #f59e0b; 
-        }
-        .pillar-card.amber .status-badge { background-color: #fef3c7; color: #d97706; }
-        .pillar-card.amber .pillar-icon { background-color: #fffbeb; color: #f59e0b; }
-
-        /* Final Choice: Selected */
-        .pillar-card.blue { 
-            border-top-color: #2563eb; 
-            border: 2px solid #2563eb;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-        .pillar-card.blue .status-badge { background-color: #dbeafe; color: #1e40af; }
-        .pillar-card.blue .pillar-icon { background-color: #eff6ff; color: #2563eb; }
-
-        .pillar-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 12px;
-            font-size: 18px;
-        }
-
-        .pillar-title {
-            font-size: 16px;
-            font-weight: 800;
-            color: #1e293b;
-            margin-bottom: 10px;
-            padding-right: 60px;
-        }
-        
-        .pillar-section-title {
-            font-size: 10px;
-            font-weight: 700;
-            color: #94a3b8;
-            margin-top: 10px;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 3px;
+            object-fit: contain;
             display: block;
         }
-
-        .pillar-content {
-            font-size: 12px;
-            color: #475569;
-            line-height: 1.4;
-        }
-        .reason-text {
-            font-size: 12px;
-            line-height: 1.4;
-            margin-top: 4px;
-        }
-        .pillar-card.gray .reason-text { color: #ef4444; font-weight: 500; }
-        .pillar-card.amber .reason-text { color: #b45309; font-weight: 500; }
-        .pillar-card.blue .reason-text { color: #2563eb; font-weight: 500; }
-
-        /* 3. Bottom Foundation */
-        .foundation-box {
-            background-color: #f0f9ff;
-            border: 1px solid #bae6fd;
-            border-radius: 10px;
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            flex-shrink: 0;
-        }
-        .foundation-title-area {
-            width: 200px;
-            border-right: 2px solid #bae6fd;
-            margin-right: 24px;
-        }
-        .foundation-title {
-            font-size: 14px;
-            font-weight: 800;
-            color: #0369a1;
-            display: block;
-        }
-        .foundation-subtitle {
-            font-size: 10px;
-            color: #0ea5e9;
-            margin-top: 2px;
-            display: block;
-        }
-        .foundation-content {
-            flex: 1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .result-item {
-            display: flex;
-            align-items: center;
-            background-color: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1px solid #e0f2fe;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            flex: 1;
-            margin: 0 4px;
-        }
-        .result-icon {
-            width: 28px;
-            height: 28px;
-            background-color: #e0f2fe;
-            color: #0284c7;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            margin-right: 10px;
-            flex-shrink: 0;
-        }
-        .result-text {
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-        }
-        .result-label {
-            font-size: 9px;
-            color: #64748b;
-            font-weight: 600;
-        }
-        .result-value {
-            font-size: 12px;
-            color: #0f172a;
-            font-weight: 700;
-            white-space: nowrap;
-            line-height: 1.3;
-        }
-        .arrow-next {
-            color: #94a3b8;
-            font-size: 12px;
-            flex-shrink: 0;
-        }
-
     </style>
 </head>
 <body>
-<div class="slide-container">
-<!-- Sidebar -->
-<aside class="sidebar">
-<div class="chapter-label">Current Chapter</div>
-<h1 class="chapter-title">전략 옵션과<br/>최종 선택</h1>
-<div class="nav-group">
-<div class="nav-item">
-<span class="nav-number">01</span>
-<span class="nav-text">Context &amp; Diagnosis</span>
-</div>
-<div class="nav-item active">
-<span class="nav-number">02</span>
-<span class="nav-text">Strategic Choice</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">03</span>
-<span class="nav-text">Fundraising Execution</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">04</span>
-<span class="nav-text">Results &amp; Impact</span>
-</div>
-</div>
-</aside>
-<!-- Main Content -->
-<main class="main-content">
-<header class="page-header">
-<h2 class="page-title">
-<i class="fas fa-code-branch text-blue-600 mr-3"></i>
-                생존과 성장을 위한 전략적 옵션 비교 및 결단
-            </h2>
-<span class="page-subtitle"></span>
-</header>
-<div class="framework-container">
-<!-- 1. Top Strategy Box -->
-<div class="strategy-top">
-<div>
-<span class="strategy-badge">Final Decision</span>
-<div class="strategy-main-text">전환사채(CB) 발행을 통한 생존 자금 확보</div>
-<div class="strategy-sub-text">아이템 중심 성장에서 '투자 유치 중심 생존'으로 전략 급선회</div>
-</div>
-<i class="fas fa-hand-holding-dollar text-4xl opacity-50"></i>
-</div>
-<!-- 2. Middle Pillars (Options) -->
-<div class="pillars-grid">
-<!-- Option 1: Dropped -->
-<div class="pillar-card gray">
-<div class="status-badge">Dropped</div>
-<div class="pillar-icon">
-<i class="fab fa-youtube"></i>
-</div>
-<h3 class="pillar-title">옵션 1: 유튜버 협업/투자 제안</h3>
-<span class="pillar-section-title">주요 내용</span>
-<p class="pillar-content">
-                        주식 투자 방송 유튜버 제휴<br/>
-                        프로그램 방송 송출 및 판매<br/>
-                        투자 제안
-                    </p>
-<span class="pillar-section-title">배제 사유</span>
-<p class="reason-text">
-<i class="fas fa-times-circle mr-1"></i> 불완전판매 우려<br/>
-<i class="fas fa-times-circle mr-1"></i> 아이템 소유권 이전 요구<br/>
-<i class="fas fa-times-circle mr-1"></i> 장기적 자산 가치 상실 가능성
-                    </p>
-</div>
-<!-- Option 2: Pivot -->
-<div class="pillar-card amber">
-<div class="status-badge">Pivoted</div>
-<div class="pillar-icon">
-<i class="fas fa-building-columns"></i>
-</div>
-<h3 class="pillar-title">옵션 2: 제도권 등록</h3>
-<span class="pillar-section-title">주요 내용</span>
-<p class="pillar-content">
-                        금융당국 직접 라이선스 취득<br/>
-                        독자적 금융 브랜드 구축
-                    </p>
-<span class="pillar-section-title">한계점 (Pivot 요인)</span>
-<p class="reason-text">
-<i class="fas fa-exclamation-triangle mr-1"></i> 자본시장법 요건 미충족<br/>
-                        → 해당 옵션은 추후 제도권 금융사 제휴 전략으로 반영
-                    </p>
-</div>
-<!-- Option 3: Selected -->
-<div class="pillar-card blue">
-<div class="status-badge">Selected</div>
-<div class="pillar-icon">
-<i class="fas fa-file-signature"></i>
-</div>
-<h3 class="pillar-title">최종: 투자 유치 (CB)</h3>
-<span class="pillar-section-title">주요 내용</span>
-<p class="pillar-content">
-                        전환사채(CB) 발행<br/>
-                        산업 진출 교두보 파트너십
-                    </p>
-<span class="pillar-section-title">선택 이유</span>
-<p class="reason-text">
-<i class="fas fa-check-circle mr-1"></i> 경영권 영향 없는 조건<br/>
-<i class="fas fa-check-circle mr-1"></i> Runway 1년 이상 확보
-                    </p>
-</div>
-</div>
-<!-- 3. Bottom Foundation (Results) -->
-<div class="foundation-box">
-<div class="foundation-title-area">
-<span class="foundation-title">전략적 결과</span>
-<span class="foundation-subtitle">Strategic Outcome</span>
-</div>
-<div class="foundation-content">
-<div class="result-item">
-<div class="result-icon"><i class="fas fa-hourglass-half"></i></div>
-<div class="result-text">
-<span class="result-label">Runway</span>
-<span class="result-value">1년 이상 확보</span>
-</div>
-</div>
-<i class="fas fa-chevron-right arrow-next"></i>
-<div class="result-item">
-<div class="result-icon"><i class="fas fa-arrow-up-right-dots"></i></div>
-<div class="result-text">
-<span class="result-label">Fundraising</span>
-<span class="result-value">최초 3억 유치</span>
-</div>
-</div>
-<i class="fas fa-chevron-right arrow-next"></i>
-<div class="result-item">
-<div class="result-icon"><i class="fas fa-sack-dollar"></i></div>
-<div class="result-text">
-<span class="result-label">Expansion</span>
-<span class="result-value">동일 투자자 9억 증액</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</main>
-</div>
+    <div class="slide-container">
+        <img src="assets/images/전략1-5.png" alt="전략1-5" class="slide-image" />
+    </div>
 </body>
 </html>`,
         6: `<!DOCTYPE html>
-
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Chapter 2. 분석 과정과 의사결정 기여</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>전략1-6</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
             padding: 0;
-            background-color: #f3f4f6;
         }
         .slide-container {
             width: 1280px;
@@ -3858,977 +2379,41 @@ document.addEventListener("DOMContentLoaded", () => {
             position: relative;
             overflow: hidden;
             display: flex;
-        }
-        /* Left Sidebar */
-        .sidebar {
-            width: 280px;
-            background-color: #051c2c;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            padding: 60px 40px;
-            flex-shrink: 0;
-        }
-        .chapter-label {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #9ca3af;
-            margin-bottom: 16px;
-            font-weight: 700;
-        }
-        .chapter-title {
-            font-size: 32px;
-            font-weight: 900;
-            line-height: 1.3;
-            margin-bottom: 40px;
-            color: #ffffff;
-        }
-        .nav-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 24px;
-            opacity: 0.5;
-            transition: opacity 0.3s;
-        }
-        .nav-item.active {
-            opacity: 1;
-            color: #60a5fa;
-        }
-        .nav-number {
-            font-size: 12px;
-            font-weight: 700;
-            margin-right: 12px;
-            width: 20px;
-        }
-        .nav-text {
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            padding: 50px 70px;
-            background-color: #f8fafc;
-            display: flex;
-            flex-direction: column;
-        }
-        .page-header {
-            margin-bottom: 24px;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: end;
-        }
-        .page-title {
-            font-size: 26px;
-            font-weight: 800;
-            color: #1e293b;
-            display: flex;
-            align-items: center;
-        }
-        .page-subtitle {
-            font-size: 16px;
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        /* Content Layout */
-        .content-body {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            flex: 1;
-        }
-
-        /* 1. Top Section: Analysis & News */
-        .top-row {
-            display: flex;
-            gap: 20px;
-            height: 240px;
-        }
-        
-        /* Analysis Box */
-        .analysis-container {
-            flex: 1.2;
-            background-color: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-        }
-        .box-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 16px;
-            font-weight: 700;
-            color: #1e293b;
-            font-size: 16px;
-        }
-        .box-header i {
-            margin-right: 8px;
-            color: #3b82f6;
-        }
-        .analysis-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            flex: 1;
-        }
-        .data-point {
-            background-color: #f8fafc;
-            padding: 12px;
-            border-radius: 8px;
-            border-left: none;
-        }
-        .data-label {
-            font-size: 12px;
-            color: #64748b;
-            display: block;
-            margin-bottom: 4px;
-            font-weight: 600;
-        }
-        .data-value {
-            font-size: 14px;
-            color: #0f172a;
-            font-weight: 700;
-            line-height: 1.4;
-        }
-        .insight-box {
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 12px;
-            margin-top: 12px;
-            border: 1px solid #e5e7eb;
-        }
-        .insight-text {
-            font-size: 13px;
-            color: #1e293b;
-            font-weight: 600;
-            line-height: 1.5;
-        }
-
-        /* News Box */
-        .news-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            height: 100%;
-        }
-        .news-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 16px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            position: relative;
-            padding-left: 20px;
-            min-height: 0;
-        }
-        .news-card::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 12px;
-            bottom: 12px;
-            width: 4px;
-            background-color: transparent;
-            border-radius: 0 4px 4px 0;
-        }
-        .news-card.highlight::before {
-            background-color: transparent;
-        }
-        .news-title {
-            font-size: 12px;
-            font-weight: 700;
-            color: #334155;
-            margin-bottom: 6px;
-            line-height: 1.3;
-        }
-        .news-meta {
-            font-size: 9px;
-            color: #94a3b8;
-            display: flex;
-            justify-content: space-between;
-        }
-        .news-snippet {
-            font-size: 10px;
-            color: #64748b;
-            margin-top: 6px;
-            line-height: 1.4;
-        }
-
-        /* 2. Middle Section: Pivot Banner */
-        .pivot-banner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: white; /* Changed to white for cleaner look */
-            border-radius: 50px; /* Pill shape */
-            padding: 10px 30px;
-            border: 2px solid #e2e8f0;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-        }
-        /* Background gradient effect */
-        .pivot-banner::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            right: 0;
-            background-color: transparent;
-            z-index: 0;
-        }
-        
-        .pivot-side {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 1;
-        }
-        .pivot-side.right {
-            justify-content: flex-end;
-        }
-        .pivot-label {
-            font-size: 12px;
-            color: #64748b;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-        .pivot-text {
-            font-size: 16px;
-            font-weight: 800;
-            color: #475569;
-        }
-        .pivot-side.right .pivot-text {
-            color: #1e293b;
-        }
-        .pivot-arrow {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-            background-color: transparent;
-            color: #1e293b;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            font-size: 14px;
-            border: 2px solid #e5e7eb;
-        }
-
-        /* 3. Bottom Section: Flow & Contribution */
-        .bottom-row {
-            flex: 1;
-            background-color: white;
-            border-radius: 12px;
-            padding: 20px 24px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-        }
-        .flow-process {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            position: relative;
-            padding-top: 8px;
-        }
-        /* Connecting Line */
-        .flow-process::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 60px;
-            right: 60px;
-            height: 2px;
-            background-color: #e2e8f0;
-            z-index: 0;
-        }
-        
-        .process-step {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
             align-items: center;
-            width: 22%;
-            text-align: center;
+            padding: 0;
         }
-        .step-icon {
-            width: 44px;
-            height: 44px;
-            background-color: white;
-            border: 2px solid #cbd5e1;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            color: #64748b;
-            margin-bottom: 8px;
-            transition: all 0.3s;
-        }
-        .process-step:hover .step-icon {
-            border-color: #e5e7eb;
-            color: #1e293b;
-            background-color: #ffffff;
-            transform: translateY(-2px);
-        }
-        .process-step:last-child .step-icon {
-            background-color: #ffffff;
-            border-color: #e5e7eb;
-            color: #1e293b;
-        }
-        
-        .step-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 6px;
-        }
-        .step-desc {
-            font-size: 12px;
-            color: #64748b;
-            line-height: 1.3;
-            background-color: #f8fafc;
-            padding: 6px 8px;
-            border-radius: 6px;
+        .slide-image {
             width: 100%;
-        }
-        .step-desc p {
-            margin: 0;
-            line-height: 1.3;
-        }
-        .step-desc p + p {
-            margin-top: 4px;
-        }
-
-    </style>
-</head>
-<body>
-<div class="slide-container">
-<!-- Sidebar -->
-<aside class="sidebar">
-<div class="chapter-label">Current Chapter</div>
-<h1 class="chapter-title">전략 옵션과<br/>최종 선택</h1>
-<div class="nav-group">
-<div class="nav-item">
-<span class="nav-number">01</span>
-<span class="nav-text">Context &amp; Diagnosis</span>
-</div>
-<div class="nav-item active">
-<span class="nav-number">02</span>
-<span class="nav-text">Strategic Choice</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">03</span>
-<span class="nav-text">Fundraising Execution</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">04</span>
-<span class="nav-text">Results &amp; Impact</span>
-</div>
-</div>
-</aside>
-<!-- Main Content -->
-<main class="main-content">
-<header class="page-header">
-<h2 class="page-title">
-<i class="fas fa-magnifying-glass-chart text-blue-600 mr-3"></i>
-<p>데이터 기반 분석을 통한 과감한 전략적 피보팅</p>
-</h2>
-<span class="page-subtitle">Analysis &amp; Decision Making</span>
-</header>
-<div class="content-body">
-<!-- 1. Top Section -->
-<div class="top-row">
-<!-- Analysis Box -->
-<div class="analysis-container">
-<div class="box-header">
-<i class="fas fa-chart-pie"></i> 현황 분석 및 시장 기회 포착
-                    </div>
-<div class="analysis-grid">
-<div class="data-point">
-<span class="data-label">Runway / 재무</span>
-<p class="data-value">대표자 가수금 의존<br/>유효 버티기 기간 산출 불가</p>
-</div>
-<div class="data-point">
-<span class="data-label">매출 구조 / 한계</span>
-<p class="data-value">단일 프로그램 판매<br/>평균 객단가 약 100만 원</p>
-</div>
-</div>
-<div class="insight-box">
-<p class="insight-text">
-<i class="fas fa-lightbulb mr-2"></i><strong>Key Insight:</strong> 
-                            시장 변동성 확대 속에서 '안정적 수익률'을 입증한 로보어드바이저의 투자가치 확인 (예적금 대비 우월)
-                        </p>
-</div>
-</div>
-<!-- News Box -->
-<div class="news-container">
-<div class="news-card highlight">
-<h3 class="news-title">4대 은행 로보어드바이저 수익률,<br/>예적금보다 3배 높다</h3>
-<div class="news-snippet">
-<p>은행권 RA 펀드 평균 수익률 2.92% (vs 수신금리 0.81%). 불확실성 시대의 투자 대안 부상.</p>
-</div>
-<div class="news-meta mt-2">
-<span>이코노믹리뷰</span>
-<span>2020.10.21</span>
-</div>
-</div>
-<div class="news-card">
-<h3 class="news-title">대신증권, 장기투자?<br/>低보수 로보어드바이저가 답</h3>
-<div class="news-snippet">
-<p>총보수율 0.137%의 저렴한 비용 구조. 성과보수 체계로 장기 투자 수단으로서 효용성 검증.</p>
-</div>
-<div class="news-meta mt-2">
-<span>대신증권 보도자료</span>
-<span>2019.07.25</span>
-</div>
-</div>
-</div>
-</div>
-<!-- 2. Pivot Banner -->
-<div class="pivot-banner">
-<div class="pivot-side">
-<span class="pivot-label">Before</span>
-<span class="pivot-text">아이템 중심 성장 전략</span>
-</div>
-<div class="pivot-arrow">
-<i class="fas fa-arrow-right"></i>
-</div>
-<div class="pivot-side right">
-<span class="pivot-text">투자 유치 중심 생존 전략</span>
-<span class="pivot-label">After</span>
-</div>
-</div>
-<!-- 3. Bottom Section: Decision Flow -->
-<div class="bottom-row">
-<div class="box-header" style="margin-bottom: 20px;">
-<i class="fas fa-project-diagram"></i> 의사결정 프로세스 및 기여
-                </div>
-<div class="flow-process">
-<!-- Step 1 -->
-<div class="process-step">
-<div class="step-icon"><i class="fas fa-search-dollar"></i></div>
-<h4 class="step-title">분석 (Analysis)</h4>
-<div class="step-desc">
-<p>Runway 정밀 진단</p>
-<p>시장 수익률 비교</p>
-</div>
-</div>
-<!-- Step 2 -->
-<div class="process-step">
-<div class="step-icon"><i class="fas fa-comments-dollar"></i></div>
-<h4 class="step-title">제안 (Proposal)</h4>
-<div class="step-desc">
-<p>전략 방향 직접 제안</p>
-<p>재무/시장 근거 제시</p>
-</div>
-</div>
-<!-- Step 3 -->
-<div class="process-step">
-<div class="step-icon"><i class="fas fa-map"></i></div>
-<h4 class="step-title">설계 (Design)</h4>
-<div class="step-desc">
-<p>실행 로드맵 설계</p>
-<p>투트랙(Two-Track) 구조</p>
-</div>
-</div>
-<!-- Step 4 -->
-<div class="process-step">
-<div class="step-icon"><i class="fas fa-handshake"></i></div>
-<h4 class="step-title">실행 (Action)</h4>
-<div class="step-desc">
-<p>외부 커뮤니케이션</p>
-<p>가치 평가 및 협상</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</main>
-</div>
-</body>
-</html></html>`,
-        7: `<!DOCTYPE html>
-
-<html lang="ko">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Chapter 3. 실행, 협업, 그리고 결과</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f3f4f6;
-        }
-        .slide-container {
-            width: 1280px;
-            height: 720px;
-            background-color: #ffffff;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-        }
-        /* Left Sidebar */
-        .sidebar {
-            width: 280px;
-            background-color: #051c2c;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            padding: 60px 40px;
-            flex-shrink: 0;
-        }
-        .chapter-label {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #9ca3af;
-            margin-bottom: 16px;
-            font-weight: 700;
-        }
-        .chapter-title {
-            font-size: 32px;
-            font-weight: 900;
-            line-height: 1.3;
-            margin-bottom: 40px;
-            color: #ffffff;
-        }
-        .nav-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 24px;
-            opacity: 0.5;
-            transition: opacity 0.3s;
-        }
-        .nav-item.active {
-            opacity: 1;
-            color: #60a5fa;
-        }
-        .nav-number {
-            font-size: 12px;
-            font-weight: 700;
-            margin-right: 12px;
-            width: 20px;
-        }
-        .nav-text {
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            padding: 30px 50px;
-            background-color: #f8fafc;
-            display: flex;
-            flex-direction: column;
-        }
-        .page-header {
-            margin-bottom: 18px;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: end;
-        }
-        .page-title {
-            font-size: 22px;
-            font-weight: 800;
-            color: #1e293b;
-            display: flex;
-            align-items: center;
-        }
-        .page-subtitle {
-            font-size: 14px;
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        /* 2x2 Grid Layout */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 18px;
-            flex: 1;
-        }
-
-        /* Card Styles */
-        .result-card {
-            background-color: white;
-            border-radius: 12px;
-            padding: 18px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-        }
-        .card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #f1f5f9;
-        }
-        .card-icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-            font-size: 14px;
-        }
-        .card-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        /* 1. Quantitative Results */
-        .icon-growth { background-color: #eff6ff; color: #3b82f6; }
-        .stat-row {
-            display: flex;
-            align-items: flex-end;
-            margin-bottom: 12px;
-        }
-        .stat-value {
-            font-size: 36px;
-            font-weight: 900;
-            color: #1e293b;
-            line-height: 1;
-            margin-right: 6px;
-        }
-        .stat-unit {
-            font-size: 15px;
-            color: #64748b;
-            font-weight: 500;
-            margin-bottom: 6px;
-        }
-        .growth-badge {
-            background-color: transparent;
-            color: #1e293b;
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 700;
-            margin-left: auto;
-            margin-bottom: 6px;
-        }
-        .sub-stat-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: auto;
-        }
-        .sub-stat-box {
-            background-color: #f8fafc;
-            padding: 10px;
-            border-radius: 8px;
-        }
-        .sub-stat-label { font-size: 11px; color: #64748b; display: block; margin-bottom: 3px; }
-        .sub-stat-text { font-size: 13px; font-weight: 700; color: #334155; display: block; line-height: 1.3; }
-
-        /* 2. Execution Design */
-        .icon-design { background-color: transparent; color: #9333ea; }
-        .design-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
             height: 100%;
-        }
-        .design-item {
-            display: flex;
-            align-items: center;
-            background-color: #f3f4f6;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 13px;
-            color: #4b5563;
-        }
-        .design-icon-small {
-            color: #9333ea;
-            margin-right: 10px;
-            width: 18px;
-            text-align: center;
-        }
-
-        /* 3. Collaboration */
-        .icon-collab { background-color: transparent; color: #16a34a; }
-        .collab-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .collab-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 8px;
-        }
-        .collab-check {
-            color: #16a34a;
-            margin-right: 8px;
-            margin-top: 3px;
-            font-size: 12px;
-        }
-        .collab-text strong {
-            color: #334155;
-            font-weight: 700;
+            object-fit: contain;
             display: block;
-            font-size: 13px;
-            margin-bottom: 2px;
-        }
-        .collab-text p {
-            color: #64748b;
-            font-size: 12px;
-            margin: 0;
-            line-height: 1.4;
-        }
-        .quote-box {
-            margin-top: auto;
-            background-color: #ffffff;
-            border-left: none;
-            padding: 8px;
-            font-size: 12px;
-            font-style: italic;
-            color: #1e293b;
-            font-weight: 600;
-        }
-
-        /* 4. Qualitative Results */
-        .icon-qualitative { background-color: transparent; color: #ea580c; }
-        .qual-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            height: 100%;
-        }
-        .qual-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 12px 6px;
-            border: 1px solid #e5e7eb;
-        }
-        .qual-icon {
-            font-size: 18px;
-            color: #1e293b;
-            margin-bottom: 6px;
-        }
-        .qual-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 3px;
-        }
-        .qual-desc {
-            font-size: 11px;
-            color: #64748b;
         }
     </style>
 </head>
 <body>
-<div class="slide-container">
-<!-- Sidebar -->
-<aside class="sidebar">
-<div class="chapter-label">Chapter 3</div>
-<h1 class="chapter-title">실행, 협업,<br/>그리고 결과</h1>
-<div class="nav-group">
-<div class="nav-item">
-<span class="nav-number">01</span>
-<span class="nav-text">Context &amp; Diagnosis</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">02</span>
-<span class="nav-text">Strategic Choice</span>
-</div>
-<div class="nav-item active">
-<span class="nav-number">03</span>
-<span class="nav-text">Fundraising Execution</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">04</span>
-<span class="nav-text">Results &amp; Impact</span>
-</div>
-</div>
-</aside>
-<!-- Main Content -->
-<main class="main-content">
-<header class="page-header">
-<h2 class="page-title">
-<i class="fas fa-flag-checkered text-blue-600 mr-3"></i>
-                전략적 실행을 통한 투자 유치 및 성장 기반 확보
-            </h2>
-<span class="page-subtitle">Execution, Collaboration &amp; Outcomes</span>
-</header>
-<div class="content-grid">
-<!-- 1. Quantitative Results -->
-<div class="result-card">
-<div class="card-header">
-<div class="card-icon icon-growth"><i class="fas fa-coins"></i></div>
-<h3 class="card-title">정량적 성과 (Quantitative)</h3>
-</div>
-<div class="stat-row">
-<span class="stat-value">17억</span>
-<span class="stat-unit">원</span>
-<div class="growth-badge">총 투자 유치</div>
-</div>
-<div class="sub-stat-grid">
-<div class="sub-stat-box">
-<span class="sub-stat-label">단계별 유치 금액</span>
-<span class="sub-stat-text text-blue-700">3억 / 9억 / 5억</span>
-</div>
-<div class="sub-stat-box">
-<span class="sub-stat-label">자본금 변화</span>
-<span class="sub-stat-text text-blue-700">100만 원 → 9억 원</span>
-</div>
-</div>
-</div>
-<!-- 2. Execution Design -->
-<div class="result-card">
-<div class="card-header">
-<div class="card-icon icon-design"><i class="fas fa-compass-drafting"></i></div>
-<h3 class="card-title">실행 설계 (Execution Design)</h3>
-</div>
-<div class="design-list">
-<div class="design-item">
-<i class="fas fa-landmark design-icon-small"></i>
-<span>금융 정책 환경과 연계한 산업 성장성 강조</span>
-</div>
-<div class="design-item">
-<i class="fas fa-file-powerpoint design-icon-small"></i>
-<span>법인 설립 전 테스트 결과 중심 IR 자료 구성</span>
-</div>
-<div class="design-item">
-<i class="fas fa-users-gear design-icon-small"></i>
-<span>내부 조직 역량 점검 및 보완 계획 수립</span>
-</div>
-<div class="design-item">
-<i class="fas fa-user-tie design-icon-small"></i>
-<span>CEO 중심 대외 투자 유치 활동 전개</span>
-</div>
-</div>
-</div>
-<!-- 3. Collaboration -->
-<div class="result-card">
-<div class="card-header">
-<div class="card-icon icon-collab"><i class="fas fa-handshake"></i></div>
-<h3 class="card-title">협업과 커뮤니케이션</h3>
-</div>
-<ul class="collab-list">
-<li class="collab-item">
-<i class="fas fa-check-circle collab-check"></i>
-<div class="collab-text">
-<strong>지분 희석 우려 해소</strong>
-<p>생존과 지분 희석 간의 균형 문제 제기 및 조율</p>
-</div>
-</li>
-<li class="collab-item">
-<i class="fas fa-check-circle collab-check"></i>
-<div class="collab-text">
-<strong>내부 합의 도출</strong>
-<p>경영진 및 주주 설득을 통한 만장일치 투자 유치</p>
-</div>
-</li>
-<li class="collab-item">
-<i class="fas fa-check-circle collab-check"></i>
-<div class="collab-text">
-<strong>실사(DD) 대응</strong>
-<p>투자자 커뮤니케이션 및 실사 자료 완벽 대응</p>
-</div>
-</li>
-</ul>
-<div class="quote-box">
-                    “생존 없이는 나눌 파이도 없다.”
-                </div>
-</div>
-<!-- 4. Qualitative Results -->
-<div class="result-card">
-<div class="card-header">
-<div class="card-icon icon-qualitative"><i class="fas fa-star"></i></div>
-<h3 class="card-title">정성적 성과 (Qualitative)</h3>
-</div>
-<div class="qual-grid">
-<div class="qual-item">
-<i class="fas fa-bullseye qual-icon"></i>
-<span class="qual-title">전략 가치 입증</span>
-<span class="qual-desc">전략기획 필요성 확인</span>
-</div>
-<div class="qual-item">
-<i class="fas fa-user-shield qual-icon"></i>
-<span class="qual-title">내부 신뢰 확보</span>
-<span class="qual-desc">의사결정 프로세스 정착</span>
-</div>
-<div class="qual-item">
-<i class="fas fa-network-wired qual-icon"></i>
-<span class="qual-title">조직 성장</span>
-<span class="qual-desc">4명 → 약 40명 규모</span>
-</div>
-<div class="qual-item">
-<i class="fas fa-eye qual-icon"></i>
-<span class="qual-title">시각 확장</span>
-<span class="qual-desc">외부 관점 반영 구조화</span>
-</div>
-</div>
-</div>
-</div>
-</main>
-</div>
+    <div class="slide-container">
+        <img src="assets/images/전략1-6.png" alt="전략1-6" class="slide-image" />
+    </div>
 </body>
-</html></html>`,
-        8: `<!DOCTYPE html>
-
+</html>`,
+        7: `<!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Chapter 4. 회고와 학습</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
-<style>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>전략1-7</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
             padding: 0;
-            background-color: #f3f4f6;
         }
         .slide-container {
             width: 1280px;
@@ -4837,331 +2422,67 @@ document.addEventListener("DOMContentLoaded", () => {
             position: relative;
             overflow: hidden;
             display: flex;
-        }
-        /* Left Sidebar */
-        .sidebar {
-            width: 280px;
-            background-color: #051c2c;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            padding: 60px 40px;
-            flex-shrink: 0;
-        }
-        .chapter-label {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #9ca3af;
-            margin-bottom: 16px;
-            font-weight: 700;
-        }
-        .chapter-title {
-            font-size: 32px;
-            font-weight: 900;
-            line-height: 1.3;
-            margin-bottom: 40px;
-            color: #ffffff;
-        }
-        .nav-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 24px;
-            opacity: 0.5;
-            transition: opacity 0.3s;
-        }
-        .nav-item.active {
-            opacity: 1;
-            color: #60a5fa;
-        }
-        .nav-number {
-            font-size: 12px;
-            font-weight: 700;
-            margin-right: 12px;
-            width: 20px;
-        }
-        .nav-text {
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            padding: 50px 70px;
-            background-color: #f8fafc;
-            display: flex;
-            flex-direction: column;
-        }
-        .page-header {
-            margin-bottom: 30px;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: end;
-        }
-        .page-title {
-            font-size: 26px;
-            font-weight: 800;
-            color: #1e293b;
-            display: flex;
-            align-items: center;
-        }
-        .page-subtitle {
-            font-size: 16px;
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        /* Content Layout */
-        .content-body {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            height: 100%;
-        }
-
-        /* Top Row: Reflection Cards */
-        .reflection-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            height: 240px;
-        }
-
-        .reflection-card {
-            background-color: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            border-left: none;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Difficulty Card */
-        .card-difficulty {
-            border-left: none;
-        }
-        .card-difficulty .card-icon {
-            background-color: transparent;
-            color: #1e293b;
-        }
-
-        /* Learning Card */
-        .card-learning {
-            border-left: none;
-        }
-        .card-learning .card-icon {
-            background-color: transparent;
-            color: #1e293b;
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .card-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            font-size: 20px;
-            margin-right: 16px;
-        }
-        .card-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        .card-list {
-            list-style: none;
+            align-items: center;
             padding: 0;
-            margin: 0;
-            flex: 1;
         }
-        .card-list li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 12px;
-            font-size: 16px;
-            color: #4b5563;
-            line-height: 1.6;
+        .slide-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
         }
-        .card-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        .card-difficulty li::before { color: #1e293b; }
-        .card-learning li::before { color: #1e293b; }
-
-        /* Bottom Row: Quote Section */
-        .quote-section {
-            flex: 1;
-            background-color: white; /* Clean white background */
-            border-radius: 12px;
-            padding: 0 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
-        }
-        
-        .quote-icon {
-            font-size: 40px;
-            color: #e2e8f0;
-            position: absolute;
-            top: 40px;
-            left: 40px;
-        }
-        .quote-icon-right {
-            font-size: 40px;
-            color: #e2e8f0;
-            position: absolute;
-            bottom: 40px;
-            right: 40px;
-        }
-
-        .quote-text {
-            font-size: 20px;
-            font-weight: 800; /* Extra bold */
-            color: #1e293b;
-            line-height: 1.5;
-            margin-bottom: 24px;
-            position: relative;
-            z-index: 10;
-        }
-        .quote-highlight {
-            color: #1e293b;
-        }
-        
-        .quote-author {
-            font-size: 16px;
-            color: #64748b;
-            font-weight: 500;
-            border-top: 2px solid #e2e8f0;
-            padding-top: 16px;
-            width: 200px;
-        }
-
-        /* Decorative Background */
-        .bg-pattern {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            width: 200px;
-            height: 200px;
-            opacity: 0.03;
-            background-image: radial-gradient(#1e293b 1px, transparent 1px);
-            background-size: 20px 20px;
-            border-bottom-right-radius: 12px;
-        }
-
     </style>
 </head>
 <body>
-<div class="slide-container">
-<!-- Sidebar -->
-<aside class="sidebar">
-<div class="chapter-label">Conclusion</div>
-<h1 class="chapter-title">회고와<br/>학습</h1>
-<div class="nav-group">
-<div class="nav-item">
-<span class="nav-number">01</span>
-<span class="nav-text">Context &amp; Diagnosis</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">02</span>
-<span class="nav-text">Strategic Choice</span>
-</div>
-<div class="nav-item">
-<span class="nav-number">03</span>
-<span class="nav-text">Fundraising Execution</span>
-</div>
-<div class="nav-item active">
-<span class="nav-number">04</span>
-<span class="nav-text">Results &amp; Impact</span>
-</div>
-</div>
-</aside>
-<!-- Main Content -->
-<main class="main-content">
-<header class="page-header">
-<h2 class="page-title">
-<i class="fas fa-quote-right text-blue-600 mr-3"></i>
-                    위기를 넘어 성장의 자산으로
-                </h2>
-<span class="page-subtitle">Reflection &amp; Insight</span>
-</header>
-<div class="content-body">
-<!-- Top Row: Reflection Cards -->
-<div class="reflection-grid">
-<!-- Difficulty -->
-<div class="reflection-card card-difficulty">
-<div class="card-header">
-<div class="card-icon">
-<i class="fas fa-mountain"></i>
-</div>
-<h3 class="card-title">당시의 어려움 (Pain Points)</h3>
-</div>
-<ul class="card-list">
-<li>
-<p>글로벌 금융위기가 회사 생존에 직접적인 영향을 미치는 <strong>위기 상황 최초 경험</strong></p>
-</li>
-<li>
-<p>경험이 전무한 상태에서 조직의 사활이 걸린 <strong>설득과 의사결정 수행에 따른 심리적 부담</strong></p>
-</li>
-</ul>
-</div>
-<!-- Learning/Next -->
-<div class="reflection-card card-learning">
-<div class="card-header">
-<div class="card-icon">
-<i class="fas fa-rotate-right"></i>
-</div>
-<h3 class="card-title">다시 한다면 (Lesson Learned)</h3>
-</div>
-<ul class="card-list">
-<li>
-<p>투자 유치 이후 단순 인원 확장이 아닌,</p>
-</li>
-<li>
-<p><strong>"매출 성장 기반의 인재 채용 구조"</strong>를 설계하여 자생력을 더욱 빠르게 확보할 것</p>
-</li>
-</ul>
-</div>
-</div>
-<!-- Bottom Row: Closing Quote -->
-<div class="quote-section">
-<i class="fas fa-quote-left quote-icon"></i>
-<i class="fas fa-quote-right quote-icon-right"></i>
-<div class="bg-pattern"></div>
-                    <p class="quote-text">
-                        "책임이란 결과의 순간까지 자리를 지키고 일을 끝마치는 것이라 생각합니다.<br/>
-                        저는 스타트업의 전략기획자로써 모두의 생존을 위한 선택지를 만들었고,<br/>
-                        책임의 부담감을 견디며 끝까지 자리를 지켰습니다."
-                    </p>
-<div class="quote-author">
-                        Strategic Planner's Epilogue
-                    </div>
-</div>
-</div>
-</main>
-</div>
+    <div class="slide-container">
+        <img src="assets/images/전략1-7.png" alt="전략1-7" class="slide-image" />
+    </div>
 </body>
-</html></html></html>`
+</html>`,
+        8: `<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>전략1-8</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+        }
+        .slide-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <img src="assets/images/전략1-8.png" alt="전략1-8" class="slide-image" />
+    </div>
+</body>
+</html>`
     };
 
     // 넥스트1 파일 내용을 객체로 저장
@@ -10191,6 +7512,8 @@ document.addEventListener("DOMContentLoaded", () => {
         resizeTimeout = setTimeout(() => {
             // 모든 iframe 스케일 재계산
             recalculateAllIframeScales();
+            // 버튼 위치 업데이트 (반응형에 따라 큰 박스의 높이가 변경될 수 있으므로)
+            updateButtonPosition();
             
             // 썸네일 박스가 있는 경우 추가로 재계산 (브라우저 최소화/최대화 대응)
             const service1ThumbnailBox = document.querySelector('.test-thumbnail-box[data-box="2"]');
