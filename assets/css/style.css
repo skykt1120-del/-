@@ -4414,8 +4414,45 @@ body {
     }
 
     .test-slide-list {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
         gap: 12px;
+    }
+    
+    /* 모바일에서 각 박스별 작은 박스 리스트도 2열로 변경 */
+    .test-expanded-view:has(.test-expanded-box[data-box="1"]) .test-slide-list {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+    
+    .test-expanded-view:has(.test-expanded-box[data-box="2"]) .test-slide-list {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+    
+    .test-expanded-view:has(.test-expanded-box[data-box="3"]) .test-slide-list {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+    
+    .test-expanded-view:has(.test-expanded-box[data-box="4"]) .test-slide-list {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+    
+    .test-expanded-view:has(.test-expanded-box[data-box="5"]) .test-slide-list {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+    
+    /* 모바일에서 큰 박스 크기 증가 (960px 이하) */
+    .test-expanded-view .test-expanded-box[data-box="1"],
+    .test-expanded-view .test-expanded-box[data-box="2"],
+    .test-expanded-view .test-expanded-box[data-box="3"],
+    .test-expanded-view .test-expanded-box[data-box="4"],
+    .test-expanded-view .test-expanded-box[data-box="5"] {
+        width: 95%;
+        max-width: 95%;
     }
 }
 
@@ -4656,7 +4693,44 @@ body {
 
     .test-slide-list {
         grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
         gap: 12px;
+    }
+    
+    /* 모바일에서 각 박스별 작은 박스 리스트도 2열로 변경 */
+    .test-expanded-view:has(.test-expanded-box[data-box="1"]) .test-slide-list {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+    
+    .test-expanded-view:has(.test-expanded-box[data-box="2"]) .test-slide-list {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+    
+    .test-expanded-view:has(.test-expanded-box[data-box="3"]) .test-slide-list {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+    
+    .test-expanded-view:has(.test-expanded-box[data-box="4"]) .test-slide-list {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+    
+    .test-expanded-view:has(.test-expanded-box[data-box="5"]) .test-slide-list {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+    
+    /* 모바일에서 큰 박스 크기 증가 (720px 이하) */
+    .test-expanded-view .test-expanded-box[data-box="1"],
+    .test-expanded-view .test-expanded-box[data-box="2"],
+    .test-expanded-view .test-expanded-box[data-box="3"],
+    .test-expanded-view .test-expanded-box[data-box="4"],
+    .test-expanded-view .test-expanded-box[data-box="5"] {
+        width: 98%;
+        max-width: 98%;
     }
 }
 
