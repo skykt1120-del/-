@@ -4096,9 +4096,9 @@ body {
     max-width: 100%;
 }
 
-/* 전략2 박스의 경우 작은 박스 리스트를 가로로 10개 배치 (10x1) */
+/* 전략2 박스의 경우 작은 박스 리스트를 가로로 9개 배치 (9x1) */
 .test-expanded-view:has(.test-expanded-box[data-box="5"]) .test-slide-list {
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: repeat(9, 1fr);
     grid-template-rows: 1fr;
     width: 100%;
     flex-shrink: 0;
