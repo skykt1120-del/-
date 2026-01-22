@@ -5521,7 +5521,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </head>
 <body>
     <div class="slide-container">
-        <img src="assets/images/서비스2-1썸네일(수정).png" alt="서비스2-1" class="slide-image" />
+        <img src="assets/images/서비스2-1썸네일(수정).png?v=20250123" alt="서비스2-1" class="slide-image" />
     </div>
 </body>
 </html>`,
